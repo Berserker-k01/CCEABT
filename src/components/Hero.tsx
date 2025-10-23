@@ -1,31 +1,55 @@
 import { ChevronDown } from 'lucide-react';
 
-export default function Hero() {
+type Variant = 'classic' | 'impact' | 'minimal';
+
+export default function Hero({ variant = 'classic' }: { variant?: Variant }) {
+  const bg =
+    variant === 'classic'
+      ? 'url("https://images.pexels.com/photos/2101137/pexels-photo-2101137.jpeg?auto=compress&cs=tinysrgb&w=1920")'
+      : variant === 'impact'
+      ? 'url("https://images.pexels.com/photos/624015/pexels-photo-624015.jpeg?auto=compress&cs=tinysrgb&w=1920")'
+      : 'url("https://images.pexels.com/photos/221015/pexels-photo-221015.jpeg?auto=compress&cs=tinysrgb&w=1920")';
+
+  const overlay =
+    variant === 'impact'
+      ? 'bg-gradient-to-br from-cceabt-green/80 to-cceabt-blue/80'
+      : 'bg-gradient-to-r from-cceabt-blue/90 to-cceabt-blue/70';
+
+  const titleClass =
+    variant === 'impact'
+      ? 'text-5xl md:text-6xl lg:text-7xl'
+      : variant === 'minimal'
+      ? 'text-4xl md:text-5xl'
+      : 'text-4xl md:text-5xl lg:text-6xl';
+
+  const align = variant === 'minimal' ? 'text-center mx-auto' : '';
+  const ctaStyle =
+    variant === 'minimal'
+      ? 'inline-block border-2 border-white text-white hover:bg-white hover:text-cceabt-blue font-semibold px-8 py-4 rounded-lg transition-all duration-200'
+      : 'inline-block bg-cceabt-green hover:bg-cceabt-green/90 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-200 transform hover:scale-105';
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center pt-20">
+    <section id="home" className="relative min-h-screen flex items-center pt-28">
       <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: 'url("https://images.pexels.com/photos/2101137/pexels-photo-2101137.jpeg?auto=compress&cs=tinysrgb&w=1920")',
+          backgroundImage: bg,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-cceabt-blue/90 to-cceabt-blue/70"></div>
+        <div className={`absolute inset-0 ${overlay}`}></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+        <div className={`max-w-3xl ${align}`}>
+          <h1 className={`${titleClass} font-bold text-white mb-6 leading-tight`}>
             Accès pour tous à l'eau et à l'assainissement
           </h1>
-          <p className="text-xl md:text-2xl text-white/95 mb-8">
+          <p className={`text-xl md:text-2xl text-white/95 mb-8 ${align}`}>
             Ensemble pour un Togo où chaque citoyen a accès à l'eau potable et à des services d'assainissement durables.
           </p>
-          <a
-            href="#actions"
-            className="inline-block bg-cceabt-green hover:bg-cceabt-green/90 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-200 transform hover:scale-105"
-          >
+          <a href="#actions" className={ctaStyle}>
             Découvrir nos actions
           </a>
         </div>

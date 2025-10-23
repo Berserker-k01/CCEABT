@@ -16,12 +16,12 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-24">
           <div className="flex items-center space-x-3">
             <img
               src="/images/logo CCEABT.png"
               alt="Logo CCEABT"
-              className="h-14 w-auto"
+              className="h-20 w-auto"
             />
             <div className="hidden md:block">
               <h1 className="text-xl font-bold text-cceabt-blue">CCEABT</h1>
