@@ -1,35 +1,43 @@
+import { useState } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import HomeClassic from './pages/HomeClassic';
-import HomeImpact from './pages/HomeImpact';
-import HomeMinimal from './pages/HomeMinimal';
+import Home from './pages/Home';
+import About from './pages/About';
+import Network from './pages/Network';
+import News from './pages/News';
+import Contact from './pages/Contact';
 
 function App() {
-  const VARIANTS = ['classic', 'impact', 'minimal'] as const;
-  type Variant = typeof VARIANTS[number];
+  const [currentPage, setCurrentPage] = useState('home');
 
-  let variant: Variant;
-  const key = 'homeVariant';
-  const existing = typeof window !== 'undefined' ? window.sessionStorage.getItem(key) : null;
-  if (existing && (VARIANTS as readonly string[]).includes(existing)) {
-    variant = existing as Variant;
-  } else {
-    const random = VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
-    variant = random;
-    if (typeof window !== 'undefined') {
-      window.sessionStorage.setItem(key, variant);
+  const handleNavigate = (page: string) => {
+    setCurrentPage(page);
+  };
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'home':
+        return <Home onNavigate={handleNavigate} />;
+      case 'about':
+        return <About />;
+      case 'network':
+        return <Network />;
+      case 'news':
+        return <News />;
+      case 'contact':
+        return <Contact />;
+      default:
+        return <Home onNavigate={handleNavigate} />;
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      <Header currentPage={currentPage} onNavigate={handleNavigate} />
       <main>
-        {variant === 'classic' && <HomeClassic />}
-        {variant === 'impact' && <HomeImpact />}
-        {variant === 'minimal' && <HomeMinimal />}
+        {renderPage()}
       </main>
-      <Footer />
+      <Footer onNavigate={handleNavigate} />
     </div>
   );
 }
