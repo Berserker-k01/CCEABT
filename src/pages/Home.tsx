@@ -9,16 +9,20 @@ export default function Home({ onNavigate }: HomeProps) {
     <div className="pt-24">
       {/* Hero Section */}
       <section className="relative text-white py-24 overflow-hidden">
-        {/* Background image + gradient overlay */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: "url('/images/hero-cceabt.jpg')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-cceabt-blue/85 via-cceabt-blue/70 to-cceabt-green/70" />
+        {/* Background image (blurred) + gradient overlay */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: "url('/images/back%20cceabt.jpeg'), url('/images/hero-cceabt.jpg')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              filter: 'blur(3px) brightness(0.95)',
+              transform: 'scale(1.06)',
+              transformOrigin: 'center',
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-cceabt-blue/80 via-cceabt-blue/65 to-cceabt-green/65" />
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
