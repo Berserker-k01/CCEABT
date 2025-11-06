@@ -3,12 +3,7 @@ import { ChevronDown } from 'lucide-react';
 type Variant = 'classic' | 'impact' | 'minimal';
 
 export default function Hero({ variant = 'classic' }: { variant?: Variant }) {
-  const bg =
-    variant === 'classic'
-      ? 'url("https://images.pexels.com/photos/2101137/pexels-photo-2101137.jpeg?auto=compress&cs=tinysrgb&w=1920")'
-      : variant === 'impact'
-      ? 'url("https://images.pexels.com/photos/624015/pexels-photo-624015.jpeg?auto=compress&cs=tinysrgb&w=1920")'
-      : 'url("https://images.pexels.com/photos/221015/pexels-photo-221015.jpeg?auto=compress&cs=tinysrgb&w=1920")';
+  const bg = 'url("/images/background images.png")';
 
   const overlay =
     variant === 'impact'
