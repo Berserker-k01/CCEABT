@@ -172,4 +172,12 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+  
+  /* Blue text glow utility (lighter, using cceabt-light-blue #7DD3F7) */
+  .text-glow-blue {
+    text-shadow: 0 0 6px rgba(125, 211, 247, 0.55), 0 0 14px rgba(125, 211, 247, 0.35);
+  }
+  .hover\:text-glow-blue:hover {
+    text-shadow: 0 0 6px rgba(125, 211, 247, 0.55), 0 0 14px rgba(125, 211, 247, 0.35);
+  }
 }
