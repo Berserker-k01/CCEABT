@@ -5,12 +5,29 @@
 @tailwind utilities;
 
 @layer base {
+  html, body {
+    @apply font-poppins antialiased m-0 p-0 w-full h-full;
+    overflow-x: hidden;
+  }
+  
   body {
-    @apply font-poppins antialiased;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
   
   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     scroll-behavior: smooth;
+  }
+  
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
   }
 }
 

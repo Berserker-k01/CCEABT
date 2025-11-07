@@ -1,0 +1,259 @@
+import { X } from 'lucide-react';
+import { useState } from 'react';
+
+type MembershipType = 'member' | 'partner' | '';
+
+export default function MembershipForm({ onClose }: { onClose: () => void }) {
+  const [membershipType, setMembershipType] = useState<MembershipType>('');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    organization: '',
+    position: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!membershipType) return;
+    
+    setIsSubmitting(true);
+    
+    // Simulate form submission
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi du formulaire', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="text-center p-6">
+        <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+          <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3 className="text-lg font-medium text-gray-900 mb-2">Demande envoyée avec succès !</h3>
+        <p className="text-sm text-gray-500 mb-6">
+          Nous avons bien reçu votre demande d'adhésion. Notre équipe vous contactera sous peu.
+        </p>
+        <button
+          type="button"
+          onClick={onClose}
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Fermer
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative">
+      <button
+        onClick={onClose}
+        className="absolute top-0 right-0 p-2 text-gray-400 hover:text-gray-500 focus:outline-none"
+      >
+        <X className="h-6 w-6" />
+      </button>
+
+      <div className="text-center">
+        <h3 className="text-lg font-medium text-gray-900 mb-2">
+          Rejoindre le CCEABT
+        </h3>
+        <p className="text-sm text-gray-500 mb-6">
+          Sélectionnez le type d'adhésion qui vous correspond
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <button
+          type="button"
+          onClick={() => setMembershipType('member')}
+          className={`p-4 border rounded-lg text-left transition-colors ${
+            membershipType === 'member'
+              ? 'border-blue-500 bg-blue-50'
+              : 'border-gray-300 hover:border-blue-300'
+          }`}
+        >
+          <div className="flex items-center">
+            <div className={`flex-shrink-0 h-5 w-5 rounded-full border-2 ${
+              membershipType === 'member' 
+                ? 'border-blue-500 bg-blue-500 flex items-center justify-center'
+                : 'border-gray-300'
+            }`}>
+              {membershipType === 'member' && (
+                <svg className="h-3 w-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              )}
+            </div>
+            <span className="ml-3 font-medium">Membre Individuel</span>
+          </div>
+          <p className="mt-2 text-sm text-gray-500">
+            Pour les professionnels souhaitant intégrer notre réseau et participer aux activités du CCEABT.
+          </p>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setMembershipType('partner')}
+          className={`p-4 border rounded-lg text-left transition-colors ${
+            membershipType === 'partner'
+              ? 'border-blue-500 bg-blue-50'
+              : 'border-gray-300 hover:border-blue-300'
+          }`}
+        >
+          <div className="flex items-center">
+            <div className={`flex-shrink-0 h-5 w-5 rounded-full border-2 ${
+              membershipType === 'partner' 
+                ? 'border-blue-500 bg-blue-500 flex items-center justify-center'
+                : 'border-gray-300'
+            }`}>
+              {membershipType === 'partner' && (
+                <svg className="h-3 w-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              )}
+            </div>
+            <span className="ml-3 font-medium">Partenaire Institutionnel</span>
+          </div>
+          <p className="mt-2 text-sm text-gray-500">
+            Pour les organisations souhaitant établir un partenariat avec le CCEABT.
+          </p>
+        </button>
+      </div>
+
+      {membershipType && (
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              Nom complet <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              value={formData.name}
+              onChange={handleInputChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Email <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={handleInputChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+              Téléphone <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              required
+              value={formData.phone}
+              onChange={handleInputChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="organization" className="block text-sm font-medium text-gray-700">
+              {membershipType === 'partner' ? 'Nom de l\'organisation' : 'Entreprise/Organisation actuelle'}
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="organization"
+              name="organization"
+              required
+              value={formData.organization}
+              onChange={handleInputChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="position" className="block text-sm font-medium text-gray-700">
+              Poste occupé <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="position"
+              name="position"
+              required
+              value={formData.position}
+              onChange={handleInputChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+              Pourquoi souhaitez-vous nous rejoindre ? <span className="text-red-500">*</span>
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows={3}
+              required
+              value={formData.message}
+              onChange={handleInputChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+
+          <div className="pt-2">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? (
+                <>
+                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Envoi en cours...
+                </>
+              ) : (
+                'Envoyer ma demande d\'adhésion'
+              )}
+            </button>
+          </div>
+        </form>
+      )}
+    </div>
+  );
+}

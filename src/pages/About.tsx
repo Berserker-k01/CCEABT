@@ -77,7 +77,7 @@ export default function About() {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+          <div className="w-6 h-10 border-2 border-white/70 rounded-full flex items-start justify-center p-2 backdrop-blur-sm bg-black/20">
             <div className="w-1 h-3 bg-white rounded-full"></div>
           </div>
         </div>
@@ -322,15 +322,15 @@ export default function About() {
                       </div>
                       <ul className="space-y-1 text-base">
                         <li className="flex items-center gap-2">
-                          <CheckCircle className="text-blue-600" size={18} />
+                          <CheckCircle className="mt-1 flex-shrink-0" size={18} />
                           <span><strong>Assemblée Générale (AG)</strong> - Organe décisionnel</span>
                         </li>
                         <li className="flex items-center gap-2">
-                          <CheckCircle className="text-blue-600" size={18} />
+                          <CheckCircle className="mt-1 flex-shrink-0" size={18} />
                           <span><strong>Conseil d'Administration (CA)</strong> - Président-Chef de file</span>
                         </li>
                         <li className="flex items-center gap-2">
-                          <CheckCircle className="text-blue-600" size={18} />
+                          <CheckCircle className="mt-1 flex-shrink-0" size={18} />
                           <span><strong>Coordination Opérationnelle</strong> - Chef de projets</span>
                         </li>
                       </ul>
@@ -433,7 +433,7 @@ export default function About() {
             {/* Plaidoyer */}
             <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-8 rounded-lg shadow-md">
               <div className="flex items-start gap-4">
-                <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold flex-shrink-0">1</div>
+                <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0 text-xl font-bold group-hover:scale-110 transition-transform">1</div>
                 <div>
                   <h3 className="text-2xl font-bold text-blue-800 mb-3">Plaidoyer & influence politique</h3>
                   <ul className="space-y-2 text-gray-700">
@@ -457,7 +457,7 @@ export default function About() {
             {/* Eau potable */}
             <div className="bg-gradient-to-r from-green-50 to-green-100 p-8 rounded-lg shadow-md">
               <div className="flex items-start gap-4">
-                <div className="bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold flex-shrink-0">2</div>
+                <div className="bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0 text-xl font-bold group-hover:scale-110 transition-transform">2</div>
                 <div>
                   <h3 className="text-2xl font-bold text-green-800 mb-3">Eau potable & protection des ressources</h3>
                   <ul className="space-y-2 text-gray-700">
@@ -481,7 +481,7 @@ export default function About() {
             {/* Hygiène & assainissement */}
             <div className="bg-gradient-to-r from-purple-50 to-purple-100 p-8 rounded-lg shadow-md">
               <div className="flex items-start gap-4">
-                <div className="bg-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold flex-shrink-0">3</div>
+                <div className="bg-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0 text-xl font-bold group-hover:scale-110 transition-transform">3</div>
                 <div>
                   <h3 className="text-2xl font-bold text-purple-800 mb-3">Hygiène & assainissement communautaire</h3>
                   <ul className="space-y-2 text-gray-700">
@@ -505,7 +505,7 @@ export default function About() {
             {/* Renforcement des capacités */}
             <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 p-8 rounded-lg shadow-md">
               <div className="flex items-start gap-4">
-                <div className="bg-yellow-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold flex-shrink-0">4</div>
+                <div className="bg-yellow-600 text-white rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0 text-xl font-bold group-hover:scale-110 transition-transform">4</div>
                 <div>
                   <h3 className="text-2xl font-bold text-yellow-800 mb-3">Renforcement des capacités</h3>
                   <ul className="space-y-2 text-gray-700">

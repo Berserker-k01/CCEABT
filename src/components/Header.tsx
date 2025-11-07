@@ -52,7 +52,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                 }}
                 className={`relative font-semibold transition-all duration-300 px-3 py-2 rounded-lg ${
                   currentPage === item.page
-                    ? 'text-white bg-gradient-to-r from-blue-600 to-green-600 shadow-lg'
+                    ? 'text-white bg-blue-700 shadow-lg'
                     : 'text-cceabt-blue hover:text-cceabt-green hover:bg-blue-50'
                 }`}
               >

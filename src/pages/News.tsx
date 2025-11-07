@@ -1,18 +1,17 @@
-import { Newspaper, Calendar, Tag, Image, Facebook, Linkedin } from 'lucide-react';
+import { Newspaper, Calendar, Tag, Image, Facebook, Linkedin, Users } from 'lucide-react';
 import { useState } from 'react';
 
-export default function News() {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+// Données des catégories
+const categories = [
+  { id: 'all', name: 'Toutes les actualités', color: 'gray' },
+  { id: 'advocacy', name: 'Plaidoyer et politiques publiques', color: 'blue' },
+  { id: 'water', name: 'Eau et assainissement', color: 'green' },
+  { id: 'training', name: 'Formations et sensibilisations', color: 'purple' },
+  { id: 'testimonials', name: 'Témoignages et projets communautaires', color: 'yellow' }
+];
 
-  const categories = [
-    { id: 'all', name: 'Toutes les actualités', color: 'gray' },
-    { id: 'advocacy', name: 'Plaidoyer et politiques publiques', color: 'blue' },
-    { id: 'water', name: 'Eau et assainissement', color: 'green' },
-    { id: 'training', name: 'Formations et sensibilisations', color: 'purple' },
-    { id: 'testimonials', name: 'Témoignages et projets communautaires', color: 'yellow' }
-  ];
-
-  const news = [
+// Données des actualités
+const newsData = [
     {
       id: 1,
       title: 'Renforcement des capacités des associations membres à Lomé',
@@ -63,15 +62,22 @@ export default function News() {
     }
   ];
 
+// Composant principal
+export default function News() {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  
+  // Filtre les actualités par catégorie sélectionnée
   const filteredNews = selectedCategory === 'all' 
-    ? news 
-    : news.filter(item => item.category === selectedCategory);
+    ? newsData 
+    : newsData.filter(item => item.category === selectedCategory);
 
+  // Récupère la couleur associée à une catégorie
   const getCategoryColor = (categoryId: string) => {
     const category = categories.find(cat => cat.id === categoryId);
     return category?.color || 'gray';
   };
 
+  // Classes de couleur pour les catégories
   const colorClasses: Record<string, string> = {
     blue: 'bg-blue-100 text-blue-800',
     green: 'bg-green-100 text-green-800',
@@ -83,12 +89,43 @@ export default function News() {
   return (
     <div className="pt-24">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Actualités</h1>
-          <p className="text-xl max-w-3xl mx-auto">
-            Restez informé de nos actions, événements et réalisations dans le secteur de l'eau, de l'hygiène et de l'assainissement.
-          </p>
+      <section className="relative text-white py-32 overflow-hidden">
+        {/* Image de fond */}
+        <div className="absolute inset-0">
+          <img 
+            src="/images/3.jpg" 
+            alt="Actualités CCEABT" 
+            className="w-full h-full object-cover"
+            style={{
+              objectPosition: 'center 40%',
+              minHeight: '100%',
+              minWidth: '100%',
+              width: '100%',
+              height: '100%',
+              position: 'absolute',
+              top: 0,
+              left: 0
+            }}
+          />
+          <div className="absolute inset-0 bg-black/10"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-5xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full mb-6 animate-fade-in">
+              <Newspaper className="text-blue-300" size={20} />
+              <span className="text-sm font-semibold">Restez informé de nos dernières actualités</span>
+            </div>
+            
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight animate-slide-up">
+              <span className="bg-gradient-to-r from-blue-200 to-green-200 bg-clip-text text-transparent">
+                Actualités
+              </span>
+            </h1>
+            <p className="text-xl md:text-2xl mb-10 leading-relaxed text-blue-100 max-w-4xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              Restez informés des dernières actualités et événements du CCEABT et de ses partenaires.
+            </p>
+          </div>
         </div>
       </section>
 

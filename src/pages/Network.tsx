@@ -1,6 +1,10 @@
-import { Users, Network as NetworkIcon, FileText, Download, UserPlus, Handshake } from 'lucide-react';
+import { Users, Network as NetworkIcon, FileText, Download, UserPlus, Handshake, X } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import MembershipForm from '../components/MembershipForm';
 
 export default function Network() {
+  const [isMembershipModalOpen, setIsMembershipModalOpen] = useState(false);
   const members = [
     'PADIE', 'JVE', 'HSF', 'STADD', 'Plan International', 'Eau Vive', 'CRS', 
     'WEP-Togo', 'PNJE', 'ADESCO', 'SOS VITA', 'AFHON', 'ANAD', 'APEL',
@@ -28,12 +32,43 @@ export default function Network() {
   return (
     <div className="pt-24">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-600 to-blue-600 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Réseau & Partenaires</h1>
-          <p className="text-xl max-w-3xl mx-auto">
-            Une plateforme collaborative pour un impact collectif dans le secteur de l'eau, de l'hygiène et de l'assainissement.
-          </p>
+      <section className="relative text-white py-32 overflow-hidden">
+        {/* Image de fond */}
+        <div className="absolute inset-0">
+          <img 
+            src="/images/2.jpg" 
+            alt="Réseau & Partenaires" 
+            className="w-full h-full object-cover"
+            style={{
+              objectPosition: 'center 40%',
+              minHeight: '100%',
+              minWidth: '100%',
+              width: '100%',
+              height: '100%',
+              position: 'absolute',
+              top: 0,
+              left: 0
+            }}
+          />
+          <div className="absolute inset-0 bg-black/10"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-5xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full mb-6 animate-fade-in">
+              <Users className="text-blue-300" size={20} />
+              <span className="text-sm font-semibold">Un réseau solidaire pour l'accès à l'eau</span>
+            </div>
+            
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight animate-slide-up">
+              <span className="bg-gradient-to-r from-blue-200 to-green-200 bg-clip-text text-transparent">
+                Réseau & Partenaires
+              </span>
+            </h1>
+            <p className="text-xl md:text-2xl mb-10 leading-relaxed text-blue-100 max-w-4xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              Une plateforme collaborative pour un impact collectif dans le secteur de l'eau, de l'hygiène et de l'assainissement.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -190,11 +225,54 @@ export default function Network() {
             Vous êtes une organisation, une institution ou un partenaire souhaitant agir pour un Togo plus propre et plus sain ?
             Rejoignez notre réseau dès aujourd'hui.
           </p>
-          <button className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all shadow-lg text-lg">
+          <button 
+            onClick={() => setIsMembershipModalOpen(true)}
+            className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all shadow-lg text-lg hover:scale-105 transform"
+          >
             Adhérer au CCEABT
           </button>
         </div>
       </section>
+
+      {/* Modal d'adhésion */}
+      <AnimatePresence>
+        {isMembershipModalOpen && (
+          <div className="fixed inset-0 z-50 overflow-y-auto">
+            <div className="flex min-h-screen items-center justify-center p-4 text-center">
+              {/* Overlay */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+                onClick={() => setIsMembershipModalOpen(false)}
+              />
+              
+              {/* Contenu de la modale */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-auto p-6 text-left overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => setIsMembershipModalOpen(false)}
+                  className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+                
+                <div className="sm:flex sm:items-start">
+                  <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                    <MembershipForm onClose={() => setIsMembershipModalOpen(false)} />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

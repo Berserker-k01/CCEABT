@@ -1,18 +1,24 @@
-import { ArrowRight, Droplet, Users, Heart, TrendingUp, Award, Target, Lightbulb, Sparkles } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, Droplet, Users, Heart, TrendingUp, Award, Target, Lightbulb, Sparkles, X } from 'lucide-react';
+import ContactForm from '../components/ContactForm';
 
 interface HomeProps {
   onNavigate: (page: string) => void;
 }
 
 export default function Home({ onNavigate }: HomeProps) {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   return (
     <div className="pt-24">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white py-24 overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-green-300 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <section className="relative text-white py-24 overflow-hidden">
+        {/* Image de fond */}
+        <div className="absolute inset-0">
+          <img 
+            src="/images/1.jpg" 
+            alt="Fond CCEABT" 
+            className="w-full h-full object-cover"
+          />
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
@@ -285,7 +291,7 @@ export default function Home({ onNavigate }: HomeProps) {
               </span>
             </button>
             <button
-              onClick={() => onNavigate('contact')}
+              onClick={() => setIsContactModalOpen(true)}
               className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white px-10 py-5 rounded-full font-bold hover:from-yellow-500 hover:to-yellow-600 hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-110 text-lg"
             >
               Nous contacter
@@ -299,6 +305,22 @@ export default function Home({ onNavigate }: HomeProps) {
           </div>
         </div>
       </section>
+
+      {/* Modal de contact */}
+      {isContactModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="relative w-full max-w-2xl">
+            <button
+              onClick={() => setIsContactModalOpen(false)}
+              className="absolute -top-10 right-0 text-white hover:text-yellow-300 transition-colors"
+              aria-label="Fermer le formulaire"
+            >
+              <X size={28} />
+            </button>
+            <ContactForm onClose={() => setIsContactModalOpen(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

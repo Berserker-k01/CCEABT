@@ -32,9 +32,9 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white flex flex-col">
       <Header currentPage={currentPage} onNavigate={handleNavigate} />
-      <main>
+      <main className="flex-grow pt-24">
         {renderPage()}
       </main>
       <Footer onNavigate={handleNavigate} />
