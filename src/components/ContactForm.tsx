@@ -404,13 +404,22 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
               <Mail className="mr-2" size={16} />
               <span className="text-sm">contact@cceabt.org</span>
             </a>
-            <a 
-              href="tel:+22812345678" 
-              className="text-gray-600 hover:text-blue-600 transition-colors flex items-center"
-            >
-              <Phone className="mr-2" size={16} />
-              <span className="text-sm">+228 12 34 56 78</span>
-            </a>
+            <div className="space-y-2">
+              <a 
+                href="tel:+22891359398" 
+                className="text-gray-600 hover:text-blue-600 transition-colors flex items-center"
+              >
+                <Phone className="mr-2" size={16} />
+                <span className="text-sm">+228 91 35 93 98</span>
+              </a>
+              <a 
+                href="tel:+22890227855" 
+                className="text-gray-600 hover:text-blue-600 transition-colors flex items-center"
+              >
+                <Phone className="mr-2" size={16} />
+                <span className="text-sm">+228 90 22 78 55</span>
+              </a>
+            </div>
           </div>
           <div className="flex space-x-3">
             <a 

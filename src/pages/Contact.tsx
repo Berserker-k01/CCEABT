@@ -34,9 +34,14 @@ export default function Contact() {
                 <Phone className="text-blue-600" size={28} />
               </div>
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Téléphone</h3>
-              <a href="tel:+22812345678" className="text-blue-600 hover:text-blue-800">
-                +228 12 34 56 78
-              </a>
+              <div className="space-y-2">
+                <a href="tel:+22891359398" className="text-blue-600 hover:text-blue-800 block">
+                  +228 91 35 93 98
+                </a>
+                <a href="tel:+22890227855" className="text-blue-600 hover:text-blue-800 block">
+                  +228 90 22 78 55
+                </a>
+              </div>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow">
