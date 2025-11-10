@@ -30,7 +30,7 @@ export default function Network() {
   ];
 
   return (
-    <div className="pt-24">
+    <div>
       {/* Hero Section */}
       <section className="relative text-white py-32 overflow-hidden">
         {/* Image de fond */}

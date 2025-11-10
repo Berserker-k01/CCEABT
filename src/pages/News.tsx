@@ -1,4 +1,4 @@
-import { Newspaper, Calendar, Tag, Image, Facebook, Linkedin, Users } from 'lucide-react';
+import { Newspaper, Calendar, Tag, Image, Facebook, Linkedin } from 'lucide-react';
 import { useState } from 'react';
 
 // Données des catégories
@@ -87,7 +87,7 @@ export default function News() {
   };
 
   return (
-    <div className="pt-24">
+    <div>
       {/* Hero Section */}
       <section className="relative text-white py-32 overflow-hidden">
         {/* Image de fond */}
@@ -114,16 +114,16 @@ export default function News() {
           <div className="max-w-5xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full mb-6 animate-fade-in">
               <Newspaper className="text-blue-300" size={20} />
-              <span className="text-sm font-semibold">Restez informé de nos dernières actualités</span>
+              <span className="text-sm font-semibold">Pour un accès universel et durable à l'eau et à l'hygiène</span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight animate-slide-up">
-              <span className="bg-gradient-to-r from-blue-200 to-green-200 bg-clip-text text-transparent">
-                Actualités
-              </span>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight animate-slide-up text-blue-600">
+              Actualités
             </h1>
-            <p className="text-xl md:text-2xl mb-10 leading-relaxed text-blue-100 max-w-4xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              Restez informés des dernières actualités et événements du CCEABT et de ses partenaires.
+            <p className="text-xl md:text-2xl mb-10 leading-relaxed text-white max-w-4xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              Depuis plus de dix ans, le CCEABT œuvre aux côtés des communautés et des acteurs publics pour offrir à chaque citoyen togolais une eau potable de qualité, des infrastructures sanitaires améliorées et un cadre de vie sain.
+              <br /><br />
+              Ensemble, bâtissons un Togo où l'eau et l'hygiène sont des droits, et non des privilèges.
             </p>
           </div>
         </div>

@@ -31,7 +31,7 @@ export default function About() {
   }, []);
 
   return (
-    <div className="pt-24">
+    <div>
       {/* Hero Section - Full screen with stats overlay */}
       <section className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-blue-900 via-blue-800 to-green-900 text-white overflow-hidden">
         {/* Animated background */}
@@ -72,13 +72,6 @@ export default function About() {
               <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-yellow-200 to-white bg-clip-text text-transparent">8.3M</div>
               <div className="text-yellow-100 font-medium">Habitants au Togo</div>
             </div>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/70 rounded-full flex items-start justify-center p-2 backdrop-blur-sm bg-black/20">
-            <div className="w-1 h-3 bg-white rounded-full"></div>
           </div>
         </div>
       </section>

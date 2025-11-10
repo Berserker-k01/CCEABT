@@ -9,10 +9,10 @@ interface HomeProps {
 export default function Home({ onNavigate }: HomeProps) {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   return (
-    <div className="pt-24">
+    <div>
       {/* Hero Section */}
       <section className="relative text-white py-24 overflow-hidden">
-        {/* Background image (blurred) + gradient overlay */}
+        {/* Background image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div
             className="absolute inset-0"
@@ -20,19 +20,16 @@ export default function Home({ onNavigate }: HomeProps) {
               backgroundImage: "url('/images/back%20cceabt.jpeg'), url('/images/hero-cceabt.jpg')",
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              filter: 'blur(3px) brightness(0.95)',
-              transform: 'scale(1.06)',
-              transformOrigin: 'center',
+              filter: 'brightness(1.15) contrast(1.1) saturate(1.1)',
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-cceabt-blue/80 via-cceabt-blue/65 to-cceabt-green/65" />
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full mb-6 animate-fade-in">
               <Sparkles className="text-yellow-300" size={20} />
-              <span className="text-sm font-semibold">Depuis 2013 au service de l'eau pour tous</span>
+              <span className="text-sm font-semibold">Parce qu'un avenir sain commence par une eau propre!</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight animate-slide-up">
@@ -275,10 +272,6 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
         
         <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="inline-flex items-center justify-center w-24 h-24 bg-white/20 backdrop-blur-sm rounded-full mb-8 animate-bounce">
-            <Heart className="text-white" size={48} />
-          </div>
-          
           <h2 className="text-4xl md:text-5xl font-bold mb-6 max-w-4xl mx-auto leading-tight">
             Vous souhaitez soutenir l'accès à l'eau et à l'hygiène pour tous ?
           </h2>
