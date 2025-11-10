@@ -160,7 +160,7 @@ export default function Network() {
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start gap-2">
                     <span className="text-purple-600">•</span>
-                    <span>Ministère de l'Eau et de l'Hydraulique Villageoise</span>
+                    <span>Ministère délégué auprès du ministère de l'aménagement du territoire, chargé de l'eau et de l'assainissement</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-purple-600">•</span>

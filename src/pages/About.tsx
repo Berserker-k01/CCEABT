@@ -47,7 +47,7 @@ export default function About() {
               Depuis 2013 pour le Togo
             </div>
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight animate-fade-in">
-              Transformer l'accès à l'eau au Togo
+              Faciliter l'accès à l'eau potable au Togo
             </h1>
             <p className="text-2xl md:text-3xl text-blue-100 mb-12 leading-relaxed animate-fade-in" style={{ animationDelay: '0.2s' }}>
               Une plateforme de 40+ organisations unies pour garantir le droit à l'eau, à l'hygiène et à l'assainissement pour tous les Togolais.
