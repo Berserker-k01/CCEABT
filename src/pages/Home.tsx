@@ -27,34 +27,34 @@ export default function Home({ onNavigate }: HomeProps) {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full mb-6 animate-fade-in">
-              <Sparkles className="text-blue-300" size={20} />
-              <span className="text-sm font-semibold text-blue-300">CCEABT, parce qu'un avenir sain commence par une eau propre!</span>
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full mb-10 animate-fade-in">
+              <Sparkles className="text-yellow-300" size={20} />
+              <span className="text-base font-semibold text-blue-400"><span className="font-bold">CCEABT</span>, parce qu'un avenir sain commence par une eau propre!</span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight animate-slide-up">
-              <span className="text-white">
-                Pour un accès <span className="text-blue-400">universel</span>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-12 leading-tight animate-slide-up">
+              <span className="bg-gradient-to-r from-blue-200 to-green-200 bg-clip-text text-transparent">
+                Pour un accès <span className="text-yellow-400">universel</span>
               </span>
               <br />
-              <span className="text-white">à l'eau et à <span className="text-blue-400">l'hygiène</span></span>
+              <span className="text-white">à l'eau et à l'hygiène</span>
             </h1>
             
             <div className="flex flex-wrap gap-4 justify-center animate-fade-in mt-16" style={{ animationDelay: '0.4s' }}>
               <button
                 onClick={() => onNavigate('about')}
-                className="group bg-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-700 hover:shadow-2xl transition-all duration-300 shadow-lg flex items-center gap-2 hover:scale-105"
+                className="group bg-white text-green-600 px-8 py-4 rounded-full font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg flex items-center gap-2 hover:scale-105"
               >
                 Découvrir le CCEABT 
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <button
                 onClick={() => onNavigate('network')}
-                className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105"
+                className="bg-green-500 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-600 hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105"
               >
                 Rejoindre le réseau
               </button>
-              <button className="bg-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-700 hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105">
+              <button className="bg-white text-green-600 px-8 py-4 rounded-full font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105">
                 Faire un don
               </button>
             </div>
@@ -128,7 +128,8 @@ export default function Home({ onNavigate }: HomeProps) {
                   <Target size={32} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-4">Plaidoyer & influence politique</h3>
-                <p className="text-gray-700 leading-relaxed">Défendre le droit à l'eau, à l'hygiène et à l'assainissement pour tous.</p>
+                <p className="text-gray-700 leading-relaxed mb-2">Défendre le droit à l'eau, à l'hygiène et à l'assainissement pour tous.</p>
+                <p className="text-gray-600 text-sm leading-relaxed">Faire de l'accès à l'eau un droit fondamental reconnu et respecté à tous les niveaux de décision.</p>
               </div>
             </div>
             
@@ -139,7 +140,8 @@ export default function Home({ onNavigate }: HomeProps) {
                   <Droplet size={32} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-4">Eau potable & gestion durable</h3>
-                <p className="text-gray-700 leading-relaxed">Protéger la ressource, améliorer les infrastructures et encourager une gestion responsable.</p>
+                <p className="text-gray-700 leading-relaxed mb-2">Protéger la ressource, moderniser les infrastructures et encourager une gestion responsable.</p>
+                <p className="text-gray-600 text-sm leading-relaxed">Garantir à chaque Togolais une eau sûre aujourd'hui, et pour les générations futures.</p>
               </div>
             </div>
             
@@ -150,7 +152,8 @@ export default function Home({ onNavigate }: HomeProps) {
                   <Heart size={32} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-4">Assainissement & hygiène</h3>
-                <p className="text-gray-700 leading-relaxed">Mettre fin à la défécation à ciel ouvert et promouvoir des pratiques saines.</p>
+                <p className="text-gray-700 leading-relaxed mb-2">Mettre fin à la défécation à l'air libre et promouvoir des pratiques saines.</p>
+                <p className="text-gray-600 text-sm leading-relaxed">Offrir à chaque communauté un environnement propre, sûr et digne.</p>
               </div>
             </div>
             
@@ -161,7 +164,8 @@ export default function Home({ onNavigate }: HomeProps) {
                   <Award size={32} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-4">Renforcement de capacités</h3>
-                <p className="text-gray-700 leading-relaxed">Former et outiller les acteurs communautaires et les ONG membres.</p>
+                <p className="text-gray-700 leading-relaxed mb-2">Former et outiller les acteurs communautaires et les ONG membres.</p>
+                <p className="text-gray-600 text-sm leading-relaxed">Donner aux acteurs locaux les moyens d'agir durablement pour l'eau et l'hygiène.</p>
               </div>
             </div>
           </div>
