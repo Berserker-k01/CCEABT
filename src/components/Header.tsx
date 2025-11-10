@@ -37,7 +37,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
               />
             </div>
             <div className="hidden md:block">
-              <h1 className="text-xl font-bold text-cceabt-blue">CCEABT</h1>
+              <h1 className="text-2xl font-bold text-cceabt-blue">CCEABT</h1>
               <p className="text-xs text-gray-600">Conseil de Concertation pour l'Eau et l'Assainissement</p>
             </div>
           </button>
