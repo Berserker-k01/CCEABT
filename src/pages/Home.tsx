@@ -28,33 +28,33 @@ export default function Home({ onNavigate }: HomeProps) {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full mb-6 animate-fade-in">
-              <Sparkles className="text-yellow-300" size={20} />
-              <span className="text-sm font-semibold">Parce qu'un avenir sain commence par une eau propre!</span>
+              <Sparkles className="text-blue-300" size={20} />
+              <span className="text-sm font-semibold text-blue-300">CCEABT, parce qu'un avenir sain commence par une eau propre!</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight animate-slide-up">
-              <span className="bg-gradient-to-r from-blue-200 to-green-200 bg-clip-text text-transparent">
-                Pour un accès <span className="text-yellow-400">universel</span>
+              <span className="text-white">
+                Pour un accès <span className="text-blue-400">universel</span>
               </span>
               <br />
-              <span className="text-white">à l'eau et à l'hygiène</span>
+              <span className="text-white">à l'eau et à <span className="text-blue-400">l'hygiène</span></span>
             </h1>
             
-            <div className="flex flex-wrap gap-4 justify-center animate-fade-in mt-12" style={{ animationDelay: '0.4s' }}>
+            <div className="flex flex-wrap gap-4 justify-center animate-fade-in mt-16" style={{ animationDelay: '0.4s' }}>
               <button
                 onClick={() => onNavigate('about')}
-                className="group bg-white text-green-600 px-8 py-4 rounded-full font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg flex items-center gap-2 hover:scale-105"
+                className="group bg-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-700 hover:shadow-2xl transition-all duration-300 shadow-lg flex items-center gap-2 hover:scale-105"
               >
                 Découvrir le CCEABT 
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <button
                 onClick={() => onNavigate('network')}
-                className="bg-green-500 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-600 hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105"
+                className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105"
               >
                 Rejoindre le réseau
               </button>
-              <button className="bg-white text-green-600 px-8 py-4 rounded-full font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105">
+              <button className="bg-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-700 hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105">
                 Faire un don
               </button>
             </div>
