@@ -21,7 +21,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md shadow-lg z-50 transition-all duration-300">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-24">
-          <button 
+          <button
             onClick={() => {
               onNavigate('home');
               window.scrollTo(0, 0);
@@ -37,7 +37,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
               />
             </div>
             <div className="hidden md:block">
-              <h1 className="text-xl font-bold text-cceabt-blue group-hover:text-cceabt-green transition-colors">CCEABT</h1>
+              <h1 className="text-xl font-bold text-cceabt-blue">CCEABT</h1>
               <p className="text-xs text-gray-600">Conseil de Concertation pour l'Eau et l'Assainissement</p>
             </div>
           </button>
@@ -83,8 +83,8 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                 }}
                 className={`text-left font-medium transition-colors duration-200 ${
                   currentPage === item.page
-                    ? 'text-cceabt-green font-bold'
-                    : 'text-cceabt-blue hover:text-cceabt-green'
+                    ? 'text-cceabt-blue font-bold'
+                    : 'text-cceabt-blue hover:text-cceabt-blue hover:text-glow-blue'
                 }`}
               >
                 {item.name}

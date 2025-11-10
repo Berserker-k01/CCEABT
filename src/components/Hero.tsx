@@ -3,17 +3,12 @@ import { ChevronDown } from 'lucide-react';
 type Variant = 'classic' | 'impact' | 'minimal';
 
 export default function Hero({ variant = 'classic' }: { variant?: Variant }) {
-  const bg =
-    variant === 'classic'
-      ? 'url("https://images.pexels.com/photos/2101137/pexels-photo-2101137.jpeg?auto=compress&cs=tinysrgb&w=1920")'
-      : variant === 'impact'
-      ? 'url("https://images.pexels.com/photos/624015/pexels-photo-624015.jpeg?auto=compress&cs=tinysrgb&w=1920")'
-      : 'url("https://images.pexels.com/photos/221015/pexels-photo-221015.jpeg?auto=compress&cs=tinysrgb&w=1920")';
+  const bg = 'url("/images/back cceabt.png")';
 
   const overlay =
     variant === 'impact'
-      ? 'bg-gradient-to-br from-cceabt-green/80 to-cceabt-blue/80'
-      : 'bg-gradient-to-r from-cceabt-blue/90 to-cceabt-blue/70';
+      ? 'bg-gradient-to-br from-cceabt-green/20 to-cceabt-blue/20'
+      : 'bg-gradient-to-r from-cceabt-blue/15 to-cceabt-blue/6';
 
   const titleClass =
     variant === 'impact'
@@ -29,13 +24,14 @@ export default function Hero({ variant = 'classic' }: { variant?: Variant }) {
       : 'inline-block bg-cceabt-green hover:bg-cceabt-green/90 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-200 transform hover:scale-105';
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center pt-28">
+    <section id="home" className="relative min-h-screen flex items-center pt-28 pb-20 md:pb-24 overflow-hidden">
       <div
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 filter brightness-112 contrast-110 saturate-110"
         style={{
           backgroundImage: bg,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundSize: '90%',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center top',
         }}
       >
         <div className={`absolute inset-0 ${overlay}`}></div>
@@ -43,10 +39,10 @@ export default function Hero({ variant = 'classic' }: { variant?: Variant }) {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className={`max-w-3xl ${align}`}>
-          <h1 className={`${titleClass} font-bold text-white mb-6 leading-tight`}>
+          <h1 className={`${titleClass} font-bold text-white mb-6 leading-tight drop-shadow-md`}>
             Accès pour tous à l'eau et à l'assainissement
           </h1>
-          <p className={`text-xl md:text-2xl text-white/95 mb-8 ${align}`}>
+          <p className={`text-xl md:text-2xl text-white/95 mb-8 ${align} drop-shadow` }>
             Ensemble pour un Togo où chaque citoyen a accès à l'eau potable et à des services d'assainissement durables.
           </p>
           <a href="#actions" className={ctaStyle}>
@@ -57,7 +53,7 @@ export default function Hero({ variant = 'classic' }: { variant?: Variant }) {
 
       <a
         href="#about"
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce"
+        className="absolute bottom-10 md:bottom-12 left-1/2 transform -translate-x-1/2 text-white animate-bounce z-10 pointer-events-none"
       >
         <ChevronDown size={40} />
       </a>
