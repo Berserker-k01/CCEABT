@@ -40,11 +40,7 @@ export default function Home({ onNavigate }: HomeProps) {
               <span className="text-white">à l'eau et à l'hygiène</span>
             </h1>
             
-            <p className="text-xl md:text-2xl mb-10 leading-relaxed text-blue-100 max-w-4xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              Le CCEABT garantit à chaque citoyen togolais l'accès à une eau potable, à des installations sanitaires améliorées et à un environnement sain.
-            </p>
-            
-            <div className="flex flex-wrap gap-4 justify-center animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            <div className="flex flex-wrap gap-4 justify-center animate-fade-in mt-8" style={{ animationDelay: '0.4s' }}>
               <button
                 onClick={() => onNavigate('about')}
                 className="group bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg flex items-center gap-2 hover:scale-105"
@@ -255,9 +251,12 @@ export default function Home({ onNavigate }: HomeProps) {
                   <p className="font-semibold text-gray-700 text-center">{partner}</p>
                 </div>
               ))}
-              <div className="bg-gradient-to-r from-blue-100 to-green-100 px-6 py-4 rounded-xl shadow-md">
-                <p className="font-semibold text-gray-600 text-center">+ bien d'autres</p>
-              </div>
+              <button
+                onClick={() => onNavigate('partners')}
+                className="bg-gradient-to-r from-blue-100 to-green-100 px-6 py-4 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
+              >
+                <p className="font-semibold text-gray-600 text-center">+ bien d'autres...</p>
+              </button>
             </div>
           </div>
         </div>

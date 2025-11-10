@@ -6,6 +6,7 @@ import About from './pages/About';
 import Network from './pages/Network';
 import News from './pages/News';
 import Contact from './pages/Contact';
+import Partners from './pages/Partners';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -26,6 +27,8 @@ function App() {
         return <News />;
       case 'contact':
         return <Contact />;
+      case 'partners':
+        return <Partners />;
       default:
         return <Home onNavigate={handleNavigate} />;
     }
