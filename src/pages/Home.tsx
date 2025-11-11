@@ -29,7 +29,7 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="max-w-5xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full mb-10 animate-fade-in">
               <Sparkles className="text-yellow-300" size={20} />
-              <span className="text-base font-semibold text-blue-400"><span className="font-bold">CCEABT</span>, parce qu'un avenir sain commence par une eau propre!</span>
+              <span className="text-base font-bold text-green-400">CCEABT, parce qu'un avenir sain commence par une eau propre!</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-12 leading-tight animate-slide-up">
@@ -40,21 +40,21 @@ export default function Home({ onNavigate }: HomeProps) {
               <span className="text-white">à l'eau et à l'hygiène</span>
             </h1>
             
-            <div className="flex flex-wrap gap-4 justify-center animate-fade-in mt-16" style={{ animationDelay: '0.4s' }}>
+            <div className="flex flex-wrap gap-4 justify-center animate-fade-in mt-20" style={{ animationDelay: '0.4s' }}>
               <button
                 onClick={() => onNavigate('about')}
-                className="group bg-white text-green-600 px-8 py-4 rounded-full font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg flex items-center gap-2 hover:scale-105"
+                className="group bg-white text-green-600 px-8 py-4 rounded-full font-bold hover:shadow-2xl transition-all duration-300 shadow-lg flex items-center gap-2 hover:scale-105"
               >
                 Découvrir le CCEABT 
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <button
                 onClick={() => onNavigate('network')}
-                className="bg-green-500 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-600 hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105"
+                className="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105"
               >
                 Rejoindre le réseau
               </button>
-              <button className="bg-white text-green-600 px-8 py-4 rounded-full font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105">
+              <button className="bg-white text-green-600 px-8 py-4 rounded-full font-bold hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105">
                 Faire un don
               </button>
             </div>
