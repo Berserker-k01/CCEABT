@@ -38,7 +38,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
             </div>
             <div className="hidden md:block">
               <h1 className="text-2xl font-bold text-cceabt-blue">CCEABT</h1>
-              <p className="text-xs text-gray-600">Conseil de Concertation pour l'Eau et l'Assainissement</p>
+              <p className="text-xs text-yellow-600 font-semibold">Conseil de Concertation pour l'Eau et l'Assainissement</p>
             </div>
           </button>
 
@@ -53,6 +53,8 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                 className={`relative font-semibold transition-all duration-300 px-3 py-2 rounded-lg ${
                   currentPage === item.page
                     ? 'text-white bg-blue-700 shadow-lg'
+                    : item.page === 'network'
+                    ? 'text-green-600 hover:text-green-700 hover:bg-green-50'
                     : 'text-cceabt-blue hover:text-cceabt-green hover:bg-blue-50'
                 }`}
               >

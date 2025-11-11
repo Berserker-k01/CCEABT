@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Droplet, Users, Heart, TrendingUp, Award, Target, Lightbulb, Sparkles, X } from 'lucide-react';
+import { ArrowRight, Droplet, Users, TrendingUp, Lightbulb, Sparkles, X, Megaphone, Handshake as HandWash, GraduationCap, Award, Target } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
 
 interface HomeProps {
@@ -29,7 +29,7 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="max-w-5xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full mb-10 animate-fade-in">
               <Sparkles className="text-yellow-300" size={20} />
-              <span className="text-base font-bold text-green-400">CCEABT, parce qu'un avenir sain commence par une eau propre!</span>
+              <span className="text-base font-bold text-white">CCEABT, parce qu'un avenir sain commence par une eau propre!</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-12 leading-tight animate-slide-up">
@@ -125,7 +125,7 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="absolute top-0 right-0 w-32 h-32 bg-blue-200 rounded-full -mr-16 -mt-16 opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
               <div className="relative z-10">
                 <div className="bg-blue-600 text-white w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:rotate-6 transition-transform">
-                  <Target size={32} />
+                  <Megaphone size={32} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-4">Plaidoyer & influence politique</h3>
                 <p className="text-gray-700 leading-relaxed mb-2">Défendre le droit à l'eau, à l'hygiène et à l'assainissement pour tous.</p>
@@ -149,7 +149,7 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="absolute top-0 right-0 w-32 h-32 bg-purple-200 rounded-full -mr-16 -mt-16 opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
               <div className="relative z-10">
                 <div className="bg-purple-600 text-white w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:rotate-6 transition-transform">
-                  <Heart size={32} />
+                  <HandWash size={32} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-4">Assainissement & hygiène</h3>
                 <p className="text-gray-700 leading-relaxed mb-2">Mettre fin à la défécation à l'air libre et promouvoir des pratiques saines.</p>
@@ -161,7 +161,7 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-200 rounded-full -mr-16 -mt-16 opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
               <div className="relative z-10">
                 <div className="bg-yellow-600 text-white w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:rotate-6 transition-transform">
-                  <Award size={32} />
+                  <GraduationCap size={32} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-4">Renforcement de capacités</h3>
                 <p className="text-gray-700 leading-relaxed mb-2">Former et outiller les acteurs communautaires et les ONG membres.</p>
