@@ -36,7 +36,7 @@ export default function Network() {
         {/* Image de fond */}
         <div className="absolute inset-0">
           <img 
-            src="/images/2.jpg" 
+            src="/images/2.webp" 
             alt="Réseau & Partenaires" 
             className="w-full h-full object-cover"
             style={{

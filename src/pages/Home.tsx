@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Droplet, Users, TrendingUp, Lightbulb, Sparkles, X, Megaphone, Handshake as HandWash, GraduationCap, Award, Target } from 'lucide-react';
+import { ArrowRight, Droplet, Users, TrendingUp, Lightbulb, Sparkles, X, Megaphone, Droplets, GraduationCap, Award, Target } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
 
 interface HomeProps {
@@ -149,7 +149,7 @@ export default function Home({ onNavigate }: HomeProps) {
               <div className="absolute top-0 right-0 w-32 h-32 bg-purple-200 rounded-full -mr-16 -mt-16 opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
               <div className="relative z-10">
                 <div className="bg-purple-600 text-white w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:rotate-6 transition-transform">
-                  <HandWash size={32} />
+                  <Droplets size={32} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-4">Assainissement & hygiène</h3>
                 <p className="text-gray-700 leading-relaxed mb-2">Mettre fin à la défécation à l'air libre et promouvoir des pratiques saines.</p>
