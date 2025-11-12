@@ -33,12 +33,15 @@ export default function About() {
   return (
     <div>
       {/* Hero Section - Full screen with stats overlay */}
-      <section className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-blue-900 via-blue-800 to-green-900 text-white overflow-hidden">
-        {/* Animated background */}
+      <section className="relative min-h-[90vh] flex items-center text-white overflow-hidden">
+        {/* Background image */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[url('/api/placeholder/1920/1080')] opacity-10 bg-cover bg-center"></div>
-          <div className="absolute top-20 left-20 w-96 h-96 bg-blue-400 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-green-400 rounded-full blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <img 
+            src="/images/4.jpg" 
+            alt="À propos du CCEABT" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-blue-800/70 to-green-900/80"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">

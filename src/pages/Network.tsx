@@ -1,4 +1,4 @@
-import { Users, Network as NetworkIcon, FileText, Download, UserPlus, Handshake, X } from 'lucide-react';
+import { Users, Network as NetworkIcon, FileText, Download, UserPlus, Handshake, X, Wrench, DollarSign, Building2 } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MembershipForm from '../components/MembershipForm';
@@ -126,7 +126,12 @@ export default function Network() {
             
             <div className="grid md:grid-cols-3 gap-6 mb-8">
               <div className="bg-blue-50 p-6 rounded-lg">
-                <h3 className="text-xl font-bold text-blue-800 mb-4">Partenaires Techniques</h3>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="bg-blue-600 text-white p-3 rounded-lg">
+                    <Wrench size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold text-blue-800">Partenaires Techniques</h3>
+                </div>
                 <ul className="space-y-2 text-gray-700">
                   {technicalPartners.map((partner, index) => (
                     <li key={index} className="flex items-start gap-2">
@@ -138,7 +143,12 @@ export default function Network() {
               </div>
 
               <div className="bg-green-50 p-6 rounded-lg">
-                <h3 className="text-xl font-bold text-green-800 mb-4">Partenaires Financiers</h3>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="bg-green-600 text-white p-3 rounded-lg">
+                    <DollarSign size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold text-green-800">Partenaires Financiers</h3>
+                </div>
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start gap-2">
                     <span className="text-green-600">•</span>
@@ -156,7 +166,12 @@ export default function Network() {
               </div>
 
               <div className="bg-purple-50 p-6 rounded-lg">
-                <h3 className="text-xl font-bold text-purple-800 mb-4">Partenaires Institutionnels</h3>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="bg-purple-600 text-white p-3 rounded-lg">
+                    <Building2 size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold text-purple-800">Partenaires Institutionnels</h3>
+                </div>
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start gap-2">
                     <span className="text-purple-600">•</span>
