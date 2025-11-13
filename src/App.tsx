@@ -7,12 +7,28 @@ import Network from './pages/Network';
 import News from './pages/News';
 import Contact from './pages/Contact';
 import Partners from './pages/Partners';
+import Admin from './pages/Admin';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
 
   useEffect(() => {
+    // Check if URL contains /cceabtadmin for admin access
+    const path = window.location.pathname;
+    if (path === '/cceabtadmin') {
+      setCurrentPage('admin');
+    }
+  }, []);
+
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Update URL when navigating to admin page
+    if (currentPage === 'admin') {
+      window.history.pushState({}, '', '/cceabtadmin');
+    } else if (window.location.pathname === '/cceabtadmin') {
+      window.history.pushState({}, '', '/');
+    }
   }, [currentPage]);
 
   const handleNavigate = (page: string) => {
@@ -33,6 +49,8 @@ function App() {
         return <Contact />;
       case 'partners':
         return <Partners />;
+      case 'admin':
+        return <Admin onNavigate={handleNavigate} />;
       default:
         return <Home onNavigate={handleNavigate} />;
     }
