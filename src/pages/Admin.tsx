@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Lock, LogOut, Save, Edit, Trash2, Plus, Eye, EyeOff, Link as LinkIcon, Upload, FileText } from 'lucide-react';
-
-interface AdminProps {
-  onNavigate: (page: string) => void;
-}
 
 interface NewsItem {
   id: string;
@@ -38,7 +35,8 @@ interface ResourceLink {
   fileName?: string;
 }
 
-export default function Admin({ onNavigate }: AdminProps) {
+export default function Admin() {
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -69,7 +67,7 @@ export default function Admin({ onNavigate }: AdminProps) {
     const savedPartners = localStorage.getItem('partners');
     const savedGallery = localStorage.getItem('galleryItems');
     const savedResources = localStorage.getItem('resources');
-    
+
     if (savedNews) setNewsItems(JSON.parse(savedNews));
     if (savedPartners) setPartners(JSON.parse(savedPartners));
     if (savedGallery) setGalleryItems(JSON.parse(savedGallery));
@@ -126,7 +124,7 @@ export default function Admin({ onNavigate }: AdminProps) {
   };
 
   const updateNewsItem = (id: string, field: string, value: string) => {
-    setNewsItems(newsItems.map(item => 
+    setNewsItems(newsItems.map(item =>
       item.id === id ? { ...item, [field]: value } : item
     ));
   };
@@ -149,7 +147,7 @@ export default function Admin({ onNavigate }: AdminProps) {
   };
 
   const updatePartner = (id: string, field: string, value: string) => {
-    setPartners(partners.map(item => 
+    setPartners(partners.map(item =>
       item.id === id ? { ...item, [field]: value } : item
     ));
   };
@@ -178,7 +176,7 @@ export default function Admin({ onNavigate }: AdminProps) {
   };
 
   const updateGalleryItem = (id: string, field: string, value: string) => {
-    setGalleryItems(galleryItems.map(item => 
+    setGalleryItems(galleryItems.map(item =>
       item.id === id ? { ...item, [field]: value } : item
     ));
   };
@@ -218,7 +216,7 @@ export default function Admin({ onNavigate }: AdminProps) {
   };
 
   const updateResource = (id: string, field: string, value: string) => {
-    setResources(resources.map(item => 
+    setResources(resources.map(item =>
       item.id === id ? { ...item, [field]: value } : item
     ));
   };
@@ -228,7 +226,7 @@ export default function Admin({ onNavigate }: AdminProps) {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setResources(resources.map(item => 
+        setResources(resources.map(item =>
           item.id === id ? { ...item, fileData: reader.result as string, fileName: file.name } : item
         ));
       };
@@ -302,7 +300,7 @@ export default function Admin({ onNavigate }: AdminProps) {
 
           <div className="mt-6 text-center">
             <button
-              onClick={() => onNavigate('home')}
+              onClick={() => navigate('/')}
               className="text-blue-600 hover:text-blue-700 text-sm font-medium"
             >
               ← Retour au site
@@ -336,51 +334,46 @@ export default function Admin({ onNavigate }: AdminProps) {
           <div className="flex border-b">
             <button
               onClick={() => setActiveTab('news')}
-              className={`px-6 py-4 font-semibold transition-colors ${
-                activeTab === 'news'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-600 hover:text-gray-800'
-              }`}
+              className={`px-6 py-4 font-semibold transition-colors ${activeTab === 'news'
+                ? 'text-blue-600 border-b-2 border-blue-600'
+                : 'text-gray-600 hover:text-gray-800'
+                }`}
             >
               Actualités
             </button>
             <button
               onClick={() => setActiveTab('partners')}
-              className={`px-6 py-4 font-semibold transition-colors ${
-                activeTab === 'partners'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-600 hover:text-gray-800'
-              }`}
+              className={`px-6 py-4 font-semibold transition-colors ${activeTab === 'partners'
+                ? 'text-blue-600 border-b-2 border-blue-600'
+                : 'text-gray-600 hover:text-gray-800'
+                }`}
             >
               Partenaires
             </button>
             <button
               onClick={() => setActiveTab('gallery')}
-              className={`px-6 py-4 font-semibold transition-colors ${
-                activeTab === 'gallery'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-600 hover:text-gray-800'
-              }`}
+              className={`px-6 py-4 font-semibold transition-colors ${activeTab === 'gallery'
+                ? 'text-blue-600 border-b-2 border-blue-600'
+                : 'text-gray-600 hover:text-gray-800'
+                }`}
             >
               Galerie
             </button>
             <button
               onClick={() => setActiveTab('resources')}
-              className={`px-6 py-4 font-semibold transition-colors ${
-                activeTab === 'resources'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-600 hover:text-gray-800'
-              }`}
+              className={`px-6 py-4 font-semibold transition-colors ${activeTab === 'resources'
+                ? 'text-blue-600 border-b-2 border-blue-600'
+                : 'text-gray-600 hover:text-gray-800'
+                }`}
             >
               Ressources
             </button>
             <button
               onClick={() => setActiveTab('settings')}
-              className={`px-6 py-4 font-semibold transition-colors ${
-                activeTab === 'settings'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-600 hover:text-gray-800'
-              }`}
+              className={`px-6 py-4 font-semibold transition-colors ${activeTab === 'settings'
+                ? 'text-blue-600 border-b-2 border-blue-600'
+                : 'text-gray-600 hover:text-gray-800'
+                }`}
             >
               Paramètres
             </button>
@@ -688,7 +681,7 @@ export default function Admin({ onNavigate }: AdminProps) {
                         rows={2}
                         placeholder="Description de la ressource"
                       />
-                      
+
                       <div className="space-y-2">
                         <label className="block text-sm font-semibold text-gray-700">
                           Uploader un document
@@ -755,7 +748,7 @@ export default function Admin({ onNavigate }: AdminProps) {
           {activeTab === 'settings' && (
             <div>
               <h2 className="text-2xl font-bold text-gray-800 mb-6">Paramètres de connexion</h2>
-              
+
               {!isEditingCredentials ? (
                 <div className="space-y-4">
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">

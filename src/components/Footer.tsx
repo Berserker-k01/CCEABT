@@ -1,17 +1,18 @@
 import { Facebook, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-interface FooterProps {
-  onNavigate: (page: string) => void;
-}
-
-export default function Footer({ onNavigate }: FooterProps) {
+export default function Footer() {
   const quickLinks = [
-    { name: 'Accueil', page: 'home' },
-    { name: 'À propos & Actions', page: 'about' },
-    { name: 'Réseau & Partenaires', page: 'network' },
-    { name: 'Actualités', page: 'news' },
-    { name: 'Contact', page: 'contact' },
+    { name: 'Accueil', path: '/' },
+    { name: 'À propos & Actions', path: '/about' },
+    { name: 'Réseau & Partenaires', path: '/network' },
+    { name: 'Actualités', path: '/news' },
+    { name: 'Contact', path: '/contact' },
   ];
+
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
 
   return (
     <footer className="bg-blue-800 text-white w-full">
@@ -33,16 +34,14 @@ export default function Footer({ onNavigate }: FooterProps) {
             <h4 className="text-lg font-semibold mb-4">Liens rapides</h4>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
-                <li key={link.page}>
-                  <button
-                    onClick={() => {
-                      onNavigate(link.page);
-                      window.scrollTo(0, 0);
-                    }}
+                <li key={link.path}>
+                  <Link
+                    to={link.path}
+                    onClick={scrollToTop}
                     className="text-sm text-gray-200 hover:text-white transition-colors"
                   >
                     {link.name}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -92,15 +91,13 @@ export default function Footer({ onNavigate }: FooterProps) {
               </a>
             </div>
             <div className="space-y-2">
-              <button
-                onClick={() => {
-                  onNavigate('network');
-                  window.scrollTo(0, 0);
-                }}
+              <Link
+                to="/network"
+                onClick={scrollToTop}
                 className="block w-full bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded transition-colors"
               >
                 Adhérer au réseau
-              </button>
+              </Link>
               <button className="block w-full bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-semibold py-2 px-4 rounded transition-colors">
                 Faire un don
               </button>
@@ -110,9 +107,9 @@ export default function Footer({ onNavigate }: FooterProps) {
 
         <div className="border-t border-white/20 mt-8 pt-8">
           <div className="flex flex-wrap justify-center gap-6 mb-4 text-sm text-gray-200">
-            <button onClick={() => onNavigate('home')} className="hover:text-white">Mentions légales</button>
+            <Link to="/" onClick={scrollToTop} className="hover:text-white">Mentions légales</Link>
             <span>•</span>
-            <button onClick={() => onNavigate('home')} className="hover:text-white">Politique de confidentialité</button>
+            <Link to="/" onClick={scrollToTop} className="hover:text-white">Politique de confidentialité</Link>
           </div>
           <p className="text-sm text-gray-200 text-center">
             © {new Date().getFullYear()} CCEABT - Tous droits réservés

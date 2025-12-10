@@ -1,31 +1,30 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-interface HeaderProps {
-  currentPage: string;
-  onNavigate: (page: string) => void;
-}
-
-export default function Header({ currentPage, onNavigate }: HeaderProps) {
+export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const navItems = [
-    { name: 'Accueil', page: 'home' },
-    { name: 'À propos & Nos actions', page: 'about' },
-    { name: 'Réseau & Partenaires', page: 'network' },
-    { name: 'Actualités', page: 'news' },
-    { name: 'Contact', page: 'contact' },
+    { name: 'Accueil', path: '/' },
+    { name: 'À propos & Nos actions', path: '/about' },
+    { name: 'Réseau & Partenaires', path: '/network' },
+    { name: 'Actualités', path: '/news' },
+    { name: 'Contact', path: '/contact' },
   ];
+
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md shadow-lg z-50 transition-all duration-300">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-24">
-          <button
-            onClick={() => {
-              onNavigate('home');
-              window.scrollTo(0, 0);
-            }}
+          <Link
+            to="/"
+            onClick={scrollToTop}
             className="flex items-center space-x-3 group"
           >
             <div className="relative">
@@ -40,26 +39,23 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
               <h1 className="text-2xl font-bold text-cceabt-blue">CCEABT</h1>
               <p className="text-xs text-gray-600">Conseil de Concertation pour l'Eau et l'Assainissement</p>
             </div>
-          </button>
+          </Link>
 
           <nav className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
-              <button
+              <Link
                 key={item.name}
-                onClick={() => {
-                  onNavigate(item.page);
-                  window.scrollTo(0, 0);
-                }}
-                className={`relative font-semibold transition-all duration-300 px-3 py-2 rounded-lg ${
-                  currentPage === item.page
+                to={item.path}
+                onClick={scrollToTop}
+                className={`relative font-semibold transition-all duration-300 px-3 py-2 rounded-lg ${location.pathname === item.path
                     ? 'text-white bg-blue-700 shadow-lg'
-                    : item.page === 'network'
-                    ? 'text-green-600 hover:text-green-700 hover:bg-green-50'
-                    : 'text-cceabt-blue hover:text-cceabt-green hover:bg-blue-50'
-                }`}
+                    : item.path === '/network'
+                      ? 'text-green-600 hover:text-green-700 hover:bg-green-50'
+                      : 'text-cceabt-blue hover:text-cceabt-green hover:bg-blue-50'
+                  }`}
               >
                 {item.name}
-              </button>
+              </Link>
             ))}
           </nav>
 
@@ -76,21 +72,20 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
         <div className="lg:hidden bg-white border-t">
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4">
             {navItems.map((item) => (
-              <button
+              <Link
                 key={item.name}
+                to={item.path}
                 onClick={() => {
-                  onNavigate(item.page);
                   setIsMenuOpen(false);
-                  window.scrollTo(0, 0);
+                  scrollToTop();
                 }}
-                className={`text-left font-medium transition-colors duration-200 ${
-                  currentPage === item.page
+                className={`text-left font-medium transition-colors duration-200 ${location.pathname === item.path
                     ? 'text-cceabt-blue font-bold'
                     : 'text-cceabt-blue hover:text-cceabt-blue hover:text-glow-blue'
-                }`}
+                  }`}
               >
                 {item.name}
-              </button>
+              </Link>
             ))}
           </nav>
         </div>

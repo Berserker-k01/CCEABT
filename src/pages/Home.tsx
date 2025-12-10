@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { ArrowRight, Droplet, Users, TrendingUp, Lightbulb, Sparkles, X, Megaphone, Droplets, GraduationCap, Award, Target } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import ContactForm from '../components/ContactForm';
 
-interface HomeProps {
-  onNavigate: (page: string) => void;
-}
-
-export default function Home({ onNavigate }: HomeProps) {
+export default function Home() {
+  const navigate = useNavigate();
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   return (
     <div>
@@ -31,7 +29,7 @@ export default function Home({ onNavigate }: HomeProps) {
               <Sparkles className="text-yellow-300" size={20} />
               <span className="text-base font-bold text-white">CCEABT, parce qu'un avenir sain commence par une eau propre!</span>
             </div>
-            
+
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-12 leading-tight animate-slide-up">
               <span className="bg-gradient-to-r from-blue-200 to-green-200 bg-clip-text text-transparent">
                 Pour un accès <span className="text-yellow-400">universel</span>
@@ -39,17 +37,17 @@ export default function Home({ onNavigate }: HomeProps) {
               <br />
               <span className="text-white">à l'eau et à l'hygiène</span>
             </h1>
-            
+
             <div className="flex flex-wrap gap-4 justify-center animate-fade-in mt-20" style={{ animationDelay: '0.4s' }}>
               <button
-                onClick={() => onNavigate('about')}
+                onClick={() => navigate('/about')}
                 className="group bg-white text-green-600 px-8 py-4 rounded-full font-bold hover:shadow-2xl transition-all duration-300 shadow-lg flex items-center gap-2 hover:scale-105"
               >
-                Découvrir le CCEABT 
+                Découvrir le CCEABT
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <button
-                onClick={() => onNavigate('network')}
+                onClick={() => navigate('/network')}
                 className="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105"
               >
                 Rejoindre le réseau
@@ -79,7 +77,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 Nous œuvrons ensemble pour influencer les politiques publiques, renforcer les capacités locales et améliorer les conditions de vie des communautés.
               </p>
             </div>
-            
+
             <div className="grid md:grid-cols-3 gap-8">
               <div className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 text-center border-t-4 border-blue-600 hover:-translate-y-2">
                 <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
@@ -119,7 +117,7 @@ export default function Home({ onNavigate }: HomeProps) {
               Quatre piliers pour transformer l'accès à l'eau et à l'hygiène au Togo
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             <div className="group relative p-8 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl hover:shadow-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2">
               <div className="absolute top-0 right-0 w-32 h-32 bg-blue-200 rounded-full -mr-16 -mt-16 opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
@@ -132,7 +130,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <p className="text-gray-600 text-sm leading-relaxed">Faire de l'accès à l'eau un droit fondamental reconnu et respecté à tous les niveaux de décision.</p>
               </div>
             </div>
-            
+
             <div className="group relative p-8 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl hover:shadow-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2">
               <div className="absolute top-0 right-0 w-32 h-32 bg-green-200 rounded-full -mr-16 -mt-16 opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
               <div className="relative z-10">
@@ -144,7 +142,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <p className="text-gray-600 text-sm leading-relaxed">Garantir à chaque Togolais une eau sûre aujourd'hui, et pour les générations futures.</p>
               </div>
             </div>
-            
+
             <div className="group relative p-8 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl hover:shadow-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2">
               <div className="absolute top-0 right-0 w-32 h-32 bg-purple-200 rounded-full -mr-16 -mt-16 opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
               <div className="relative z-10">
@@ -156,7 +154,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 <p className="text-gray-600 text-sm leading-relaxed">Offrir à chaque communauté un environnement propre, sûr et digne.</p>
               </div>
             </div>
-            
+
             <div className="group relative p-8 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl hover:shadow-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2">
               <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-200 rounded-full -mr-16 -mt-16 opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
               <div className="relative z-10">
@@ -179,7 +177,7 @@ export default function Home({ onNavigate }: HomeProps) {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Actualités récentes</h2>
             <p className="text-xl text-gray-600">Restez informé de nos dernières actions sur le terrain</p>
           </div>
-          
+
           <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6 mb-10">
             <div className="group bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border-l-4 border-blue-600 hover:-translate-y-1">
               <div className="flex items-start gap-3 mb-3">
@@ -192,7 +190,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 </div>
               </div>
             </div>
-            
+
             <div className="group bg-gradient-to-br from-green-50 to-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border-l-4 border-green-600 hover:-translate-y-1">
               <div className="flex items-start gap-3 mb-3">
                 <div className="bg-green-600 text-white rounded-lg p-2">
@@ -204,7 +202,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 </div>
               </div>
             </div>
-            
+
             <div className="group bg-gradient-to-br from-purple-50 to-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border-l-4 border-purple-600 hover:-translate-y-1">
               <div className="flex items-start gap-3 mb-3">
                 <div className="bg-purple-600 text-white rounded-lg p-2">
@@ -217,13 +215,13 @@ export default function Home({ onNavigate }: HomeProps) {
               </div>
             </div>
           </div>
-          
+
           <div className="text-center">
             <button
-              onClick={() => onNavigate('news')}
+              onClick={() => navigate('/news')}
               className="group inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-700 hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
-              Voir toutes les actualités 
+              Voir toutes les actualités
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
@@ -237,11 +235,11 @@ export default function Home({ onNavigate }: HomeProps) {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Nos partenaires</h2>
             <p className="text-xl text-gray-600 mb-8">Une collaboration forte pour un impact durable</p>
           </div>
-          
+
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-wrap justify-center items-center gap-6">
               {['Eau Vive', 'CRS', 'Plan International', 'PADIE', 'HSF', 'JVE', 'STADD', 'WEP-Togo'].map((partner, index) => (
-                <div 
+                <div
                   key={index}
                   className="bg-white px-6 py-4 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2 border-gray-100 hover:border-blue-200"
                 >
@@ -249,7 +247,7 @@ export default function Home({ onNavigate }: HomeProps) {
                 </div>
               ))}
               <button
-                onClick={() => onNavigate('partners')}
+                onClick={() => navigate('/partners')}
                 className="bg-gradient-to-r from-blue-100 to-green-100 px-6 py-4 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
               >
                 <p className="font-semibold text-gray-600 text-center">+ bien d'autres...</p>
@@ -266,19 +264,19 @@ export default function Home({ onNavigate }: HomeProps) {
           <div className="absolute top-10 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-yellow-300 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }}></div>
         </div>
-        
+
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 max-w-4xl mx-auto leading-tight">
             Vous souhaitez soutenir l'accès à l'eau et à l'hygiène pour tous ?
           </h2>
-          
+
           <p className="text-2xl mb-10 text-blue-100 max-w-2xl mx-auto">
             Rejoignez le mouvement dès aujourd'hui et faites la différence.
           </p>
-          
+
           <div className="flex flex-wrap gap-4 justify-center">
             <button
-              onClick={() => onNavigate('network')}
+              onClick={() => navigate('/network')}
               className="group bg-white text-blue-600 px-10 py-5 rounded-full font-bold hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-110 text-lg"
             >
               <span className="flex items-center gap-2">
@@ -293,7 +291,7 @@ export default function Home({ onNavigate }: HomeProps) {
               Nous contacter
             </button>
           </div>
-          
+
           <div className="mt-16 pt-8 border-t border-white/20">
             <p className="text-blue-100 text-lg">
               <strong className="text-white">Chaque goutte compte</strong> — Ensemble pour un Togo propre, équitable et en bonne santé
