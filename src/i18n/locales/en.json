@@ -8,10 +8,313 @@
         "resources": "Resources"
     },
     "home": {
+        "hero_tagline": "CCEABT, because a healthy future starts with clean water!",
         "hero_title": "For universal access",
+        "hero_title_suffix": "universal",
         "hero_subtitle": "to water and hygiene",
         "discover_btn": "Discover CCEABT",
         "join_btn": "Join the network",
-        "donate_btn": "Donate"
+        "donate_btn": "Donate",
+        "mission_tag": "Our Mission",
+        "mission_title": "Who are we?",
+        "mission_text_1": "The CCEABT is a <0>national civil society platform</0> bringing together more than 40 organizations active in the fields of water, hygiene, and sanitation.",
+        "mission_text_2": "We work together to influence public policies, strengthen local capacities, and improve community living conditions.",
+        "stats_water_value": "60%",
+        "stats_water_label": "national drinking water coverage",
+        "stats_members_value": "40+",
+        "stats_members_label": "Member NGOs and associations",
+        "stats_members_sub": "active",
+        "stats_years_value": "10+",
+        "stats_years_label": "years of civic action",
+        "stats_years_sub": "for water and sanitation",
+        "axes_title": "Our Areas of Action",
+        "axes_subtitle": "Four pillars to transform access to water and hygiene in Togo",
+        "axis_1_title": "Advocacy & Political Influence",
+        "axis_1_desc": "Defending the right to water, hygiene, and sanitation for all.",
+        "axis_1_sub": "Making access to water a fundamental right recognized and respected at all decision-making levels.",
+        "axis_2_title": "Drinking Water & Sustainable Management",
+        "axis_2_desc": "Protecting the resource, modernizing infrastructure, and encouraging responsible management.",
+        "axis_2_sub": "Guaranteeing every Togolese safe water today, and for future generations.",
+        "axis_3_title": "Sanitation & Hygiene",
+        "axis_3_desc": "Ending open defecation and promoting healthy practices.",
+        "axis_3_sub": "Offering every community a clean, safe, and dignified environment.",
+        "axis_4_title": "Capacity Building",
+        "axis_4_desc": "Training and equipping community actors and member NGOs.",
+        "axis_4_sub": "Empowering local actors to act sustainably for water and hygiene.",
+        "news_title": "Recent News",
+        "news_subtitle": "Stay informed about our latest actions on the ground",
+        "news_view_all": "View all news",
+        "partners_title": "Our Partners",
+        "partners_subtitle": "Strong collaboration for sustainable impact",
+        "partners_more": "+ and many more...",
+        "cta_title": "Do you want to support access to water and hygiene for all?",
+        "cta_subtitle": "Join the movement today and make a difference.",
+        "cta_join": "Join the network",
+        "cta_contact": "Contact us",
+        "cta_footer": "<0>Every drop counts</0> — Together for a clean, fair, and healthy Togo"
+    },
+    "footer": {
+        "description": "National network of civil society organizations working in the Water, Hygiene, and Sanitation sector in Togo.",
+        "quick_links": "Quick Links",
+        "contact": "Contact",
+        "address": "Vakpossito District, Agoè-Nyivé 3, Lomé – Togo",
+        "follow_us": "Follow Us",
+        "join_network": "Join the Network",
+        "donate": "Donate",
+        "legal": "Legal Notice",
+        "privacy": "Privacy Policy",
+        "rights": "All rights reserved"
+    },
+    "about": {
+        "hero": {
+            "tag": "Since 2013 for Togo",
+            "title": "Facilitating access to clean water in Togo",
+            "subtitle": "A platform of 40+ organizations united to guarantee the right to water, hygiene, and sanitation for all Togolese.",
+            "stats": {
+                "members": "Member Organizations",
+                "coverage": "Drinking water coverage (2020)",
+                "years": "Years of Impact",
+                "population": "Inhabitants in Togo"
+            }
+        },
+        "mission_statement": {
+            "title": "We work to ensure that every Togolese has access to",
+            "highlight": "clean water, hygiene, and sanitation",
+            "description": "A national civil society platform bringing together more than 40 organizations to sustainably transform access to water in Togo."
+        },
+        "timeline": {
+            "tag": "Our Journey",
+            "title": "A Decade of Impact",
+            "subtitle": "From creation in 2013 to today, discover the key stages of our evolution",
+            "2013": {
+                "title": "Creation of the Platform",
+                "desc": "NGOs and associations involved in the basic sanitation sub-sector in Togo form a platform to bring this neglected issue out of the shadows.",
+                "context_title": "The alarming context:",
+                "context_list": [
+                    "Less than 1% of the State budget allocated to the sector",
+                    "Disparate and unreliable data on sanitation",
+                    "Improved sanitation facilities: 10% (2005) then 54% (2015 QUIBB) vs 12% (2015 JMP)",
+                    "Hygiene rules poorly respected throughout the territory"
+                ]
+            },
+            "2018": {
+                "title": "Integration of Drinking Water",
+                "desc": "For greater efficiency and in recognition of the intrinsic link between water and sanitation, members decided to integrate the issue of drinking water into the network's areas of intervention."
+            },
+            "2020": {
+                "title": "Measurable Progress",
+                "desc": "With a population of 8,279,000 inhabitants, the national drinking water coverage rate increased from 53% (2019) to 60% (2020).",
+                "challenges_title": "Persistent Challenges:",
+                "challenges_desc": "In semi-urban and rural areas, more than half of households still do not have sustainable access to drinking water, due to lack of funding for works and difficulties in sustainable management of existing infrastructure."
+            },
+            "today": {
+                "title": "Today: A Strong Collective Voice",
+                "desc": "CCEABT represents the collective voice of more than 40 civil society organizations in the Water, Hygiene, and Sanitation sector.",
+                "governance_title": "Governance:",
+                "governance_list": [
+                    "General Assembly (GA) - Decision-making body",
+                    "Board of Directors (BD) - President-Leader",
+                    "Operational Coordination - Project Manager"
+                ]
+            }
+        },
+        "values": {
+            "vision": {
+                "title": "Vision",
+                "desc": "Working to facilitate access for all to drinking water, hygiene, and sanitation, leading populations to permanently consume drinking water and use improved sanitary facilities for their needs."
+            },
+            "missions": {
+                "title": "Our Missions",
+                "list": [
+                    "Conduct advocacy actions for the protection of the resource and the effectiveness of the right to water, hygiene, and sanitation for all, including the most vulnerable",
+                    "Influence decision-makers for ambitious and respected commitments in the sector",
+                    "Strengthen the capacities and expertise of member associations/NGOs to conduct joint actions",
+                    "Inform and mobilize the population for action"
+                ]
+            },
+            "valeurs": {
+                "title": "Our Values",
+                "list": [
+                    "Transparency and Accountability",
+                    "Solidarity and Inclusion",
+                    "Civic Engagement",
+                    "Cooperation and Sharing"
+                ]
+            }
+        },
+        "domains": {
+            "title": "⚙️ Our Areas of Intervention",
+            "subtitle": "Four strategic axes for maximum impact",
+            "advocacy": {
+                "title": "Advocacy & Political Influence",
+                "list": [
+                    "Defense of the right to water and sanitation",
+                    "Support for increasing the national and municipal budget for the sector",
+                    "Development of advocacy documents and guides"
+                ]
+            },
+            "water": {
+                "title": "Drinking Water & Resource Protection",
+                "list": [
+                    "Studies on resource management",
+                    "Awareness on pollution and waste",
+                    "Technical support for hydraulic works planning"
+                ]
+            },
+            "hygiene": {
+                "title": "Community Hygiene & Sanitation",
+                "list": [
+                    "\"Zero Open Defecation\" campaigns",
+                    "Promotion of improved sanitary facilities",
+                    "Support to municipalities for the implementation of the social water tariff"
+                ]
+            },
+            "capacity": {
+                "title": "Capacity Building",
+                "list": [
+                    "Training workshops for NGOs and communities",
+                    "Creation of practical tools: guides, studies, awareness modules"
+                ]
+            }
+        },
+        "realizations": {
+            "title": "Our Concrete Achievements",
+            "subtitle": "Actions taken to transform the WASH sector in Togo",
+            "items": [
+                {
+                    "title": "Capacity Building Workshops",
+                    "desc": "Organization of various training workshops for member CSOs of the network"
+                },
+                {
+                    "title": "Practical Advocacy Guide",
+                    "desc": "Development of a practical advocacy guide in the field of water and sanitation"
+                },
+                {
+                    "title": "Budget Advocacy Document",
+                    "desc": "Advocacy for increasing the budget allocated to the WASH sector in municipalities and regulating the price of water"
+                },
+                {
+                    "title": "Sector Financing Study",
+                    "desc": "In-depth study on water/sanitation sector financing in municipal budgets and on the application of the social water tariff at public standpipes"
+                }
+            ]
+        },
+        "resources": {
+            "title": "Access our documentary resources",
+            "desc": "Guides, studies, reports, and advocacy documents available online",
+            "btn": "Consult resources"
+        },
+        "impact": {
+            "title": "Results and Impacts",
+            "water_rate": "Drinking water coverage rate",
+            "members": "Member NGOs and associations",
+            "members_sub": "trained and supported",
+            "studies": "Studies and advocacy carried out",
+            "studies_val": "Numerous",
+            "studies_sub": "for municipal budgets",
+            "coordination": "Strengthened coordination",
+            "coordination_val": "Excellence",
+            "coordination_sub": "between civil society actors"
+        },
+        "governance": {
+            "tag": "Our Structure",
+            "title": "Transparent Governance",
+            "subtitle": "Three complementary bodies for effective and democratic action",
+            "ag": {
+                "title": "General Assembly",
+                "desc": "Supreme decision-making body bringing together all members to define the strategic directions of the network."
+            },
+            "ca": {
+                "title": "Board of Directors",
+                "desc": "Led by the President-Leader, it pilots activities and ensures the implementation of decisions.",
+                "role": "President-Leader"
+            },
+            "co": {
+                "title": "Operational Coordination",
+                "desc": "Led by the Project Manager, it ensures daily management and coordination of actions on the ground.",
+                "role": "Project Manager"
+            }
+        },
+        "cta": {
+            "title": "Join the movement for water in Togo",
+            "desc": "Together, we can guarantee access to safe drinking water for all Togolese. Your commitment counts.",
+            "join": "Become a member",
+            "resources": "Our resources"
+        }
+    },
+    "network": {
+        "hero": {
+            "tag": "A solidarity network for access to water",
+            "title": "Network & Partners",
+            "subtitle": "A collaborative platform for collective impact in the water, hygiene, and sanitation sector."
+        },
+        "network": {
+            "title": "Our Network",
+            "text1": "The CCEABT brings together more than 40 organizations that share the same vision: improving access to water, hygiene, and sanitation for all in Togo.",
+            "text2": "Each member contributes to strengthening the network's impact on the ground."
+        },
+        "members": {
+            "title": "Network Members",
+            "more": "+ and many more..."
+        },
+        "partners": {
+            "title": "Technical & Financial Partners",
+            "technical": {
+                "title": "Technical Partners"
+            },
+            "financial": {
+                "title": "Financial Partners",
+                "list": [
+                    "Institutional Partners",
+                    "International NGOs",
+                    "Foundations"
+                ]
+            },
+            "institutional": {
+                "title": "Institutional Partners",
+                "list": [
+                    "Ministry Delegate to the Ministry of Territorial Administration, in charge of Water and Sanitation",
+                    "Local Communities"
+                ]
+            }
+        },
+        "resources": {
+            "title": "Shared Resources",
+            "desc": "Access our practical guides, study reports, advocacy documents, and publications.",
+            "download": "Download",
+            "access_btn": "Access our resources",
+            "items": [
+                {
+                    "title": "Advocacy Guide for Water and Sanitation",
+                    "type": "PDF",
+                    "size": "2.5 MB"
+                },
+                {
+                    "title": "Study on WASH Sector Governance",
+                    "type": "PDF",
+                    "size": "3.1 MB"
+                },
+                {
+                    "title": "2023 Annual Report",
+                    "type": "PDF",
+                    "size": "4.2 MB"
+                },
+                {
+                    "title": "Training Manual - Community Hygiene",
+                    "type": "PDF",
+                    "size": "1.8 MB"
+                },
+                {
+                    "title": "National Water-Hygiene-Sanitation Strategy",
+                    "type": "PDF",
+                    "size": "2.9 MB"
+                }
+            ]
+        },
+        "join": {
+            "title": "Join Our Network",
+            "desc": "Are you an organization, institution, or partner wishing to act for a cleaner and healthier Togo? Join our network today.",
+            "btn": "Join CCEABT"
+        }
     }
 }

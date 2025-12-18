@@ -1,4 +1,3 @@
-import { X } from 'lucide-react';
 import { useState } from 'react';
 
 type MembershipType = 'member' | 'partner' | '';
@@ -27,9 +26,9 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!membershipType) return;
-    
+
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     try {
       await new Promise(resolve => setTimeout(resolve, 1500));
@@ -66,13 +65,6 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="relative">
-      <button
-        onClick={onClose}
-        className="absolute top-0 right-0 p-2 text-gray-400 hover:text-gray-500 focus:outline-none"
-      >
-        <X className="h-6 w-6" />
-      </button>
-
       <div className="text-center">
         <h3 className="text-lg font-medium text-gray-900 mb-2">
           Rejoindre le CCEABT
@@ -86,18 +78,16 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
         <button
           type="button"
           onClick={() => setMembershipType('member')}
-          className={`p-4 border rounded-lg text-left transition-colors ${
-            membershipType === 'member'
-              ? 'border-blue-500 bg-blue-50'
-              : 'border-gray-300 hover:border-blue-300'
-          }`}
+          className={`p-4 border rounded-lg text-left transition-colors ${membershipType === 'member'
+            ? 'border-blue-500 bg-blue-50'
+            : 'border-gray-300 hover:border-blue-300'
+            }`}
         >
           <div className="flex items-center">
-            <div className={`flex-shrink-0 h-5 w-5 rounded-full border-2 ${
-              membershipType === 'member' 
-                ? 'border-blue-500 bg-blue-500 flex items-center justify-center'
-                : 'border-gray-300'
-            }`}>
+            <div className={`flex-shrink-0 h-5 w-5 rounded-full border-2 ${membershipType === 'member'
+              ? 'border-blue-500 bg-blue-500 flex items-center justify-center'
+              : 'border-gray-300'
+              }`}>
               {membershipType === 'member' && (
                 <svg className="h-3 w-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -114,18 +104,16 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
         <button
           type="button"
           onClick={() => setMembershipType('partner')}
-          className={`p-4 border rounded-lg text-left transition-colors ${
-            membershipType === 'partner'
-              ? 'border-blue-500 bg-blue-50'
-              : 'border-gray-300 hover:border-blue-300'
-          }`}
+          className={`p-4 border rounded-lg text-left transition-colors ${membershipType === 'partner'
+            ? 'border-blue-500 bg-blue-50'
+            : 'border-gray-300 hover:border-blue-300'
+            }`}
         >
           <div className="flex items-center">
-            <div className={`flex-shrink-0 h-5 w-5 rounded-full border-2 ${
-              membershipType === 'partner' 
-                ? 'border-blue-500 bg-blue-500 flex items-center justify-center'
-                : 'border-gray-300'
-            }`}>
+            <div className={`flex-shrink-0 h-5 w-5 rounded-full border-2 ${membershipType === 'partner'
+              ? 'border-blue-500 bg-blue-500 flex items-center justify-center'
+              : 'border-gray-300'
+              }`}>
               {membershipType === 'partner' && (
                 <svg className="h-3 w-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
