@@ -2,12 +2,10 @@ import { Users, Network as NetworkIcon, FileText, Download, UserPlus, Handshake,
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MembershipForm from '../components/MembershipForm';
-import { useTranslation } from 'react-i18next';
 
 import { useNavigate } from 'react-router-dom';
 
 export default function Network() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const [isMembershipModalOpen, setIsMembershipModalOpen] = useState(false);
   const members = [

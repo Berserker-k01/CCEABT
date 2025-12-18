@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const quickLinks = [
     { name: 'Accueil', path: '/' },
     { name: 'À propos & Actions', path: '/about' },
@@ -29,12 +29,12 @@ export default function Footer() {
             />
             <h3 className="text-xl font-bold mb-2">CCEABT</h3>
             <p className="text-gray-200 text-sm">
-              {t('footer.description')}
+              Réseau national des organisations de la société civile œuvrant dans le secteur Eau, Hygiène et Assainissement au Togo.
             </p>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">{t('footer.quick_links')}</h4>
+            <h4 className="text-lg font-semibold mb-4">Liens rapides</h4>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.path}>
@@ -51,11 +51,11 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">{t('footer.contact')}</h4>
+            <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
                 <MapPin size={20} className="mt-1 flex-shrink-0" />
-                <p className="text-sm text-gray-200">{t('footer.address')}</p>
+                <p className="text-sm text-gray-200">Quartier Vakpossito, Agoè-Nyivé 3, Lomé – Togo</p>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail size={20} className="flex-shrink-0" />
@@ -74,7 +74,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">{t('footer.follow_us')}</h4>
+            <h4 className="text-lg font-semibold mb-4">Suivez-nous</h4>
             <div className="flex space-x-4 mb-6">
               <a
                 href="https://facebook.com/CCEABT"
@@ -99,10 +99,10 @@ export default function Footer() {
                 onClick={scrollToTop}
                 className="block w-full bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded transition-colors text-center"
               >
-                {t('footer.join_network')}
+                Adhérer au réseau
               </Link>
               <button className="block w-full bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-semibold py-2 px-4 rounded transition-colors text-center">
-                {t('footer.donate')}
+                Faire un don
               </button>
             </div>
           </div>
@@ -110,9 +110,9 @@ export default function Footer() {
 
         <div className="border-t border-white/20 mt-8 pt-8">
           <div className="flex flex-wrap justify-center gap-6 mb-4 text-sm text-gray-200">
-            <Link to="/" onClick={scrollToTop} className="hover:text-white">{t('footer.legal')}</Link>
+            <Link to="/" onClick={scrollToTop} className="hover:text-white">Mentions légales</Link>
             <span>•</span>
-            <Link to="/" onClick={scrollToTop} className="hover:text-white">{t('footer.privacy')}</Link>
+            <Link to="/" onClick={scrollToTop} className="hover:text-white">Politique de confidentialité</Link>
           </div>
 
           <div className="flex justify-center gap-4 mb-4">
@@ -132,7 +132,7 @@ export default function Footer() {
           </div>
 
           <p className="text-sm text-gray-200 text-center">
-            © {new Date().getFullYear()} CCEABT - {t('footer.rights')}
+            © {new Date().getFullYear()} CCEABT - Tous droits réservés
           </p>
         </div>
       </div>

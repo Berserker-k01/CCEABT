@@ -1,22 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useData } from '../context/DataContext';
 import { useNavigate } from 'react-router-dom';
-import { Lock, LogOut, Save, Edit, Trash2, Plus, Eye, EyeOff, Link as LinkIcon, Upload, FileText } from 'lucide-react';
+import { Plus, Trash2, FileText, Globe, LogOut, Lock, Eye, EyeOff, Save, Upload, Link as LinkIcon, Edit } from 'lucide-react';
 
-interface NewsItem {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
-}
-
-interface Partner {
-  id: string;
-  name: string;
-  category: string;
-  description: string;
-  website?: string;
-}
-
+// Interface pour la Galerie (non gérée par DataContext pour l'instant)
 interface GalleryItem {
   id: string;
   title: string;
@@ -25,53 +12,41 @@ interface GalleryItem {
   date: string;
 }
 
-interface ResourceLink {
-  id: string;
-  title: string;
-  description: string;
-  driveUrl: string;
-  type: string;
-  fileData?: string;
-  fileName?: string;
-}
-
 export default function Admin() {
   const navigate = useNavigate();
+  const { news, addNews, deleteNews, resources, addResource, deleteResource, partners, addPartner, deletePartner } = useData();
+  const [activeTab, setActiveTab] = useState<'news' | 'resources' | 'partners' | 'gallery' | 'settings'>('news');
+
+  // Auth State
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState('news');
 
-  // Credentials stored in localStorage
+  // Admin Credentials
   const [adminEmail, setAdminEmail] = useState('');
   const [adminPassword, setAdminPassword] = useState('');
   const [isEditingCredentials, setIsEditingCredentials] = useState(false);
 
-  // Content states
-  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
-  const [partners, setPartners] = useState<Partner[]>([]);
+  // Gallery State (Local Storage Only)
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
-  const [resources, setResources] = useState<ResourceLink[]>([]);
+
+  // Form States (New Logic)
+  const [newsForm, setNewsForm] = useState({ title: '', category: '', date: '', image: '', excerpt: '', content: '' });
+  const [resourceForm, setResourceForm] = useState({ title: '', type: 'PDF', theme: '', year: new Date().getFullYear().toString(), author: 'CCEABT', size: '', downloadUrl: '' });
+  const [partnerForm, setPartnerForm] = useState({ name: '', type: 'Technique' as const, description: '', website: '' });
 
   useEffect(() => {
-    // Load admin credentials from localStorage
-    const savedEmail = localStorage.getItem('adminEmail') || 'admin@cceabt.org';
+    // Load admin credentials
+    const savedEmail = localStorage.getItem('adminEmail') || 'admin';
     const savedPassword = localStorage.getItem('adminPassword') || 'admin123';
     setAdminEmail(savedEmail);
     setAdminPassword(savedPassword);
 
-    // Load content from localStorage
-    const savedNews = localStorage.getItem('newsItems');
-    const savedPartners = localStorage.getItem('partners');
+    // Load Gallery
     const savedGallery = localStorage.getItem('galleryItems');
-    const savedResources = localStorage.getItem('resources');
-
-    if (savedNews) setNewsItems(JSON.parse(savedNews));
-    if (savedPartners) setPartners(JSON.parse(savedPartners));
     if (savedGallery) setGalleryItems(JSON.parse(savedGallery));
-    if (savedResources) setResources(JSON.parse(savedResources));
   }, []);
 
   const handleLogin = (e: React.FormEvent) => {
@@ -97,62 +72,33 @@ export default function Admin() {
     alert('Identifiants mis à jour avec succès !');
   };
 
-  const saveNews = () => {
-    localStorage.setItem('newsItems', JSON.stringify(newsItems));
-    alert('Actualités sauvegardées !');
+  // --- Handlers for New Logic ---
+
+  const handleAddNews = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsForm.title) return;
+    addNews(newsForm);
+    setNewsForm({ title: '', category: '', date: '', image: '', excerpt: '', content: '' });
+    alert('Actualité ajoutée !');
   };
 
-  const savePartners = () => {
-    localStorage.setItem('partners', JSON.stringify(partners));
-    alert('Partenaires sauvegardés !');
+  const handleAddResource = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!resourceForm.title) return;
+    addResource(resourceForm);
+    setResourceForm({ title: '', type: 'PDF', theme: '', year: new Date().getFullYear().toString(), author: 'CCEABT', size: '', downloadUrl: '' });
+    alert('Ressource ajoutée !');
   };
 
-  const addNewsItem = () => {
-    const newItem: NewsItem = {
-      id: Date.now().toString(),
-      title: 'Nouvelle actualité',
-      description: 'Description de l\'actualité',
-      date: new Date().toISOString().split('T')[0]
-    };
-    setNewsItems([...newsItems, newItem]);
+  const handleAddPartner = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!partnerForm.name) return;
+    addPartner(partnerForm);
+    setPartnerForm({ name: '', type: 'Technique', description: '', website: '' });
+    alert('Partenaire ajouté !');
   };
 
-  const deleteNewsItem = (id: string) => {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette actualité ?')) {
-      setNewsItems(newsItems.filter(item => item.id !== id));
-    }
-  };
-
-  const updateNewsItem = (id: string, field: string, value: string) => {
-    setNewsItems(newsItems.map(item =>
-      item.id === id ? { ...item, [field]: value } : item
-    ));
-  };
-
-  const addPartner = () => {
-    const newPartner: Partner = {
-      id: Date.now().toString(),
-      name: 'Nouveau partenaire',
-      category: 'ONG Nationale',
-      description: 'Description du partenaire',
-      website: ''
-    };
-    setPartners([...partners, newPartner]);
-  };
-
-  const deletePartner = (id: string) => {
-    if (confirm('Êtes-vous sûr de vouloir supprimer ce partenaire ?')) {
-      setPartners(partners.filter(item => item.id !== id));
-    }
-  };
-
-  const updatePartner = (id: string, field: string, value: string) => {
-    setPartners(partners.map(item =>
-      item.id === id ? { ...item, [field]: value } : item
-    ));
-  };
-
-  // Gallery management functions
+  // --- Handlers for Gallery (Old Logic) ---
   const saveGallery = () => {
     localStorage.setItem('galleryItems', JSON.stringify(galleryItems));
     alert('Galerie sauvegardée !');
@@ -163,15 +109,17 @@ export default function Admin() {
       id: Date.now().toString(),
       title: 'Nouvelle image',
       imageUrl: '',
-      description: 'Description de l\'image',
+      description: 'Description...',
       date: new Date().toISOString().split('T')[0]
     };
     setGalleryItems([...galleryItems, newItem]);
   };
 
   const deleteGalleryItem = (id: string) => {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette image ?')) {
-      setGalleryItems(galleryItems.filter(item => item.id !== id));
+    if (confirm('Supprimer cette image ?')) {
+      const updated = galleryItems.filter(item => item.id !== id);
+      setGalleryItems(updated);
+      localStorage.setItem('galleryItems', JSON.stringify(updated));
     }
   };
 
@@ -192,47 +140,6 @@ export default function Admin() {
     }
   };
 
-  // Resources management functions
-  const saveResources = () => {
-    localStorage.setItem('resources', JSON.stringify(resources));
-    alert('Ressources sauvegardées !');
-  };
-
-  const addResource = () => {
-    const newResource: ResourceLink = {
-      id: Date.now().toString(),
-      title: 'Nouvelle ressource',
-      description: 'Description de la ressource',
-      driveUrl: '',
-      type: 'Document'
-    };
-    setResources([...resources, newResource]);
-  };
-
-  const deleteResource = (id: string) => {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette ressource ?')) {
-      setResources(resources.filter(item => item.id !== id));
-    }
-  };
-
-  const updateResource = (id: string, field: string, value: string) => {
-    setResources(resources.map(item =>
-      item.id === id ? { ...item, [field]: value } : item
-    ));
-  };
-
-  const handleDocumentUpload = (id: string, event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setResources(resources.map(item =>
-          item.id === id ? { ...item, fileData: reader.result as string, fileName: file.name } : item
-        ));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   if (!isAuthenticated) {
     return (
@@ -243,35 +150,28 @@ export default function Admin() {
               <Lock className="text-white" size={32} />
             </div>
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Administration CCEABT</h1>
-            <p className="text-gray-600">Connectez-vous pour gérer le contenu du site</p>
+            <p className="text-gray-600">Connectez-vous pour gérer le contenu</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Email
-              </label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onChange={e => setEmail(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4"
                 placeholder="admin@cceabt.org"
                 required
               />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Mot de passe
-              </label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Mot de passe</label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="••••••••"
+                  placeholder="admin123"
                   required
                 />
                 <button
@@ -290,19 +190,12 @@ export default function Admin() {
               </div>
             )}
 
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-            >
+            <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
               Se connecter
             </button>
           </form>
-
           <div className="mt-6 text-center">
-            <button
-              onClick={() => navigate('/')}
-              className="text-blue-600 hover:text-blue-700 text-sm font-medium"
-            >
+            <button onClick={() => navigate('/')} className="text-blue-600 hover:text-blue-700 text-sm font-medium">
               ← Retour au site
             </button>
           </div>
@@ -320,503 +213,307 @@ export default function Admin() {
             <h1 className="text-3xl font-bold text-gray-800">Panneau d'administration</h1>
             <p className="text-gray-600 mt-1">Gérez le contenu de votre site web</p>
           </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
-          >
-            <LogOut size={20} />
-            Déconnexion
-          </button>
+          <div className="flex gap-4">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
+            >
+              <LogOut size={20} /> Déconnexion
+            </button>
+          </div>
         </div>
 
         {/* Tabs */}
         <div className="bg-white rounded-lg shadow-md mb-6">
-          <div className="flex border-b">
-            <button
-              onClick={() => setActiveTab('news')}
-              className={`px-6 py-4 font-semibold transition-colors ${activeTab === 'news'
-                ? 'text-blue-600 border-b-2 border-blue-600'
-                : 'text-gray-600 hover:text-gray-800'
-                }`}
-            >
-              Actualités
-            </button>
-            <button
-              onClick={() => setActiveTab('partners')}
-              className={`px-6 py-4 font-semibold transition-colors ${activeTab === 'partners'
-                ? 'text-blue-600 border-b-2 border-blue-600'
-                : 'text-gray-600 hover:text-gray-800'
-                }`}
-            >
-              Partenaires
-            </button>
-            <button
-              onClick={() => setActiveTab('gallery')}
-              className={`px-6 py-4 font-semibold transition-colors ${activeTab === 'gallery'
-                ? 'text-blue-600 border-b-2 border-blue-600'
-                : 'text-gray-600 hover:text-gray-800'
-                }`}
-            >
-              Galerie
-            </button>
-            <button
-              onClick={() => setActiveTab('resources')}
-              className={`px-6 py-4 font-semibold transition-colors ${activeTab === 'resources'
-                ? 'text-blue-600 border-b-2 border-blue-600'
-                : 'text-gray-600 hover:text-gray-800'
-                }`}
-            >
-              Ressources
-            </button>
-            <button
-              onClick={() => setActiveTab('settings')}
-              className={`px-6 py-4 font-semibold transition-colors ${activeTab === 'settings'
-                ? 'text-blue-600 border-b-2 border-blue-600'
-                : 'text-gray-600 hover:text-gray-800'
-                }`}
-            >
-              Paramètres
-            </button>
+          <div className="flex border-b overflow-x-auto">
+            {['news', 'partners', 'gallery', 'resources', 'settings'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab as any)}
+                className={`px-6 py-4 font-semibold transition-colors capitalize whitespace-nowrap ${activeTab === tab
+                  ? 'text-blue-600 border-b-2 border-blue-600'
+                  : 'text-gray-600 hover:text-gray-800'
+                  }`}
+              >
+                {tab === 'news' && 'Actualités'}
+                {tab === 'partners' && 'Partenaires'}
+                {tab === 'gallery' && 'Galerie'}
+                {tab === 'resources' && 'Ressources'}
+                {tab === 'settings' && 'Paramètres'}
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Content */}
         <div className="bg-white rounded-lg shadow-md p-6">
+
+          {/* NEWS TAB */}
           {activeTab === 'news' && (
-            <div>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">Gestion des actualités</h2>
-                <div className="flex gap-3">
-                  <button
-                    onClick={addNewsItem}
-                    className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors"
-                  >
-                    <Plus size={20} />
-                    Ajouter
+            <div className="grid lg:grid-cols-2 gap-8">
+              <div className="h-fit space-y-4">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Ajouter une actualité</h2>
+                <form onSubmit={handleAddNews} className="space-y-4 bg-gray-50 p-6 rounded-xl border">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Titre</label>
+                    <input type="text" value={newsForm.title} onChange={e => setNewsForm({ ...newsForm, title: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" required />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Catégorie</label>
+                    <select value={newsForm.category} onChange={e => setNewsForm({ ...newsForm, category: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                      <option value="">Choisir...</option>
+                      <option value="advocacy">Plaidoyer</option>
+                      <option value="water">Eau</option>
+                      <option value="training">Formation</option>
+                      <option value="testimonials">Témoignage</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Date</label>
+                    <input type="text" value={newsForm.date} onChange={e => setNewsForm({ ...newsForm, date: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" placeholder="ex: 15 Mars 2025" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Image URL</label>
+                    <input type="text" value={newsForm.image} onChange={e => setNewsForm({ ...newsForm, image: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Extrait</label>
+                    <textarea value={newsForm.excerpt} onChange={e => setNewsForm({ ...newsForm, excerpt: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" rows={3}></textarea>
+                  </div>
+                  <button type="submit" className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center gap-2">
+                    <Plus size={20} /> Ajouter
                   </button>
-                  <button
-                    onClick={saveNews}
-                    className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                  >
-                    <Save size={20} />
-                    Sauvegarder
-                  </button>
-                </div>
+                </form>
               </div>
 
-              <div className="space-y-4">
-                {newsItems.map((item) => (
-                  <div key={item.id} className="border border-gray-200 rounded-lg p-4">
-                    <div className="space-y-3">
-                      <input
-                        type="text"
-                        value={item.title}
-                        onChange={(e) => updateNewsItem(item.id, 'title', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg font-semibold"
-                        placeholder="Titre"
-                      />
-                      <textarea
-                        value={item.description}
-                        onChange={(e) => updateNewsItem(item.id, 'description', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                        rows={3}
-                        placeholder="Description"
-                      />
-                      <div className="flex items-center justify-between">
-                        <input
-                          type="date"
-                          value={item.date}
-                          onChange={(e) => updateNewsItem(item.id, 'date', e.target.value)}
-                          className="px-3 py-2 border border-gray-300 rounded-lg"
-                        />
-                        <button
-                          onClick={() => deleteNewsItem(item.id)}
-                          className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
-                        >
-                          <Trash2 size={18} />
-                          Supprimer
-                        </button>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Liste des actualités</h2>
+                <div className="space-y-4">
+                  {news.map(item => (
+                    <div key={item.id} className="border border-gray-200 rounded-lg p-4 flex gap-4 bg-white shadow-sm">
+                      {item.image && <img src={item.image} className="w-20 h-20 object-cover rounded-md bg-gray-100" alt="" />}
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900 line-clamp-1">{item.title}</h3>
+                        <p className="text-xs text-gray-500 mb-1">{item.date} • {item.category}</p>
+                        <p className="text-sm text-gray-600 line-clamp-2">{item.excerpt}</p>
                       </div>
+                      <button onClick={() => deleteNews(item.id)} className="text-red-500 hover:text-red-700 h-fit p-1">
+                        <Trash2 size={20} />
+                      </button>
                     </div>
-                  </div>
-                ))}
-                {newsItems.length === 0 && (
-                  <p className="text-center text-gray-500 py-8">Aucune actualité. Cliquez sur "Ajouter" pour créer une actualité.</p>
-                )}
+                  ))}
+                  {news.length === 0 && <p className="text-gray-500 italic text-center py-8">Aucune actualité.</p>}
+                </div>
               </div>
             </div>
           )}
 
-          {activeTab === 'partners' && (
-            <div>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">Gestion des partenaires</h2>
-                <div className="flex gap-3">
-                  <button
-                    onClick={addPartner}
-                    className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors"
-                  >
-                    <Plus size={20} />
-                    Ajouter
-                  </button>
-                  <button
-                    onClick={savePartners}
-                    className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                  >
-                    <Save size={20} />
-                    Sauvegarder
-                  </button>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                {partners.map((partner) => (
-                  <div key={partner.id} className="border border-gray-200 rounded-lg p-4">
-                    <div className="space-y-3">
-                      <input
-                        type="text"
-                        value={partner.name}
-                        onChange={(e) => updatePartner(partner.id, 'name', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg font-semibold"
-                        placeholder="Nom du partenaire"
-                      />
-                      <select
-                        value={partner.category}
-                        onChange={(e) => updatePartner(partner.id, 'category', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                      >
-                        <option value="ONG Internationale">ONG Internationale</option>
-                        <option value="ONG Nationale">ONG Nationale</option>
-                        <option value="Partenaire Technique et Financier">Partenaire Technique et Financier</option>
-                        <option value="Partenaire Institutionnel">Partenaire Institutionnel</option>
+          {/* RESOURCES TAB */}
+          {activeTab === 'resources' && (
+            <div className="grid lg:grid-cols-2 gap-8">
+              <div className="h-fit space-y-4">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Ajouter une ressource</h2>
+                <form onSubmit={handleAddResource} className="space-y-4 bg-gray-50 p-6 rounded-xl border">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Titre</label>
+                    <input type="text" value={resourceForm.title} onChange={e => setResourceForm({ ...resourceForm, title: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" required />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Type</label>
+                      <select value={resourceForm.type} onChange={e => setResourceForm({ ...resourceForm, type: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        <option value="PDF">PDF</option>
+                        <option value="Rapport">Rapport</option>
+                        <option value="Guide">Guide</option>
+                        <option value="Étude">Étude</option>
                       </select>
-                      <textarea
-                        value={partner.description}
-                        onChange={(e) => updatePartner(partner.id, 'description', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                        rows={2}
-                        placeholder="Description"
-                      />
-                      <input
-                        type="url"
-                        value={partner.website || ''}
-                        onChange={(e) => updatePartner(partner.id, 'website', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                        placeholder="Site web (optionnel)"
-                      />
-                      <div className="flex justify-end">
-                        <button
-                          onClick={() => deletePartner(partner.id)}
-                          className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
-                        >
-                          <Trash2 size={18} />
-                          Supprimer
-                        </button>
-                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Thème</label>
+                      <input type="text" value={resourceForm.theme} onChange={e => setResourceForm({ ...resourceForm, theme: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" />
                     </div>
                   </div>
-                ))}
-                {partners.length === 0 && (
-                  <p className="text-center text-gray-500 py-8">Aucun partenaire. Cliquez sur "Ajouter" pour créer un partenaire.</p>
-                )}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Année</label>
+                      <input type="text" value={resourceForm.year} onChange={e => setResourceForm({ ...resourceForm, year: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Taille</label>
+                      <input type="text" value={resourceForm.size} onChange={e => setResourceForm({ ...resourceForm, size: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" placeholder="ex: 2MB" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Lien Téléchargement (Drive/URL)</label>
+                    <input type="text" value={resourceForm.downloadUrl} onChange={e => setResourceForm({ ...resourceForm, downloadUrl: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" placeholder="https://..." />
+                  </div>
+                  <button type="submit" className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center gap-2">
+                    <Plus size={20} /> Ajouter
+                  </button>
+                </form>
+              </div>
+
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Liste des ressources</h2>
+                <div className="space-y-4">
+                  {resources.map(item => (
+                    <div key={item.id} className="border border-gray-200 rounded-lg p-4 flex gap-4 bg-white shadow-sm items-center">
+                      <div className="bg-blue-100 p-3 rounded-lg text-blue-600">
+                        <FileText size={24} />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900 line-clamp-1">{item.title}</h3>
+                        <p className="text-xs text-gray-500">{item.type} • {item.year} • {item.theme}</p>
+                      </div>
+                      <button onClick={() => deleteResource(item.id)} className="text-red-500 hover:text-red-700 p-2">
+                        <Trash2 size={20} />
+                      </button>
+                    </div>
+                  ))}
+                  {resources.length === 0 && <p className="text-gray-500 italic text-center py-8">Aucune ressource.</p>}
+                </div>
               </div>
             </div>
           )}
 
+          {/* PARTNERS TAB */}
+          {activeTab === 'partners' && (
+            <div className="grid lg:grid-cols-2 gap-8">
+              <div className="h-fit space-y-4">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Ajouter un partenaire</h2>
+                <form onSubmit={handleAddPartner} className="space-y-4 bg-gray-50 p-6 rounded-xl border">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Nom</label>
+                    <input type="text" value={partnerForm.name} onChange={e => setPartnerForm({ ...partnerForm, name: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" required />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Type</label>
+                    <select value={partnerForm.type} onChange={e => setPartnerForm({ ...partnerForm, type: e.target.value as any })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                      <option value="Technique">Partenaire Technique</option>
+                      <option value="Financier">Partenaire Financier</option>
+                      <option value="Institutionnel">Partenaire Institutionnel</option>
+                      <option value="International">ONG Internationale</option>
+                      <option value="National">ONG Nationale</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea value={partnerForm.description} onChange={e => setPartnerForm({ ...partnerForm, description: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" rows={2}></textarea>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Site Web</label>
+                    <input type="text" value={partnerForm.website} onChange={e => setPartnerForm({ ...partnerForm, website: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" />
+                  </div>
+                  <button type="submit" className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center gap-2">
+                    <Plus size={20} /> Ajouter
+                  </button>
+                </form>
+              </div>
+
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Liste des partenaires</h2>
+                <div className="space-y-4">
+                  {partners.map(item => (
+                    <div key={item.id} className="border border-gray-200 rounded-lg p-4 flex gap-4 bg-white shadow-sm items-center">
+                      <div className="bg-green-100 p-3 rounded-lg text-green-600">
+                        <Globe size={24} />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900">{item.name}</h3>
+                        <p className="text-sm text-gray-500">{item.type}</p>
+                      </div>
+                      <button onClick={() => deletePartner(item.id)} className="text-red-500 hover:text-red-700 p-2">
+                        <Trash2 size={20} />
+                      </button>
+                    </div>
+                  ))}
+                  {partners.length === 0 && <p className="text-gray-500 italic text-center py-8">Aucun partenaire.</p>}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* GALLERY TAB (Legacy Support) */}
           {activeTab === 'gallery' && (
             <div>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-gray-800">Gestion de la galerie</h2>
                 <div className="flex gap-3">
-                  <button
-                    onClick={addGalleryItem}
-                    className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors"
-                  >
-                    <Plus size={20} />
-                    Ajouter
+                  <button onClick={addGalleryItem} className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                    <Plus size={20} /> Ajouter
                   </button>
-                  <button
-                    onClick={saveGallery}
-                    className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                  >
-                    <Save size={20} />
-                    Sauvegarder
+                  <button onClick={saveGallery} className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    <Save size={20} /> Sauvegarder
                   </button>
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="grid md:grid-cols-2 gap-4">
                 {galleryItems.map((item) => (
-                  <div key={item.id} className="border border-gray-200 rounded-lg p-4">
+                  <div key={item.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50">
                     <div className="space-y-3">
-                      <input
-                        type="text"
-                        value={item.title}
-                        onChange={(e) => updateGalleryItem(item.id, 'title', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg font-semibold"
-                        placeholder="Titre de l'image"
-                      />
-                      <div className="space-y-2">
-                        <label className="block text-sm font-semibold text-gray-700">
-                          Uploader une image
+                      <input type="text" value={item.title} onChange={(e) => updateGalleryItem(item.id, 'title', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg font-semibold" placeholder="Titre" />
+
+                      {/* Upload Image */}
+                      <div className="flex gap-2 items-center">
+                        <label className="flex-1 cursor-pointer bg-white border border-dashed border-gray-400 rounded-lg p-2 text-center hover:bg-blue-50">
+                          <span className="text-sm flex items-center justify-center gap-2 text-gray-600"><Upload size={16} /> Upload Image</span>
+                          <input type="file" accept="image/*" onChange={(e) => handleImageUpload(item.id, e)} className="hidden" />
                         </label>
-                        <div className="flex gap-2">
-                          <label className="flex-1 flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 cursor-pointer transition-colors bg-gray-50 hover:bg-blue-50">
-                            <Upload size={20} className="text-gray-600" />
-                            <span className="text-sm text-gray-600">Choisir une image</span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={(e) => handleImageUpload(item.id, e)}
-                              className="hidden"
-                            />
-                          </label>
-                        </div>
-                        <p className="text-xs text-gray-500">Ou entrez une URL ci-dessous</p>
+                        {item.imageUrl && <img src={item.imageUrl} alt="Preview" className="w-12 h-12 rounded object-cover border" />}
                       </div>
-                      <input
-                        type="url"
-                        value={item.imageUrl}
-                        onChange={(e) => updateGalleryItem(item.id, 'imageUrl', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                        placeholder="URL de l'image (ex: /images/photo.jpg)"
-                      />
-                      <textarea
-                        value={item.description}
-                        onChange={(e) => updateGalleryItem(item.id, 'description', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                        rows={2}
-                        placeholder="Description"
-                      />
+
+                      <textarea value={item.description} onChange={(e) => updateGalleryItem(item.id, 'description', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg" rows={2} placeholder="Description" />
+
                       <div className="flex items-center justify-between">
-                        <input
-                          type="date"
-                          value={item.date}
-                          onChange={(e) => updateGalleryItem(item.id, 'date', e.target.value)}
-                          className="px-3 py-2 border border-gray-300 rounded-lg"
-                        />
-                        <button
-                          onClick={() => deleteGalleryItem(item.id)}
-                          className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
-                        >
-                          <Trash2 size={18} />
-                          Supprimer
-                        </button>
-                      </div>
-                      {item.imageUrl && (
-                        <div className="mt-2">
-                          <p className="text-sm text-gray-600 mb-2">Aperçu :</p>
-                          <img src={item.imageUrl} alt={item.title} className="max-h-40 rounded-lg object-cover" />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-                {galleryItems.length === 0 && (
-                  <p className="text-center text-gray-500 py-8">Aucune image. Cliquez sur "Ajouter" pour créer une image.</p>
-                )}
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'resources' && (
-            <div>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">Gestion des ressources partagées</h2>
-                <div className="flex gap-3">
-                  <button
-                    onClick={addResource}
-                    className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors"
-                  >
-                    <Plus size={20} />
-                    Ajouter
-                  </button>
-                  <button
-                    onClick={saveResources}
-                    className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                  >
-                    <Save size={20} />
-                    Sauvegarder
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                <p className="text-sm text-blue-800 mb-2">
-                  💡 <strong>Deux options pour ajouter des documents :</strong>
-                </p>
-                <ul className="text-sm text-blue-800 list-disc list-inside space-y-1">
-                  <li><strong>Upload direct :</strong> Uploadez un fichier depuis votre ordinateur (stocké dans le navigateur)</li>
-                  <li><strong>Google Drive :</strong> Collez un lien Google Drive partagé (recommandé pour les gros fichiers)</li>
-                </ul>
-              </div>
-
-              <div className="space-y-4">
-                {resources.map((resource) => (
-                  <div key={resource.id} className="border border-gray-200 rounded-lg p-4">
-                    <div className="space-y-3">
-                      <input
-                        type="text"
-                        value={resource.title}
-                        onChange={(e) => updateResource(resource.id, 'title', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg font-semibold"
-                        placeholder="Titre de la ressource"
-                      />
-                      <select
-                        value={resource.type}
-                        onChange={(e) => updateResource(resource.id, 'type', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                      >
-                        <option value="Document">Document</option>
-                        <option value="PDF">PDF</option>
-                        <option value="Présentation">Présentation</option>
-                        <option value="Feuille de calcul">Feuille de calcul</option>
-                        <option value="Vidéo">Vidéo</option>
-                        <option value="Autre">Autre</option>
-                      </select>
-                      <textarea
-                        value={resource.description}
-                        onChange={(e) => updateResource(resource.id, 'description', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                        rows={2}
-                        placeholder="Description de la ressource"
-                      />
-
-                      <div className="space-y-2">
-                        <label className="block text-sm font-semibold text-gray-700">
-                          Uploader un document
-                        </label>
-                        <label className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 cursor-pointer transition-colors bg-gray-50 hover:bg-blue-50">
-                          <FileText size={20} className="text-gray-600" />
-                          <span className="text-sm text-gray-600">
-                            {resource.fileName || 'Choisir un fichier'}
-                          </span>
-                          <input
-                            type="file"
-                            accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt"
-                            onChange={(e) => handleDocumentUpload(resource.id, e)}
-                            className="hidden"
-                          />
-                        </label>
-                        {resource.fileName && (
-                          <p className="text-xs text-green-600">✓ Fichier uploadé: {resource.fileName}</p>
-                        )}
-                      </div>
-
-                      <div className="space-y-2">
-                        <label className="block text-sm font-semibold text-gray-700">
-                          Lien Google Drive (optionnel)
-                        </label>
-                        <input
-                          type="url"
-                          value={resource.driveUrl}
-                          onChange={(e) => updateResource(resource.id, 'driveUrl', e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                          placeholder="https://drive.google.com/file/d/..."
-                        />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        {resource.driveUrl && (
-                          <a
-                            href={resource.driveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-sm"
-                          >
-                            <LinkIcon size={16} />
-                            Tester le lien
-                          </a>
-                        )}
-                        <button
-                          onClick={() => deleteResource(resource.id)}
-                          className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors ml-auto"
-                        >
-                          <Trash2 size={18} />
-                          Supprimer
+                        <input type="date" value={item.date} onChange={(e) => updateGalleryItem(item.id, 'date', e.target.value)} className="px-3 py-2 border border-gray-300 rounded-lg" />
+                        <button onClick={() => deleteGalleryItem(item.id)} className="text-red-600 hover:text-red-800 p-2">
+                          <Trash2 size={20} />
                         </button>
                       </div>
                     </div>
                   </div>
                 ))}
-                {resources.length === 0 && (
-                  <p className="text-center text-gray-500 py-8">Aucune ressource. Cliquez sur "Ajouter" pour créer une ressource.</p>
-                )}
+                {galleryItems.length === 0 && <p className="text-gray-500 italic text-center col-span-2 py-8">Aucune image.</p>}
               </div>
             </div>
           )}
 
+          {/* SETTINGS TAB */}
           {activeTab === 'settings' && (
             <div>
               <h2 className="text-2xl font-bold text-gray-800 mb-6">Paramètres de connexion</h2>
-
               {!isEditingCredentials ? (
                 <div className="space-y-4">
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <p className="text-sm text-blue-800 mb-2">
-                      <strong>Email actuel :</strong> {adminEmail}
-                    </p>
-                    <p className="text-sm text-blue-800">
-                      <strong>Mot de passe :</strong> ••••••••
-                    </p>
+                    <p className="text-sm text-blue-800 mb-2"><strong>Email admin :</strong> {adminEmail}</p>
+                    <p className="text-sm text-blue-800"><strong>Mot de passe :</strong> ••••••••</p>
                   </div>
-                  <button
-                    onClick={() => setIsEditingCredentials(true)}
-                    className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                  >
-                    <Edit size={20} />
-                    Modifier les identifiants
+                  <button onClick={() => setIsEditingCredentials(true)} className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    <Edit size={20} /> Modifier
                   </button>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-4 max-w-md">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Nouvel email
-                    </label>
-                    <input
-                      type="email"
-                      value={adminEmail}
-                      onChange={(e) => setAdminEmail(e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg"
-                      placeholder="admin@cceabt.org"
-                    />
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Nouvel email</label>
+                    <input type="email" value={adminEmail} onChange={(e) => setAdminEmail(e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Nouveau mot de passe
-                    </label>
-                    <input
-                      type="text"
-                      value={adminPassword}
-                      onChange={(e) => setAdminPassword(e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg"
-                      placeholder="Nouveau mot de passe"
-                    />
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Nouveau mot de passe</label>
+                    <input type="text" value={adminPassword} onChange={(e) => setAdminPassword(e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-lg" />
                   </div>
                   <div className="flex gap-3">
-                    <button
-                      onClick={saveCredentials}
-                      className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
-                    >
-                      <Save size={20} />
-                      Sauvegarder
+                    <button onClick={saveCredentials} className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                      <Save size={20} /> Enregistrer
                     </button>
-                    <button
-                      onClick={() => setIsEditingCredentials(false)}
-                      className="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-400 transition-colors"
-                    >
-                      Annuler
-                    </button>
-                  </div>
-                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                    <p className="text-sm text-yellow-800">
-                      ⚠️ <strong>Important :</strong> Notez bien vos nouveaux identifiants. Vous en aurez besoin pour vous reconnecter.
-                    </p>
+                    <button onClick={() => setIsEditingCredentials(false)} className="px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Annuler</button>
                   </div>
                 </div>
               )}
             </div>
           )}
+
         </div>
       </div>
     </div>

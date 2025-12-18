@@ -10,9 +10,12 @@ import Partners from './pages/Partners';
 import Admin from './pages/Admin';
 import Resources from './pages/Resources';
 
+import ScrollToTop from './components/ScrollToTop';
+
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="min-h-screen bg-white flex flex-col">
         <Header />
         <main className="flex-grow pt-24">

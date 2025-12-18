@@ -11,11 +11,11 @@ export default function Contact() {
             Notre équipe est à votre écoute pour répondre à vos questions et vous accompagner dans vos projets.
           </p>
         </div>
-        
+
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <ContactForm className="w-full" />
         </div>
-        
+
         <div className="mt-12 bg-blue-50 rounded-xl p-8 text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Autres moyens de nous contacter</h2>
           <div className="grid md:grid-cols-3 gap-6 mt-6">
@@ -28,7 +28,7 @@ export default function Contact() {
                 contact@cceabt.org
               </a>
             </div>
-            
+
             <div className="bg-white p-6 rounded-lg shadow">
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Phone className="text-blue-600" size={28} />
@@ -43,7 +43,7 @@ export default function Contact() {
                 </a>
               </div>
             </div>
-            
+
             <div className="bg-white p-6 rounded-lg shadow">
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <MapPin className="text-blue-600" size={28} />

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowRight, Droplet, Users, TrendingUp, Lightbulb, Sparkles, X, Megaphone, Droplets, GraduationCap, Award, Target } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 import ContactForm from '../components/ContactForm';
 import DonationModal from '../components/DonationModal';
@@ -32,12 +32,12 @@ export default function Home() {
           <div className="max-w-5xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full mb-10 animate-fade-in">
               <Sparkles className="text-yellow-300" size={20} />
-              <span className="text-base font-bold text-white">{t('home.hero_tagline')}</span>
+              <span className="text-base font-bold text-white">CCEABT, parce qu'un avenir sain commence par une eau propre!</span>
             </div>
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-12 leading-tight animate-slide-up">
               <span className="bg-gradient-to-r from-blue-200 to-green-200 bg-clip-text text-transparent">
-                {t('home.hero_title')} <span className="text-yellow-400">{t('home.hero_title_suffix')}</span>
+                {t('home.hero_title')} <span className="text-yellow-400">universel</span>
               </span>
               <br />
               <span className="text-white">{t('home.hero_subtitle')}</span>
@@ -75,14 +75,14 @@ export default function Home() {
             <div className="text-center mb-12">
               <div className="inline-flex items-center gap-3 bg-blue-100 px-6 py-3 rounded-full mb-4">
                 <Lightbulb className="text-blue-600" size={28} />
-                <span className="text-blue-600 font-semibold">{t('home.mission_tag')}</span>
+                <span className="text-blue-600 font-semibold">Notre mission</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">{t('home.mission_title')}</h2>
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Qui sommes-nous ?</h2>
               <p className="text-xl text-gray-700 mb-4 leading-relaxed max-w-4xl mx-auto">
-                <Trans i18nKey="home.mission_text_1" components={[<span className="text-blue-600 font-semibold" key="0" />]} />
+                Le CCEABT est une <span className="text-blue-600 font-semibold">plateforme nationale de la société civile</span> regroupant plus de 40 organisations actives dans les domaines de l'eau, de l'hygiène et de l'assainissement.
               </p>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                {t('home.mission_text_2')}
+                Nous œuvrons ensemble pour influencer les politiques publiques, renforcer les capacités locales et améliorer les conditions de vie des communautés.
               </p>
             </div>
 
@@ -91,25 +91,25 @@ export default function Home() {
                 <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                   <Droplet className="text-blue-600" size={40} />
                 </div>
-                <h3 className="text-5xl font-bold text-blue-600 mb-3 group-hover:scale-110 transition-transform">{t('home.stats_water_value')}</h3>
-                <p className="text-gray-700 font-medium">{t('home.stats_water_label')}</p>
+                <h3 className="text-5xl font-bold text-blue-600 mb-3 group-hover:scale-110 transition-transform">60%</h3>
+                <p className="text-gray-700 font-medium">de desserte nationale en eau potable</p>
                 <p className="text-sm text-gray-500 mt-2">(2020)</p>
               </div>
               <div className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 text-center border-t-4 border-green-600 hover:-translate-y-2">
                 <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                   <Users className="text-green-600" size={40} />
                 </div>
-                <h3 className="text-5xl font-bold text-green-600 mb-3 group-hover:scale-110 transition-transform">{t('home.stats_members_value')}</h3>
-                <p className="text-gray-700 font-medium">{t('home.stats_members_label')}</p>
-                <p className="text-sm text-gray-500 mt-2">{t('home.stats_members_sub')}</p>
+                <h3 className="text-5xl font-bold text-green-600 mb-3 group-hover:scale-110 transition-transform">40+</h3>
+                <p className="text-gray-700 font-medium">ONG et associations membres</p>
+                <p className="text-sm text-gray-500 mt-2">actives</p>
               </div>
               <div className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 text-center border-t-4 border-purple-600 hover:-translate-y-2">
                 <div className="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                   <TrendingUp className="text-purple-600" size={40} />
                 </div>
-                <h3 className="text-5xl font-bold text-purple-600 mb-3 group-hover:scale-110 transition-transform">{t('home.stats_years_value')}</h3>
-                <p className="text-gray-700 font-medium">{t('home.stats_years_label')}</p>
-                <p className="text-sm text-gray-500 mt-2">{t('home.stats_years_sub')}</p>
+                <h3 className="text-5xl font-bold text-purple-600 mb-3 group-hover:scale-110 transition-transform">10+</h3>
+                <p className="text-gray-700 font-medium">ans d'action citoyenne</p>
+                <p className="text-sm text-gray-500 mt-2">pour l'eau et l'assainissement</p>
               </div>
             </div>
           </div>
@@ -120,9 +120,9 @@ export default function Home() {
       <section className="py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">{t('home.axes_title')}</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Nos axes d'action</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {t('home.axes_subtitle')}
+              Quatre piliers pour transformer l'accès à l'eau et à l'hygiène au Togo
             </p>
           </div>
 
@@ -133,9 +133,9 @@ export default function Home() {
                 <div className="bg-blue-600 text-white w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:rotate-6 transition-transform">
                   <Megaphone size={32} />
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">{t('home.axis_1_title')}</h3>
-                <p className="text-gray-700 leading-relaxed mb-2">{t('home.axis_1_desc')}</p>
-                <p className="text-gray-600 text-sm leading-relaxed">{t('home.axis_1_sub')}</p>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">Plaidoyer & influence politique</h3>
+                <p className="text-gray-700 leading-relaxed mb-2">Défendre le droit à l'eau, à l'hygiène et à l'assainissement pour tous.</p>
+                <p className="text-gray-600 text-sm leading-relaxed">Faire de l'accès à l'eau un droit fondamental reconnu et respecté à tous les niveaux de décision.</p>
               </div>
             </div>
 
@@ -145,9 +145,9 @@ export default function Home() {
                 <div className="bg-green-600 text-white w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:rotate-6 transition-transform">
                   <Droplet size={32} />
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">{t('home.axis_2_title')}</h3>
-                <p className="text-gray-700 leading-relaxed mb-2">{t('home.axis_2_desc')}</p>
-                <p className="text-gray-600 text-sm leading-relaxed">{t('home.axis_2_sub')}</p>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">Eau potable & gestion durable</h3>
+                <p className="text-gray-700 leading-relaxed mb-2">Protéger la ressource, moderniser les infrastructures et encourager une gestion responsable.</p>
+                <p className="text-gray-600 text-sm leading-relaxed">Garantir à chaque Togolais une eau sûre aujourd'hui, et pour les générations futures.</p>
               </div>
             </div>
 
@@ -157,9 +157,9 @@ export default function Home() {
                 <div className="bg-purple-600 text-white w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:rotate-6 transition-transform">
                   <Droplets size={32} />
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">{t('home.axis_3_title')}</h3>
-                <p className="text-gray-700 leading-relaxed mb-2">{t('home.axis_3_desc')}</p>
-                <p className="text-gray-600 text-sm leading-relaxed">{t('home.axis_3_sub')}</p>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">Assainissement & hygiène</h3>
+                <p className="text-gray-700 leading-relaxed mb-2">Mettre fin à la défécation à l'air libre et promouvoir des pratiques saines.</p>
+                <p className="text-gray-600 text-sm leading-relaxed">Offrir à chaque communauté un environnement propre, sûr et digne.</p>
               </div>
             </div>
 
@@ -169,9 +169,9 @@ export default function Home() {
                 <div className="bg-yellow-600 text-white w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:rotate-6 transition-transform">
                   <GraduationCap size={32} />
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">{t('home.axis_4_title')}</h3>
-                <p className="text-gray-700 leading-relaxed mb-2">{t('home.axis_4_desc')}</p>
-                <p className="text-gray-600 text-sm leading-relaxed">{t('home.axis_4_sub')}</p>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">Renforcement de capacités</h3>
+                <p className="text-gray-700 leading-relaxed mb-2">Former et outiller les acteurs communautaires et les ONG membres.</p>
+                <p className="text-gray-600 text-sm leading-relaxed">Donner aux acteurs locaux les moyens d'agir durablement pour l'eau et l'hygiène.</p>
               </div>
             </div>
           </div>

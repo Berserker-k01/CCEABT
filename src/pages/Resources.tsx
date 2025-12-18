@@ -1,14 +1,15 @@
 import { useState, useMemo } from 'react';
 import { Search, Filter, Download, FileText, Calendar, Tag, User } from 'lucide-react';
-import { resources } from '../data/resources';
+import { useData } from '../context/DataContext';
 
 export default function Resources() {
+    const { resources } = useData();
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedTheme, setSelectedTheme] = useState<string>('all');
     const [selectedYear, setSelectedYear] = useState<string>('all');
 
     const themes = Array.from(new Set(resources.map(r => r.theme))).sort();
-    const years = Array.from(new Set(resources.map(r => r.year))).sort((a, b) => b - a);
+    const years = Array.from(new Set(resources.map(r => r.year))).sort((a, b) => Number(b) - Number(a));
 
     const filteredResources = useMemo(() => {
         return resources.filter(resource => {
@@ -162,10 +163,15 @@ export default function Resources() {
                                             </p>
                                         </div>
                                         <div className="flex-shrink-0 flex items-center">
-                                            <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition-colors font-medium text-sm">
+                                            <a
+                                                href={resource.downloadUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition-colors font-medium text-sm"
+                                            >
                                                 <Download size={16} />
                                                 Télécharger
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 ))}
