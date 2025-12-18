@@ -1,18 +1,26 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { t } = useTranslation();
 
   const navItems = [
-    { name: 'Accueil', path: '/' },
-    { name: 'À propos & Nos actions', path: '/about' },
-    { name: 'Réseau & Partenaires', path: '/network' },
-    { name: 'Actualités', path: '/news' },
-    { name: 'Contact', path: '/contact' },
+    { name: t('header.home'), path: '/' },
+    { name: t('header.about'), path: '/about' },
+    { name: t('header.network'), path: '/network' },
+    { name: t('header.news'), path: '/news' },
+    { name: t('header.contact'), path: '/contact' },
   ];
+
+  /* 
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
+  */
 
   const scrollToTop = () => {
     window.scrollTo(0, 0);
@@ -44,14 +52,14 @@ export default function Header() {
           <nav className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
               <Link
-                key={item.name}
+                key={item.path}
                 to={item.path}
                 onClick={scrollToTop}
                 className={`relative font-semibold transition-all duration-300 px-3 py-2 rounded-lg ${location.pathname === item.path
-                    ? 'text-white bg-blue-700 shadow-lg'
-                    : item.path === '/network'
-                      ? 'text-green-600 hover:text-green-700 hover:bg-green-50'
-                      : 'text-cceabt-blue hover:text-cceabt-green hover:bg-blue-50'
+                  ? 'text-white bg-blue-700 shadow-lg'
+                  : item.path === '/network'
+                    ? 'text-green-600 hover:text-green-700 hover:bg-green-50'
+                    : 'text-cceabt-blue hover:text-cceabt-green hover:bg-blue-50'
                   }`}
               >
                 {item.name}
@@ -73,15 +81,15 @@ export default function Header() {
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4">
             {navItems.map((item) => (
               <Link
-                key={item.name}
+                key={item.path}
                 to={item.path}
                 onClick={() => {
                   setIsMenuOpen(false);
                   scrollToTop();
                 }}
                 className={`text-left font-medium transition-colors duration-200 ${location.pathname === item.path
-                    ? 'text-cceabt-blue font-bold'
-                    : 'text-cceabt-blue hover:text-cceabt-blue hover:text-glow-blue'
+                  ? 'text-cceabt-blue font-bold'
+                  : 'text-cceabt-blue hover:text-cceabt-blue hover:text-glow-blue'
                   }`}
               >
                 {item.name}

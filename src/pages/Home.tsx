@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { ArrowRight, Droplet, Users, TrendingUp, Lightbulb, Sparkles, X, Megaphone, Droplets, GraduationCap, Award, Target } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import ContactForm from '../components/ContactForm';
 
 export default function Home() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   return (
     <div>
@@ -15,7 +17,7 @@ export default function Home() {
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: "url('/images/back%20cceabt.jpeg'), url('/images/hero-cceabt.jpg')",
+              backgroundImage: "url('/images/back%20cceabt.jpeg'), url('/images/1.jpg')",
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               filter: 'brightness(1.15) contrast(1.1) saturate(1.1)',
@@ -32,10 +34,10 @@ export default function Home() {
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-12 leading-tight animate-slide-up">
               <span className="bg-gradient-to-r from-blue-200 to-green-200 bg-clip-text text-transparent">
-                Pour un accès <span className="text-yellow-400">universel</span>
+                {t('home.hero_title')} <span className="text-yellow-400">universel</span>
               </span>
               <br />
-              <span className="text-white">à l'eau et à l'hygiène</span>
+              <span className="text-white">{t('home.hero_subtitle')}</span>
             </h1>
 
             <div className="flex flex-wrap gap-4 justify-center animate-fade-in mt-20" style={{ animationDelay: '0.4s' }}>
@@ -43,17 +45,17 @@ export default function Home() {
                 onClick={() => navigate('/about')}
                 className="group bg-white text-green-600 px-8 py-4 rounded-full font-bold hover:shadow-2xl transition-all duration-300 shadow-lg flex items-center gap-2 hover:scale-105"
               >
-                Découvrir le CCEABT
+                {t('home.discover_btn')}
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <button
                 onClick={() => navigate('/network')}
                 className="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105"
               >
-                Rejoindre le réseau
+                {t('home.join_btn')}
               </button>
               <button className="bg-white text-green-600 px-8 py-4 rounded-full font-bold hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105">
-                Faire un don
+                {t('home.donate_btn')}
               </button>
             </div>
           </div>

@@ -3,10 +3,13 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MembershipForm from '../components/MembershipForm';
 
+import { useNavigate } from 'react-router-dom';
+
 export default function Network() {
+  const navigate = useNavigate();
   const [isMembershipModalOpen, setIsMembershipModalOpen] = useState(false);
   const members = [
-    'PADIE', 'JVE', 'HSF', 'STADD', 'Plan International', 'Eau Vive', 'CRS', 
+    'PADIE', 'JVE', 'HSF', 'STADD', 'Plan International', 'Eau Vive', 'CRS',
     'WEP-Togo', 'PNJE', 'ADESCO', 'SOS VITA', 'AFHON', 'ANAD', 'APEL',
     'ATBEF', 'CDJP', 'CERF', 'CLEF', 'CRAD', 'FDR', 'GRADH',
     'IHEDA', 'RAFIA', 'RAJS', 'ROSE', 'UONGTO', 'WADR'
@@ -35,9 +38,9 @@ export default function Network() {
       <section className="relative text-white py-32 overflow-hidden">
         {/* Image de fond */}
         <div className="absolute inset-0">
-          <img 
-            src="/images/2.webp" 
-            alt="Réseau & Partenaires" 
+          <img
+            src="/images/2.webp"
+            alt="Réseau & Partenaires"
             className="w-full h-full object-cover"
             style={{
               objectPosition: 'center 40%',
@@ -52,14 +55,14 @@ export default function Network() {
           />
           <div className="absolute inset-0 bg-black/10"></div>
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full mb-6 animate-fade-in">
               <Users className="text-blue-300" size={20} />
               <span className="text-sm font-semibold">Un réseau solidaire pour l'accès à l'eau</span>
             </div>
-            
+
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight animate-slide-up">
               <span className="bg-gradient-to-r from-blue-200 to-green-200 bg-clip-text text-transparent">
                 Réseau & Partenaires
@@ -100,16 +103,19 @@ export default function Network() {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {members.map((member, index) => (
-                <div 
+                <div
                   key={index}
                   className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center font-semibold text-gray-700 border-2 border-green-100 hover:border-green-300"
                 >
                   {member}
                 </div>
               ))}
-              <div className="bg-gradient-to-br from-green-100 to-blue-100 p-4 rounded-lg shadow-md text-center font-semibold text-gray-600 border-2 border-dashed border-green-300 flex items-center justify-center">
+              <button
+                onClick={() => navigate('/partners')}
+                className="bg-gradient-to-br from-green-100 to-blue-100 p-4 rounded-lg shadow-md text-center font-semibold text-gray-600 border-2 border-dashed border-green-300 flex items-center justify-center hover:scale-105 transition-transform w-full h-full"
+              >
                 + et bien d'autres...
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -123,7 +129,7 @@ export default function Network() {
               <Handshake className="text-blue-600" size={40} />
               <h2 className="text-3xl font-bold text-gray-800">Partenaires techniques & financiers</h2>
             </div>
-            
+
             <div className="grid md:grid-cols-3 gap-6 mb-8">
               <div className="bg-blue-50 p-6 rounded-lg">
                 <div className="flex items-center gap-3 mb-4">
@@ -199,7 +205,7 @@ export default function Network() {
             <p className="text-gray-700 mb-6">
               Accédez à nos guides pratiques, rapports d'études, documents de plaidoyer et publications.
             </p>
-            
+
             <div className="space-y-4 mb-8">
               {resources.map((resource, index) => (
                 <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-center justify-between">
@@ -219,13 +225,13 @@ export default function Network() {
             </div>
 
             <div className="text-center">
-              <a 
-                href="#" 
+              <button
+                onClick={() => navigate('/resources')}
                 className="inline-flex items-center gap-2 bg-green-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition-colors shadow-lg"
               >
                 <FileText size={24} />
-                Accéder à nos ressources (Google Drive)
-              </a>
+                Accéder à nos ressources
+              </button>
             </div>
           </div>
         </div>
@@ -240,7 +246,7 @@ export default function Network() {
             Vous êtes une organisation, une institution ou un partenaire souhaitant agir pour un Togo plus propre et plus sain ?
             Rejoignez notre réseau dès aujourd'hui.
           </p>
-          <button 
+          <button
             onClick={() => setIsMembershipModalOpen(true)}
             className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all shadow-lg text-lg hover:scale-105 transform"
           >
@@ -262,7 +268,7 @@ export default function Network() {
                 className="fixed inset-0 bg-black/50 backdrop-blur-sm"
                 onClick={() => setIsMembershipModalOpen(false)}
               />
-              
+
               {/* Contenu de la modale */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -277,7 +283,7 @@ export default function Network() {
                 >
                   <X className="h-6 w-6" />
                 </button>
-                
+
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
                     <MembershipForm onClose={() => setIsMembershipModalOpen(false)} />

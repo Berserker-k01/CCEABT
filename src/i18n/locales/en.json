@@ -1,0 +1,17 @@
+{
+    "header": {
+        "home": "Home",
+        "about": "About & Actions",
+        "network": "Network & Partners",
+        "news": "News",
+        "contact": "Contact",
+        "resources": "Resources"
+    },
+    "home": {
+        "hero_title": "For universal access",
+        "hero_subtitle": "to water and hygiene",
+        "discover_btn": "Discover CCEABT",
+        "join_btn": "Join the network",
+        "donate_btn": "Donate"
+    }
+}

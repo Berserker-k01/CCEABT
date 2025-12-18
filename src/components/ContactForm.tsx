@@ -1,6 +1,6 @@
 import { useState, useRef, ChangeEvent, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Phone, MapPin, Facebook, Linkedin, Send, CheckCircle, AlertCircle, Loader2, Upload, X } from 'lucide-react';
+import { Mail, Phone, Facebook, Linkedin, Send, CheckCircle, AlertCircle, Loader2, Upload, X } from 'lucide-react';
 
 type FormData = {
   name: string;
@@ -36,29 +36,29 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
-    
+
     if (!formData.name.trim()) {
       newErrors.name = 'Le nom est requis';
     } else if (formData.name.trim().length < 2) {
       newErrors.name = 'Le nom doit contenir au moins 2 caractères';
     }
-    
+
     if (!formData.email) {
       newErrors.email = 'L\'email est requis';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Veuillez entrer un email valide';
     }
-    
+
     if (!formData.subject) {
       newErrors.subject = 'Veuillez sélectionner un sujet';
     }
-    
+
     if (!formData.message.trim()) {
       newErrors.message = 'Le message est requis';
     } else if (formData.message.trim().length < 10) {
       newErrors.message = 'Le message doit contenir au moins 10 caractères';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -69,7 +69,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => {
@@ -95,7 +95,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
         attachment: file
       }));
       setFileName(file.name);
-      
+
       if (errors.attachment) {
         setErrors(prev => {
           const newErrors = { ...prev };
@@ -119,17 +119,17 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       // Reset form
       setFormData({
         name: '',
@@ -142,13 +142,13 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
-      
+
       setIsSubmitted(true);
       setTimeout(() => {
         setIsSubmitted(false);
         if (onClose) onClose();
       }, 3000);
-      
+
     } catch (error) {
       console.error('Error submitting form:', error);
       setErrors(prev => ({
@@ -175,10 +175,10 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
             </button>
           )}
         </div>
-        
+
         <AnimatePresence>
           {isSubmitted ? (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-8"
@@ -193,7 +193,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
             <form onSubmit={handleSubmit} className="space-y-5">
               <AnimatePresence>
                 {errors.submit && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
@@ -393,27 +393,27 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
           )}
         </AnimatePresence>
       </div>
-      
+
       <div className="bg-gray-50 px-6 py-4 border-t border-gray-200">
         <div className="flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
           <div className="flex items-center space-x-4">
-            <a 
-              href="mailto:contact@cceabt.org" 
+            <a
+              href="mailto:contact@cceabt.org"
               className="text-gray-600 hover:text-blue-600 transition-colors flex items-center"
             >
               <Mail className="mr-2" size={16} />
               <span className="text-sm">contact@cceabt.org</span>
             </a>
             <div className="space-y-2">
-              <a 
-                href="tel:+22891359398" 
+              <a
+                href="tel:+22891359398"
                 className="text-gray-600 hover:text-blue-600 transition-colors flex items-center"
               >
                 <Phone className="mr-2" size={16} />
                 <span className="text-sm">+228 91 35 93 98</span>
               </a>
-              <a 
-                href="tel:+22890227855" 
+              <a
+                href="tel:+22890227855"
                 className="text-gray-600 hover:text-blue-600 transition-colors flex items-center"
               >
                 <Phone className="mr-2" size={16} />
@@ -422,18 +422,18 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
             </div>
           </div>
           <div className="flex space-x-3">
-            <a 
-              href="https://facebook.com/cceabt" 
-              target="_blank" 
+            <a
+              href="https://facebook.com/cceabt"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 hover:text-blue-600 transition-colors"
               aria-label="Facebook"
             >
               <Facebook size={20} />
             </a>
-            <a 
-              href="https://linkedin.com/company/cceabt" 
-              target="_blank" 
+            <a
+              href="https://linkedin.com/company/cceabt"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 hover:text-blue-600 transition-colors"
               aria-label="LinkedIn"

@@ -8,6 +8,7 @@ import News from './pages/News';
 import Contact from './pages/Contact';
 import Partners from './pages/Partners';
 import Admin from './pages/Admin';
+import Resources from './pages/Resources';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/partners" element={<Partners />} />
             <Route path="/cceabtadmin" element={<Admin />} />
+            <Route path="/resources" element={<Resources />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
