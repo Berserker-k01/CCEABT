@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Trash2, FileText, Handshake, Building2, Users, LogOut, Lock, Eye, EyeOff, Save, Upload, Edit, X, CheckCircle } from 'lucide-react';
+import { Plus, Trash2, LogOut, Lock, Eye, EyeOff, Save, Upload, Edit } from 'lucide-react';
 
 // Interface pour la Galerie (non gérée par DataContext pour l'instant)
 interface GalleryItem {
@@ -13,24 +13,22 @@ interface GalleryItem {
 }
 
 export default function Admin() {
+  const { news, partners, galleryItems, addNews, updateNews, deleteNews, addPartner, updatePartner, deletePartner, setGalleryItems, addResource, deleteResource, resources, submissions, deleteSubmission, updateSubmissionStatus } = useData();
   const navigate = useNavigate();
-  const { driveUrl, setDriveUrl, news, addNews, deleteNews, updateNews, resources, addResource, deleteResource, partners, addPartner, deletePartner, updatePartner, setPartners, initialPartners, submissions, deleteSubmission, updateSubmissionStatus } = useData();
-  const [activeTab, setActiveTab] = useState<'news' | 'resources' | 'partners' | 'gallery' | 'settings' | 'submissions'>('news');
 
   // Auth State
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
-  // Admin Credentials
-  const [adminEmail, setAdminEmail] = useState('');
-  const [adminPassword, setAdminPassword] = useState('');
+  // Admin Settings
+  const [adminEmail, setAdminEmail] = useState('admin@cceabt.org');
+  const [adminPassword, setAdminPassword] = useState('admin123');
   const [isEditingCredentials, setIsEditingCredentials] = useState(false);
 
-  // Gallery State (Local Storage Only)
-  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
+  const [activeTab, setActiveTab] = useState<'news' | 'partners' | 'gallery' | 'resources' | 'settings'>('news');
 
   // Form States (New Logic)
   const [newsForm, setNewsForm] = useState({ title: '', category: '', date: '', image: '', excerpt: '', content: '' });
@@ -275,7 +273,7 @@ export default function Admin() {
         {/* Tabs */}
         <div className="bg-white rounded-lg shadow-md mb-6">
           <div className="flex border-b overflow-x-auto">
-            {['news', 'partners', 'gallery', 'resources', 'submissions', 'settings'].map((tab) => (
+            {['news', 'partners', 'gallery', 'resources', 'settings'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
@@ -288,16 +286,6 @@ export default function Admin() {
                 {tab === 'partners' && 'Partenaires'}
                 {tab === 'gallery' && 'Galerie'}
                 {tab === 'resources' && 'Ressources'}
-                {tab === 'submissions' && (
-                  <>
-                    Collecte de données
-                    {submissions.filter(s => s.status === 'en_attente').length > 0 && (
-                      <span className="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full animate-pulse shadow-sm">
-                        {submissions.filter(s => s.status === 'en_attente').length}
-                      </span>
-                    )}
-                  </>
-                )}
                 {tab === 'settings' && 'Paramètres'}
               </button>
             ))}
@@ -696,133 +684,6 @@ export default function Admin() {
                   </div>
                 ))}
                 {galleryItems.length === 0 && <p className="text-gray-500 italic text-center col-span-2 py-8">Aucune image.</p>}
-              </div>
-            </div>
-          )}
-
-          {/* SUBMISSIONS TAB */}
-          {activeTab === 'submissions' && (
-            <div className="space-y-6">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-800">Données collectées via le portail</h2>
-                  <p className="text-sm text-gray-500">Suivi des rapports et indicateurs WASH transmis par les partenaires</p>
-                </div>
-                <div className="flex gap-2 bg-gray-100 p-1 rounded-xl">
-                  {['tous', 'en_attente', 'reussi', 'echoue'].map(f => (
-                    <button
-                      key={f}
-                      onClick={() => setSubmissionFilter(f as any)}
-                      className={`px-4 py-2 rounded-lg text-xs font-bold uppercase transition-all ${submissionFilter === f ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-                    >
-                      {f === 'reussi' ? 'Réussis' : f === 'echoue' ? 'Échoués' : f.replace('_', ' ')}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="grid gap-6">
-                {submissions
-                  .filter(s => submissionFilter === 'tous' || s.status === submissionFilter)
-                  .map(sub => (
-                    <div key={sub.id} className="bg-white border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                      <div className="p-6">
-                        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-                          <div className="flex items-center gap-4">
-                            <div className="bg-blue-600 text-white w-12 h-12 rounded-xl flex items-center justify-center font-bold">
-                              {sub.partnerName.substring(0, 2).toUpperCase()}
-                            </div>
-                            <div>
-                              <h3 className="text-xl font-bold text-gray-900">{sub.projectTitle}</h3>
-                              <div className="flex items-center gap-2">
-                                <p className="text-gray-500 font-medium">{sub.partnerName}</p>
-                                <span className="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold uppercase">
-                                  {partners.find(p => p.name === sub.partnerName)?.type || 'Membre'}
-                                </span>
-                              </div>
-                              <p className="text-xs text-gray-400 mt-1">{sub.date}</p>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase ${sub.status === 'reussi' ? 'bg-green-100 text-green-700' :
-                              sub.status === 'echoue' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
-                              }`}>
-                              {sub.status === 'reussi' ? 'Upload Réussi' : sub.status === 'echoue' ? 'Upload Échoué' : 'En attente'}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="grid md:grid-cols-4 gap-6 bg-gray-50 p-6 rounded-2xl mb-6">
-                          <div>
-                            <p className="text-xs text-gray-500 font-bold uppercase mb-1">Localisation</p>
-                            <p className="text-gray-800 font-semibold">{sub.location}</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-gray-500 font-bold uppercase mb-1">Période</p>
-                            <p className="text-gray-800 font-semibold">{sub.period}</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-gray-500 font-bold uppercase mb-1">Bénéficiaires</p>
-                            <p className="text-blue-600 font-bold text-lg">{sub.beneficiaries.toLocaleString()}</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-gray-500 font-bold uppercase mb-1">Budget</p>
-                            <p className="text-green-600 font-bold text-lg">{sub.budget}</p>
-                          </div>
-                        </div>
-
-                        <div className="mb-6">
-                          <p className="text-xs text-gray-500 font-bold uppercase mb-2">Détails techniques & Indicateurs</p>
-                          <p className="text-gray-700 whitespace-pre-wrap leading-relaxed bg-white border border-gray-100 p-4 rounded-xl">{sub.details}</p>
-                        </div>
-
-                        {sub.attachment && (
-                          <div className="mb-6">
-                            <p className="text-xs text-gray-500 font-bold uppercase mb-2">Pièce jointe</p>
-                            <a
-                              href={sub.attachment}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-xl border border-blue-100 hover:bg-blue-100 transition-colors font-medium text-sm"
-                            >
-                              <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-4 h-4" />
-                              Consulter le rapport sur Drive
-                            </a>
-                          </div>
-                        )}
-
-                        <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t">
-                          <div className="flex gap-2">
-                            <button
-                              onClick={() => updateSubmissionStatus(sub.id, 'reussi')}
-                              className="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center gap-2 text-sm"
-                            >
-                              <CheckCircle size={16} /> Marquer comme Réussi
-                            </button>
-                            <button
-                              onClick={() => updateSubmissionStatus(sub.id, 'echoue')}
-                              className="bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600 transition-colors flex items-center gap-2 text-sm"
-                            >
-                              <X size={16} /> Marquer comme Échoué
-                            </button>
-                          </div>
-                          <button
-                            onClick={() => { if (confirm('Supprimer définitivement ce rapport ?')) deleteSubmission(sub.id) }}
-                            className="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition-colors"
-                          >
-                            <Trash2 size={20} />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-
-                {submissions.length === 0 && (
-                  <div className="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
-                    <FileText className="mx-auto text-gray-300 mb-4" size={64} />
-                    <p className="text-xl text-gray-500 font-medium">Aucune soumission reçue pour le moment.</p>
-                  </div>
-                )}
               </div>
             </div>
           )}

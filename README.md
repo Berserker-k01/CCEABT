@@ -1,56 +1,11 @@
-# 📚 CCEABT - Documentation Complète
+# 📚 CCEABT - Documentation
 
 ## 🎯 Vue d'Ensemble du Projet
 
-Site web professionnel pour le CCEABT (Conseil de Concertation pour l'Eau et l'Assainissement de Base au Togo) avec système de collecte de données via Google Drive.
+Site web professionnel pour le CCEABT (Conseil de Concertation pour l'Eau et l'Assainissement de Base au Togo).
+Le projet est un site web statique en **React** (Vite).
 
----
-
-## 📁 Structure de la Documentation
-
-### Pour le Développement Local
-
-1. **BACKEND_README.md**
-   - Architecture complète du système
-   - Flux de travail upload → Google Drive
-   - Technologies utilisées
-
-2. **backend/CONFIGURATION_GUIDE.md**
-   - Guide détaillé Google Cloud Console
-   - Configuration Service Account
-   - Setup Google Drive API
-   - Configuration `.env`
-
-3. **backend/QUICKSTART.md**
-   - Installation rapide (5 minutes)
-   - Commandes essentielles
-   - Tests de base
-
-### Pour le Déploiement Production
-
-4. **DEPLOIEMENT_LWS.md** ⭐
-   - Guide complet pour LWS
-   - Configuration DNS et SSL
-   - Setup Node.js sur LWS
-   - Configuration Apache (.htaccess)
-   - Tests de production
-
-5. **CHECKLIST_DEPLOIEMENT.md** ✅
-   - Checklist étape par étape
-   - Vérifications avant/après déploiement
-   - Tests fonctionnels
-   - Sécurité et performance
-
-### Scripts Utiles
-
-6. **build-for-lws.bat**
-   - Build automatique du projet
-   - Création de l'archive pour LWS
-   - Préparation backend
-
-7. **backend/create-env.bat**
-   - Création automatique du fichier `.env`
-   - Template pré-rempli
+La collecte de données partenaires se fait désormais simplement via un lien vers **Google Forms**.
 
 ---
 
@@ -59,163 +14,72 @@ Site web professionnel pour le CCEABT (Conseil de Concertation pour l'Eau et l'A
 ### Développement Local
 
 ```bash
-# 1. Backend
-cd backend
+# Installer les dépendances
 npm install
-# Configurez .env (voir CONFIGURATION_GUIDE.md)
-npm run dev
 
-# 2. Frontend (nouveau terminal)
-cd ..
-npm install
+# Démarrer le serveur de développement
 npm run dev
 ```
+
+L'application sera accessible sur `http://localhost:5173`.
 
 ### Build pour Production
 
 ```bash
-# Windows
-build-for-lws.bat
-
-# Ou manuellement
 npm run build
 ```
 
----
-
-## 📖 Guides par Cas d'Usage
-
-### Je veux développer en local
-1. Lisez `backend/QUICKSTART.md`
-2. Suivez `backend/CONFIGURATION_GUIDE.md` pour Google Drive
-3. Lancez `npm run dev` (frontend et backend)
-
-### Je veux déployer sur LWS
-1. Lisez `DEPLOIEMENT_LWS.md` en entier
-2. Utilisez `CHECKLIST_DEPLOIEMENT.md` pendant le déploiement
-3. Exécutez `build-for-lws.bat`
-4. Suivez les étapes du guide LWS
-
-### Je veux comprendre l'architecture
-1. Lisez `BACKEND_README.md`
-2. Consultez le code dans `/backend/server.js`
-3. Regardez `/src/pages/PartnerPortal.tsx`
+Cela génère un dossier `dist/` contenant les fichiers statiques prêts à être hébergés.
 
 ---
 
-## 🔑 Fichiers de Configuration Importants
+## 🌐 URLs du Projet (Local)
 
-### Développement
-- `backend/.env` - Credentials Google Drive (local)
-- `.env.production` - URL API pour le build
-
-### Production
-- `public/.htaccess` - Configuration Apache
-- `backend/.env` - Credentials sur le serveur LWS
-
----
-
-## 🌐 URLs du Projet
-
-### Développement
 - Frontend : http://localhost:5173
-- Backend : http://localhost:5000
-- API Health : http://localhost:5000/api/health
-
-### Production (à configurer)
-- Site : https://votre-domaine.com
-- API : https://api.votre-domaine.com
-- Portail : https://votre-domaine.com/portal
-- Admin : https://votre-domaine.com/cceabtadmin
+- Admin : http://localhost:5173/cceabtadmin
+- Portail Partenaire : http://localhost:5173/portal
 
 ---
 
-## 🔐 Credentials et Sécurité
+## 🔐 Configuration Admin
 
-### Fichiers Sensibles (NE JAMAIS COMMITER)
-- `backend/.env`
-- Fichier JSON du Service Account Google
-- Credentials admin
+Les identifiants par défaut pour le panneau d'administration sont :
 
-### Fichiers Protégés par .gitignore
-- `backend/.env`
-- `backend/node_modules/`
-- `backend/uploads/`
-- `dist/`
+- **Email** : `admin@cceabt.org`
+- **Mot de passe** : `admin123`
+
+⚠️ **Important** : Ces identifiants sont définis dans le code frontend (`Admin.tsx`) et ne sont pas stockés en base de données pour cette version statique.
 
 ---
 
-## 📞 Support et Ressources
+## 🛠️ Technologies Utilisées
 
-### Documentation Externe
-- [Google Drive API](https://developers.google.com/drive/api/v3/about-sdk)
-- [LWS Documentation](https://aide.lws.fr/)
-- [React Documentation](https://react.dev/)
-- [Express.js](https://expressjs.com/)
-
-### Support LWS
-- Email : support@lws.fr
-- Téléphone : +33 (0)1 77 62 30 03
-- Panel : https://panel.lws.fr/
+- **React** + **TypeScript** : Interface utilisateur
+- **Vite** : Build tool ultra-rapide
+- **Tailwind CSS** : Styling moderne
+- **Lucide React** : Icônes
+- **Framer Motion** : Animations
 
 ---
 
-## 🎓 Formation Équipe
+## 📁 Structure du Projet
 
-### Administrateurs
-- Accès : `/cceabtadmin`
-- Login par défaut : `admin` / `admin123` (À CHANGER !)
-- Fonctions : Gestion news, partenaires, soumissions
-
-### Partenaires
-- Accès : `/portal`
-- Login : Email + mot de passe (configuré par admin)
-- Fonction : Upload de rapports vers Google Drive
-
----
-
-## 🔄 Workflow de Mise à Jour
-
-### Mise à jour du Code
-
-```bash
-# 1. Développement local
-git pull
-npm install
-npm run dev
-
-# 2. Test des modifications
-
-# 3. Build pour production
-build-for-lws.bat
-
-# 4. Upload sur LWS (FTP/SSH)
-
-# 5. Redémarrer le backend Node.js
+```
+CCEABT/
+├── src/                       # Code source Frontend
+│   ├── pages/
+│   │   ├── Admin.tsx         # Dashboard admin
+│   │   ├── PartnerPortal.tsx # Portail partenaire (lien Google Forms)
+│   │   └── ...
+│   ├── components/           # Composants réutilisables
+│   ├── context/              # Gestion d'état (DataContext)
+│   └── ...
+├── public/                    # Fichiers publics (images, .htaccess)
+└── README.md                  # Ce fichier
 ```
 
 ---
 
-## ✅ Checklist Avant Production
+## 📞 Support
 
-- [ ] Google Drive configuré et testé
-- [ ] Backend fonctionne en local
-- [ ] Frontend fonctionne en local
-- [ ] Upload testé avec succès
-- [ ] `.env.production` configuré
-- [ ] Build réussi sans erreurs
-- [ ] Documentation lue et comprise
-- [ ] Backup du code effectué
-- [ ] Credentials sauvegardés en sécurité
-
----
-
-## 🎉 Félicitations !
-
-Vous avez maintenant accès à toute la documentation nécessaire pour :
-- ✅ Développer en local
-- ✅ Configurer Google Drive
-- ✅ Déployer sur LWS
-- ✅ Maintenir le système
-
-**Prochaine étape recommandée** : Lisez `DEPLOIEMENT_LWS.md` pour préparer votre déploiement !
+Pour toute question technique concernant le site, contactez l'équipe technique.
