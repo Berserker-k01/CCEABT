@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Trash2, LogOut, Lock, Eye, EyeOff, Save, Upload, Edit } from 'lucide-react';
+import { Plus, Trash2, LogOut, Lock, Eye, EyeOff, Save, Upload, Edit, FileText, Building2, Users } from 'lucide-react';
 
 // Interface pour la Galerie (non gérée par DataContext pour l'instant)
 interface GalleryItem {
@@ -13,7 +13,7 @@ interface GalleryItem {
 }
 
 export default function Admin() {
-  const { news, partners, galleryItems, addNews, updateNews, deleteNews, addPartner, updatePartner, deletePartner, setGalleryItems, addResource, deleteResource, resources, submissions, deleteSubmission, updateSubmissionStatus } = useData();
+  const { news, partners, addNews, updateNews, deleteNews, addPartner, updatePartner, deletePartner, addResource, deleteResource, resources } = useData();
   const navigate = useNavigate();
 
   // Auth State
@@ -28,6 +28,9 @@ export default function Admin() {
   const [adminPassword, setAdminPassword] = useState('admin123');
   const [isEditingCredentials, setIsEditingCredentials] = useState(false);
 
+  // Gallery State (Local)
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
+
   const [activeTab, setActiveTab] = useState<'news' | 'partners' | 'gallery' | 'resources' | 'settings'>('news');
 
   // Form States (New Logic)
@@ -37,11 +40,10 @@ export default function Admin() {
   const [editingPartnerId, setEditingPartnerId] = useState<string | null>(null);
   const [editingNewsId, setEditingNewsId] = useState<string | null>(null);
   const [activePartnerCategory, setActivePartnerCategory] = useState<'International' | 'National' | 'Institutionnel' | 'Technique'>('International');
-  const [submissionFilter, setSubmissionFilter] = useState<'tous' | 'en_attente' | 'reussi' | 'echoue'>('tous');
 
   useEffect(() => {
     // Load admin credentials
-    const savedEmail = localStorage.getItem('adminEmail') || 'admin';
+    const savedEmail = localStorage.getItem('adminEmail') || 'admin@cceabt.org';
     const savedPassword = localStorage.getItem('adminPassword') || 'admin123';
     setAdminEmail(savedEmail);
     setAdminPassword(savedPassword);
@@ -50,6 +52,8 @@ export default function Admin() {
     const savedGallery = localStorage.getItem('galleryItems');
     if (savedGallery) setGalleryItems(JSON.parse(savedGallery));
   }, []);
+
+
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -375,64 +379,11 @@ export default function Admin() {
           )}
 
           {/* RESOURCES TAB */}
+          {/* RESOURCES TAB */}
           {activeTab === 'resources' && (
             <div className="grid lg:grid-cols-2 gap-8">
               <div className="h-fit space-y-4">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">Configuration Google Drive</h2>
 
-                <div className="bg-blue-50 border border-blue-200 p-6 rounded-2xl mb-8 shadow-sm">
-                  <div className="flex items-center gap-3 mb-4">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-8 h-8" />
-                    <h3 className="font-black text-blue-900 uppercase tracking-tight">Archive Documentaire Globale</h3>
-                  </div>
-                  <p className="text-sm text-blue-700 mb-6 leading-relaxed">
-                    Ce lien est le point d'entrée principal vers votre bibliothèque. Il permet aux visiteurs d'accéder à <strong>l'ensemble de vos dossiers</strong> d'un seul clic.
-                  </p>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      placeholder="Collez le lien du dossier Google Drive ici..."
-                      value={driveUrl}
-                      onChange={(e) => setDriveUrl(e.target.value)}
-                      className="flex-1 px-4 py-3 border-2 border-blue-100 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white font-medium"
-                    />
-                    <button
-                      onClick={() => alert('Lien global sauvegardé dans le système !')}
-                      className="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-900 transition-all font-bold shadow-lg shadow-blue-200"
-                    >
-                      Enregistrer
-                    </button>
-                  </div>
-                </div>
-
-                <div className="bg-white border-2 border-dashed border-gray-200 p-6 rounded-2xl mb-8">
-                  <h4 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                    <span className="w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xs">?</span>
-                    Comment rendre le Drive accessible à tous ?
-                  </h4>
-                  <div className="space-y-3">
-                    {[
-                      "Allez sur votre Google Drive",
-                      "Faites un clic droit sur votre dossier 'RESSOURCES'",
-                      "Cliquez sur 'Partager'",
-                      "Sous 'Accès général', changez 'Limité' par 'Tous les utilisateurs disposant du lien'",
-                      "Vérifiez que le rôle est bien 'Lecteur'",
-                      "Copiez le lien et collez-le ci-dessus !"
-                    ].map((step, i) => (
-                      <div key={i} className="flex gap-3 text-sm text-gray-600">
-                        <span className="font-black text-blue-600">{i + 1}.</span>
-                        <p>{step}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl mb-4">
-                  <p className="text-xs text-amber-800 leading-relaxed">
-                    <strong>Note Importante :</strong> Pour optimiser le site, les fichiers ne sont pas stockés ici.
-                    Téléchargez-les d'abord sur votre Google Drive, assurez-vous que le lien est <strong>Public</strong> (Tous les utilisateurs disposant du lien), puis collez le lien ci-dessous.
-                  </p>
-                </div>
 
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Répertorier un document</h2>
                 <form onSubmit={handleAddResource} className="space-y-4 bg-gray-50 p-6 rounded-xl border">
@@ -553,12 +504,6 @@ export default function Admin() {
               <div>
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-2xl font-bold text-gray-800">Liste des partenaires</h2>
-                  <button
-                    onClick={() => { if (confirm('Cela réinitialisera la liste des partenaires avec les données par défaut. Continuer ?')) setPartners(initialPartners) }}
-                    className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-600 px-3 py-1 rounded-full transition-colors flex items-center gap-1"
-                  >
-                    <Handshake size={14} /> Synchroniser avec le site
-                  </button>
                 </div>
 
                 <div className="flex flex-wrap gap-2 mb-6">
