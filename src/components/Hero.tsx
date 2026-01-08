@@ -1,8 +1,10 @@
 import { ChevronDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 type Variant = 'classic' | 'impact' | 'minimal';
 
 export default function Hero({ variant = 'classic' }: { variant?: Variant }) {
+  const { t } = useTranslation();
   const bg = 'url("/images/back cceabt.png")';
 
   const overlay =
@@ -14,8 +16,8 @@ export default function Hero({ variant = 'classic' }: { variant?: Variant }) {
     variant === 'impact'
       ? 'text-5xl md:text-6xl lg:text-7xl'
       : variant === 'minimal'
-      ? 'text-4xl md:text-5xl'
-      : 'text-4xl md:text-5xl lg:text-6xl';
+        ? 'text-4xl md:text-5xl'
+        : 'text-4xl md:text-5xl lg:text-6xl';
 
   const align = variant === 'minimal' ? 'text-center mx-auto' : '';
   const ctaStyle =
@@ -40,13 +42,13 @@ export default function Hero({ variant = 'classic' }: { variant?: Variant }) {
       <div className="container mx-auto px-4 relative z-10">
         <div className={`max-w-3xl ${align}`}>
           <h1 className={`${titleClass} font-bold text-white mb-6 leading-tight drop-shadow-md`}>
-            Accès pour tous à l'eau et à l'assainissement
+            {t('home.hero_title')}
           </h1>
-          <p className={`text-xl md:text-2xl text-white/95 mb-8 ${align} drop-shadow` }>
-            Ensemble pour un Togo où chaque citoyen a accès à l'eau potable et à des services d'assainissement durables.
+          <p className={`text-xl md:text-2xl text-white/95 mb-8 ${align} drop-shadow`}>
+            {t('home.hero_subtitle')}
           </p>
           <a href="#actions" className={ctaStyle}>
-            Découvrir nos actions
+            {t('home.discover_btn')}
           </a>
         </div>
       </div>

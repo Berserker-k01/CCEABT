@@ -9,7 +9,11 @@ import Contact from './pages/Contact';
 import Partners from './pages/Partners';
 import Admin from './pages/Admin';
 import Resources from './pages/Resources';
-
+import PartnerPortal from './pages/PartnerPortal';
+import NewsReader from './pages/NewsReader';
+import TestAnimation from './pages/TestAnimation';
+import LegalNotices from './pages/LegalNotices';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import ScrollToTop from './components/ScrollToTop';
 
 function App() {
@@ -24,10 +28,15 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/network" element={<Network />} />
             <Route path="/news" element={<News />} />
+            <Route path="/news/:id" element={<NewsReader />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/partners" element={<Partners />} />
             <Route path="/cceabtadmin" element={<Admin />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/portal" element={<PartnerPortal />} />
+            <Route path="/test-animation" element={<TestAnimation />} />
+            <Route path="/legal" element={<LegalNotices />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>

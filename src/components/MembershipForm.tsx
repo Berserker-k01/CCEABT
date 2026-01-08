@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type MembershipType = 'member' | 'partner' | '';
 
 export default function MembershipForm({ onClose }: { onClose: () => void }) {
+  const { t } = useTranslation();
   const [membershipType, setMembershipType] = useState<MembershipType>('');
   const [formData, setFormData] = useState({
     name: '',
@@ -31,7 +33,24 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
 
     // Simulate form submission
     try {
+      const summary = `
+--- DEMANDE D'ADHÉSION CCEABT ---
+Type : ${membershipType === 'member' ? 'Membre Individuel' : 'Partenaire Institutionnel'}
+Nom : ${formData.name}
+Email : ${formData.email}
+Téléphone : ${formData.phone}
+Organisation : ${formData.organization}
+Poste : ${formData.position}
+
+Motivation :
+${formData.message}
+--------------------------------
+      `;
+
+      const mailtoLink = `mailto:contact@cceabt.org?subject=${encodeURIComponent(`[Adhésion Web] ${formData.organization} - ${formData.name}`)}&body=${encodeURIComponent(summary)}`;
+
       await new Promise(resolve => setTimeout(resolve, 1500));
+      window.location.href = mailtoLink;
       setIsSubmitted(true);
     } catch (error) {
       console.error('Erreur lors de l\'envoi du formulaire', error);
@@ -48,16 +67,16 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-lg font-medium text-gray-900 mb-2">Demande envoyée avec succès !</h3>
+        <h3 className="text-lg font-medium text-gray-900 mb-2">{t('forms.success_title')}</h3>
         <p className="text-sm text-gray-500 mb-6">
-          Nous avons bien reçu votre demande d'adhésion. Notre équipe vous contactera sous peu.
+          {t('forms.success_desc')}
         </p>
         <button
           type="button"
           onClick={onClose}
           className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
-          Fermer
+          {t('forms.close')}
         </button>
       </div>
     );
@@ -67,10 +86,10 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
     <div className="relative">
       <div className="text-center">
         <h3 className="text-lg font-medium text-gray-900 mb-2">
-          Rejoindre le CCEABT
+          {t('forms.membership_title')}
         </h3>
         <p className="text-sm text-gray-500 mb-6">
-          Sélectionnez le type d'adhésion qui vous correspond
+          {t('forms.membership_subtitle')}
         </p>
       </div>
 
@@ -94,10 +113,10 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
                 </svg>
               )}
             </div>
-            <span className="ml-3 font-medium">Membre Individuel</span>
+            <span className="ml-3 font-medium">{t('forms.member_individual')}</span>
           </div>
           <p className="mt-2 text-sm text-gray-500">
-            Pour les professionnels souhaitant intégrer notre réseau et participer aux activités du CCEABT.
+            {t('forms.member_individual_desc')}
           </p>
         </button>
 
@@ -120,10 +139,10 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
                 </svg>
               )}
             </div>
-            <span className="ml-3 font-medium">Partenaire Institutionnel</span>
+            <span className="ml-3 font-medium">{t('forms.partner_institutional')}</span>
           </div>
           <p className="mt-2 text-sm text-gray-500">
-            Pour les organisations souhaitant établir un partenariat avec le CCEABT.
+            {t('forms.partner_institutional_desc')}
           </p>
         </button>
       </div>
@@ -132,7 +151,7 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-              Nom complet <span className="text-red-500">*</span>
+              {t('forms.full_name')} <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -147,7 +166,7 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
 
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email <span className="text-red-500">*</span>
+              {t('forms.email')} <span className="text-red-500">*</span>
             </label>
             <input
               type="email"
@@ -162,7 +181,7 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
 
           <div>
             <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-              Téléphone <span className="text-red-500">*</span>
+              {t('forms.phone')} <span className="text-red-500">*</span>
             </label>
             <input
               type="tel"
@@ -177,7 +196,7 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
 
           <div>
             <label htmlFor="organization" className="block text-sm font-medium text-gray-700">
-              {membershipType === 'partner' ? 'Nom de l\'organisation' : 'Entreprise/Organisation actuelle'}
+              {membershipType === 'partner' ? t('forms.org_name') : t('forms.current_org')}
               <span className="text-red-500">*</span>
             </label>
             <input
@@ -193,7 +212,7 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
 
           <div>
             <label htmlFor="position" className="block text-sm font-medium text-gray-700">
-              Poste occupé <span className="text-red-500">*</span>
+              {t('forms.position')} <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -208,7 +227,7 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
 
           <div>
             <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-              Pourquoi souhaitez-vous nous rejoindre ? <span className="text-red-500">*</span>
+              {t('forms.why_join')} <span className="text-red-500">*</span>
             </label>
             <textarea
               id="message"
@@ -233,10 +252,10 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Envoi en cours...
+                  {t('forms.submitting')}
                 </>
               ) : (
-                'Envoyer ma demande d\'adhésion'
+                t('forms.submit_membership')
               )}
             </button>
           </div>

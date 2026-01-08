@@ -5,11 +5,10 @@ export default function ScrollToTop() {
     const { pathname } = useLocation();
 
     useLayoutEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'instant'
-        });
+        // Force scroll to top immediately on route change
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTo(0, 0);
+        document.body.scrollTo(0, 0);
     }, [pathname]);
 
     return null;

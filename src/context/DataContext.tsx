@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 // --- Types ---
 
@@ -30,12 +30,32 @@ export interface PartnerItem {
     description?: string;
     website?: string;
     logo?: string;
+    email?: string;
+    password?: string;
+}
+
+export interface Submission {
+    id: string;
+    partnerName: string;
+    projectTitle: string;
+    location: string;
+    period: string;
+    beneficiaries: number;
+    budget: string;
+    status: 'en_attente' | 'reussi' | 'echoue';
+    date: string;
+    details: string;
+    attachment?: string;
 }
 
 interface DataContextType {
+    driveUrl: string;
+    setDriveUrl: (url: string) => void;
+
     news: NewsItem[];
     addNews: (item: Omit<NewsItem, 'id'>) => void;
     deleteNews: (id: string) => void;
+    updateNews: (id: string, updates: Partial<NewsItem>) => void;
 
     resources: ResourceItem[];
     addResource: (item: Omit<ResourceItem, 'id'>) => void;
@@ -44,6 +64,14 @@ interface DataContextType {
     partners: PartnerItem[];
     addPartner: (item: Omit<PartnerItem, 'id'>) => void;
     deletePartner: (id: string) => void;
+    updatePartner: (id: string, updates: Partial<PartnerItem>) => void;
+    setPartners: React.Dispatch<React.SetStateAction<PartnerItem[]>>;
+    initialPartners: PartnerItem[];
+
+    submissions: Submission[];
+    addSubmission: (item: Omit<Submission, 'id' | 'date'> & { status?: Submission['status'] }) => void;
+    deleteSubmission: (id: string) => void;
+    updateSubmissionStatus: (id: string, status: Submission['status']) => void;
 }
 
 // --- Initial Mock Data (Pour ne pas démarrer vide) ---
@@ -85,9 +113,23 @@ const initialResources: ResourceItem[] = [
 ];
 
 const initialPartners: PartnerItem[] = [
-    { id: '1', name: 'Eau Vive', type: 'International', description: 'ONG Internationale', website: 'https://www.eau-vive.org' },
-    { id: '2', name: 'CRS', type: 'International', description: 'Catholic Relief Services', website: '#' },
-    { id: '3', name: 'Plan International', type: 'International', description: 'Plan International Togo', website: '#' },
+    // Organisations membres
+    { id: '1', name: 'Eau Vive', type: 'International', description: 'Organisation Internationale membre', email: 'eauvive@cceabt.org', password: 'password123' },
+    { id: '2', name: 'CRS', type: 'International', description: 'Organisation Internationale membre', email: 'crs@cceabt.org', password: 'password123' },
+    { id: '3', name: 'Plan International', type: 'International', description: 'Organisation Internationale membre', email: 'plan@cceabt.org', password: 'password123' },
+    { id: '4', name: 'PADIE', type: 'National', description: 'Organisation Nationale membre', email: 'padie@cceabt.org', password: 'password123' },
+    { id: '5', name: 'JVE', type: 'National', description: 'Organisation Nationale membre', email: 'jve@cceabt.org', password: 'password123' },
+
+    // Partenaires Institutionnels
+    { id: 'inst1', name: 'Ministère délégué chargé de l’eau et de l’assainissement', type: 'Institutionnel', description: 'Partenaire Institutionnel', website: 'https://eau.gouv.tg/', email: 'ministereeau@cceabt.org', password: 'password123' },
+    { id: 'inst2', name: 'Ministère de la Santé, de l’Hygiène Publique et de la Couverture Sanitaire Universelle', type: 'Institutionnel', description: 'Partenaire Institutionnel', website: 'https://sante.gouv.tg/', email: 'ministeresante@cceabt.org', password: 'password123' },
+    { id: 'inst3', name: 'Ministère de l’Environnement, des Ressources Forestières, de la Protection Côtière et du Changement Climatique', type: 'Institutionnel', description: 'Partenaire Institutionnel', website: 'https://environnement.gouv.tg/', email: 'ministereenvironnement@cceabt.org', password: 'password123' },
+    { id: 'inst4', name: 'Ministère de l\'Administration Territoriale, de la Gouvernance Locale et des Affaires Coutumières', type: 'Institutionnel', description: 'Partenaire Institutionnel', website: 'https://territoire.gouv.tg/', email: 'ministereterritoire@cceabt.org', password: 'password123' },
+    { id: 'inst5', name: 'Autorité de régulation du secteur de l\'électricité', type: 'Institutionnel', description: 'Partenaire Institutionnel', website: 'https://www.arse.tg/', email: 'arse@cceabt.org', password: 'password123' },
+
+    // Partenaires Techniques et Financiers
+    { id: 'tf1', name: 'AFD (Agence Française de Développement)', type: 'Technique', description: 'Partenaire Technique et Financier', email: 'afd@cceabt.org', password: 'password123' },
+    { id: 'tf2', name: 'Union Européenne', type: 'Financier', description: 'Partenaire Technique et Financier', email: 'ue@cceabt.org', password: 'password123' },
 ];
 
 
@@ -97,6 +139,10 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
     // Load from localStorage or use initial data
+    const [driveUrl, setDriveUrl] = useState(() => {
+        return localStorage.getItem('cceabt_drive_url') || 'https://drive.google.com';
+    });
+
     const [news, setNews] = useState<NewsItem[]>(() => {
         const saved = localStorage.getItem('cceabt_news');
         return saved ? JSON.parse(saved) : initialNews;
@@ -112,11 +158,31 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         return saved ? JSON.parse(saved) : initialPartners;
     });
 
+    const [submissions, setSubmissions] = useState<Submission[]>(() => {
+        const saved = localStorage.getItem('cceabt_submissions');
+        return saved ? JSON.parse(saved) : [];
+    });
+
 
     // Helper to persist to localStorage
+    useEffect(() => { localStorage.setItem('cceabt_drive_url', driveUrl); }, [driveUrl]);
     useEffect(() => { localStorage.setItem('cceabt_news', JSON.stringify(news)); }, [news]);
     useEffect(() => { localStorage.setItem('cceabt_resources', JSON.stringify(resources)); }, [resources]);
     useEffect(() => { localStorage.setItem('cceabt_partners', JSON.stringify(partners)); }, [partners]);
+    useEffect(() => { localStorage.setItem('cceabt_submissions', JSON.stringify(submissions)); }, [submissions]);
+
+    // Sync across tabs
+    useEffect(() => {
+        const handleStorageChange = (e: StorageEvent) => {
+            if (e.key === 'cceabt_drive_url' && e.newValue) setDriveUrl(e.newValue);
+            if (e.key === 'cceabt_partners' && e.newValue) setPartners(JSON.parse(e.newValue));
+            if (e.key === 'cceabt_news' && e.newValue) setNews(JSON.parse(e.newValue));
+            if (e.key === 'cceabt_resources' && e.newValue) setResources(JSON.parse(e.newValue));
+            if (e.key === 'cceabt_submissions' && e.newValue) setSubmissions(JSON.parse(e.newValue));
+        };
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, []);
 
 
     // --- Actions ---
@@ -149,12 +215,41 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         setPartners(prev => prev.filter(item => item.id !== id));
     };
 
+    const updatePartner = (id: string, updates: Partial<PartnerItem>) => {
+        setPartners(prev => prev.map(p => p.id === id ? { ...p, ...updates } : p));
+    };
+
+    const addSubmission = (item: Omit<Submission, 'id' | 'date'> & { status?: Submission['status'] }) => {
+        const newSubmission: Submission = {
+            ...item,
+            id: Date.now().toString(),
+            status: item.status || 'en_attente',
+            date: new Date().toLocaleDateString('fr-FR')
+        };
+        setSubmissions(prev => [newSubmission, ...prev]);
+    };
+
+    const deleteSubmission = (id: string) => {
+        setSubmissions(prev => prev.filter(s => s.id !== id));
+    };
+
+    const updateSubmissionStatus = (id: string, status: Submission['status']) => {
+        setSubmissions(prev => prev.map(s => s.id === id ? { ...s, status } : s));
+    };
+
+
+    const updateNews = (id: string, updates: Partial<NewsItem>) => {
+        setNews(prev => prev.map(item => item.id === id ? { ...item, ...updates } : item));
+    };
+
 
     return (
         <DataContext.Provider value={{
-            news, addNews, deleteNews,
+            driveUrl, setDriveUrl,
+            news, addNews, deleteNews, updateNews,
             resources, addResource, deleteResource,
-            partners, addPartner, deletePartner
+            partners, addPartner, deletePartner, updatePartner, setPartners, initialPartners,
+            submissions, addSubmission, deleteSubmission, updateSubmissionStatus
         }}>
             {children}
         </DataContext.Provider>

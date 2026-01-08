@@ -6,7 +6,7 @@
 
 @layer base {
   html, body {
-    @apply font-poppins antialiased m-0 p-0 w-full h-full;
+    @apply font-poppins antialiased m-0 p-0 w-full;
     overflow-x: hidden;
   }
   

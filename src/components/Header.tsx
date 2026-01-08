@@ -1,4 +1,4 @@
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +6,12 @@ import { useTranslation } from 'react-i18next';
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'fr' ? 'en' : 'fr';
+    i18n.changeLanguage(newLang);
+  };
 
   const navItems = [
     { name: t('header.home'), path: '/' },
@@ -45,7 +50,7 @@ export default function Header() {
             </div>
             <div className="hidden md:block">
               <h1 className="text-2xl font-bold text-cceabt-blue">CCEABT</h1>
-              <p className="text-xs text-gray-600">Conseil de Concertation pour l'Eau et l'Assainissement</p>
+              <p className="text-xs text-gray-600">{t('header.full_name')}</p>
             </div>
           </Link>
 
@@ -67,12 +72,22 @@ export default function Header() {
             ))}
           </nav>
 
-          <button
-            className="lg:hidden text-cceabt-blue"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border-2 border-blue-100 hover:border-blue-600 hover:bg-blue-50 transition-all group font-bold text-sm text-blue-700"
+              title="Changer de langue / Change language"
+            >
+              <Globe size={18} className="group-hover:rotate-12 transition-transform" />
+              <span className="uppercase">{i18n.language === 'fr' ? 'EN' : 'FR'}</span>
+            </button>
+            <button
+              className="lg:hidden text-cceabt-blue"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
         </div>
       </div>
 

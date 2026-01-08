@@ -1,4 +1,5 @@
 import { useState, useRef, ChangeEvent, FormEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, Facebook, Linkedin, Send, CheckCircle, AlertCircle, Loader2, Upload, X } from 'lucide-react';
 
@@ -20,6 +21,7 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({ onClose, className = '' }: ContactFormProps) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -38,25 +40,25 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
     const newErrors: FormErrors = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Le nom est requis';
+      newErrors.name = t('forms.error_name_required');
     } else if (formData.name.trim().length < 2) {
-      newErrors.name = 'Le nom doit contenir au moins 2 caractères';
+      newErrors.name = t('forms.error_name_short');
     }
 
     if (!formData.email) {
-      newErrors.email = 'L\'email est requis';
+      newErrors.email = t('forms.error_email_required');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Veuillez entrer un email valide';
+      newErrors.email = t('forms.error_email_invalid');
     }
 
     if (!formData.subject) {
-      newErrors.subject = 'Veuillez sélectionner un sujet';
+      newErrors.subject = t('forms.error_subject_required');
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = 'Le message est requis';
+      newErrors.message = t('forms.error_message_required');
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Le message doit contenir au moins 10 caractères';
+      newErrors.message = t('forms.error_message_short');
     }
 
     setErrors(newErrors);
@@ -86,7 +88,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
       if (file.size > 5 * 1024 * 1024) { // 5MB limit
         setErrors(prev => ({
           ...prev,
-          attachment: 'La taille du fichier ne doit pas dépasser 5MB'
+          attachment: t('forms.error_file_size')
         }));
         return;
       }
@@ -127,8 +129,28 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
     setIsSubmitting(true);
 
     try {
+      // Compile summary for email
+      const summary = `
+--- RÉSUMÉ DE CONTACT CCEABT ---
+Expéditeur : ${formData.name}
+Email : ${formData.email}
+Sujet : ${formData.subject}
+
+Message :
+${formData.message}
+
+${fileName ? `Fichier à joindre : ${fileName}` : 'Aucun fichier joint'}
+-------------------------------
+      `;
+
+      // Construct mailto link
+      const mailtoLink = `mailto:contact@cceabt.org?subject=${encodeURIComponent(`[Contact Web] ${formData.subject} - ${formData.name}`)}&body=${encodeURIComponent(summary)}`;
+
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      // Open mail client (this satisfies the "envoyé par mail" requirement in frontend)
+      window.location.href = mailtoLink;
 
       // Reset form
       setFormData({
@@ -153,7 +175,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
       console.error('Error submitting form:', error);
       setErrors(prev => ({
         ...prev,
-        submit: 'Une erreur est survenue lors de l\'envoi du message. Veuillez réessayer.'
+        submit: t('forms.error_submit')
       }));
     } finally {
       setIsSubmitting(false);
@@ -164,7 +186,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
     <div className={`bg-white rounded-2xl shadow-2xl overflow-hidden ${className}`}>
       <div className="p-6 sm:p-8">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">Contactez-nous</h2>
+          <h2 className="text-2xl font-bold text-gray-800">{t('forms.contact_title')}</h2>
           {onClose && (
             <button
               onClick={onClose}
@@ -186,8 +208,8 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
               <div className="flex justify-center mb-4">
                 <CheckCircle className="text-green-500" size={48} />
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Message envoyé avec succès !</h3>
-              <p className="text-gray-600">Nous vous répondrons dans les plus brefs délais.</p>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">{t('forms.success_title')}</h3>
+              <p className="text-gray-600">{t('forms.success_desc')}</p>
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -210,7 +232,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-1">
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                    Nom complet *
+                    {t('forms.full_name')} *
                   </label>
                   <div className="relative">
                     <input
@@ -220,7 +242,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
                       value={formData.name}
                       onChange={handleChange}
                       className={`w-full px-4 py-2 border-2 ${errors.name ? 'border-red-300 focus:border-red-500' : 'border-gray-300 focus:border-blue-500'} rounded-lg focus:ring-2 focus:ring-blue-200 transition-all duration-300`}
-                      placeholder="Votre nom"
+                      placeholder={t('forms.full_name')}
                     />
                     {errors.name && (
                       <AlertCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 text-red-500" size={18} />
@@ -233,7 +255,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
 
                 <div className="space-y-1">
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Email *
+                    {t('forms.email')} *
                   </label>
                   <div className="relative">
                     <input
@@ -257,7 +279,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
 
               <div className="space-y-1">
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
-                  Sujet *
+                  {t('forms.subject')} *
                 </label>
                 <div className="relative">
                   <select
@@ -267,12 +289,12 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
                     onChange={handleChange}
                     className={`w-full px-4 py-2 border-2 ${errors.subject ? 'border-red-300 focus:border-red-500' : 'border-gray-300 focus:border-blue-500'} rounded-lg focus:ring-2 focus:ring-blue-200 transition-all duration-300 appearance-none bg-white`}
                   >
-                    <option value="">Sélectionnez un sujet</option>
-                    <option value="adhesion">Adhésion au réseau</option>
-                    <option value="partenariat">Partenariat</option>
-                    <option value="information">Demande d'information</option>
-                    <option value="don">Faire un don</option>
-                    <option value="autre">Autre</option>
+                    <option value="">{t('forms.subject_placeholder')}</option>
+                    <option value="adhesion">{t('forms.subject_membership')}</option>
+                    <option value="partenariat">{t('forms.subject_partnership')}</option>
+                    <option value="information">{t('forms.subject_info')}</option>
+                    <option value="don">{t('forms.subject_donation')}</option>
+                    <option value="autre">{t('forms.subject_other')}</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -290,7 +312,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
 
               <div className="space-y-1">
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-                  Message *
+                  {t('forms.message')} *
                 </label>
                 <div className="relative">
                   <textarea
@@ -300,7 +322,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
                     onChange={handleChange}
                     rows={5}
                     className={`w-full px-4 py-2 border-2 ${errors.message ? 'border-red-300 focus:border-red-500' : 'border-gray-300 focus:border-blue-500'} rounded-lg focus:ring-2 focus:ring-blue-200 transition-all duration-300 resize-none`}
-                    placeholder="Votre message..."
+                    placeholder={t('forms.message_placeholder')}
                   />
                   {errors.message && (
                     <AlertCircle className="absolute right-3 top-3 text-red-500" size={18} />
@@ -313,7 +335,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
 
               <div className="space-y-1">
                 <label className="block text-sm font-medium text-gray-700">
-                  Pièce jointe (optionnelle)
+                  {t('forms.attachment')}
                 </label>
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-gray-300 rounded-lg">
                   <div className="space-y-1 text-center">
@@ -343,7 +365,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
                             htmlFor="attachment"
                             className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none"
                           >
-                            <span>Télécharger un fichier</span>
+                            <span>{t('forms.upload_file')}</span>
                             <input
                               id="attachment"
                               name="attachment"
@@ -353,7 +375,7 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
                               className="sr-only"
                             />
                           </label>
-                          <p className="pl-1">ou glissez-déposez</p>
+                          <p className="pl-1">{t('forms.drag_drop')}</p>
                         </div>
                         <p className="text-xs text-gray-500">
                           PDF, DOC, JPG, PNG (max. 5MB)
@@ -376,17 +398,17 @@ export default function ContactForm({ onClose, className = '' }: ContactFormProp
                   {isSubmitting ? (
                     <>
                       <Loader2 className="animate-spin mr-2" size={18} />
-                      Envoi en cours...
+                      {t('forms.submitting')}
                     </>
                   ) : (
                     <>
                       <Send className="mr-2" size={18} />
-                      Envoyer le message
+                      {t('forms.submit_contact')}
                     </>
                   )}
                 </button>
                 <p className="mt-3 text-center text-xs text-gray-500">
-                  En soumettant ce formulaire, vous acceptez notre politique de confidentialité.
+                  {t('forms.privacy_notice')}
                 </p>
               </div>
             </form>

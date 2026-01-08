@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Trash2, FileText, Globe, LogOut, Lock, Eye, EyeOff, Save, Upload, Link as LinkIcon, Edit } from 'lucide-react';
+import { Plus, Trash2, FileText, Handshake, Building2, Users, LogOut, Lock, Eye, EyeOff, Save, Upload, Edit, X, CheckCircle } from 'lucide-react';
 
 // Interface pour la Galerie (non gérée par DataContext pour l'instant)
 interface GalleryItem {
@@ -14,8 +14,8 @@ interface GalleryItem {
 
 export default function Admin() {
   const navigate = useNavigate();
-  const { news, addNews, deleteNews, resources, addResource, deleteResource, partners, addPartner, deletePartner } = useData();
-  const [activeTab, setActiveTab] = useState<'news' | 'resources' | 'partners' | 'gallery' | 'settings'>('news');
+  const { driveUrl, setDriveUrl, news, addNews, deleteNews, updateNews, resources, addResource, deleteResource, partners, addPartner, deletePartner, updatePartner, setPartners, initialPartners, submissions, deleteSubmission, updateSubmissionStatus } = useData();
+  const [activeTab, setActiveTab] = useState<'news' | 'resources' | 'partners' | 'gallery' | 'settings' | 'submissions'>('news');
 
   // Auth State
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -35,7 +35,11 @@ export default function Admin() {
   // Form States (New Logic)
   const [newsForm, setNewsForm] = useState({ title: '', category: '', date: '', image: '', excerpt: '', content: '' });
   const [resourceForm, setResourceForm] = useState({ title: '', type: 'PDF', theme: '', year: new Date().getFullYear().toString(), author: 'CCEABT', size: '', downloadUrl: '' });
-  const [partnerForm, setPartnerForm] = useState({ name: '', type: 'Technique' as const, description: '', website: '' });
+  const [partnerForm, setPartnerForm] = useState({ name: '', type: 'Technique' as const, description: '', website: '', email: '', password: '' });
+  const [editingPartnerId, setEditingPartnerId] = useState<string | null>(null);
+  const [editingNewsId, setEditingNewsId] = useState<string | null>(null);
+  const [activePartnerCategory, setActivePartnerCategory] = useState<'International' | 'National' | 'Institutionnel' | 'Technique'>('International');
+  const [submissionFilter, setSubmissionFilter] = useState<'tous' | 'en_attente' | 'reussi' | 'echoue'>('tous');
 
   useEffect(() => {
     // Load admin credentials
@@ -77,9 +81,29 @@ export default function Admin() {
   const handleAddNews = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsForm.title) return;
-    addNews(newsForm);
+
+    if (editingNewsId) {
+      updateNews(editingNewsId, newsForm);
+      setEditingNewsId(null);
+      alert('Actualité mise à jour !');
+    } else {
+      addNews(newsForm);
+      alert('Actualité ajoutée !');
+    }
     setNewsForm({ title: '', category: '', date: '', image: '', excerpt: '', content: '' });
-    alert('Actualité ajoutée !');
+  };
+
+  const handleEditNews = (item: any) => {
+    setEditingNewsId(item.id);
+    setNewsForm({
+      title: item.title,
+      category: item.category,
+      date: item.date,
+      image: item.image,
+      excerpt: item.excerpt,
+      content: item.content || ''
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleAddResource = (e: React.FormEvent) => {
@@ -93,9 +117,34 @@ export default function Admin() {
   const handleAddPartner = (e: React.FormEvent) => {
     e.preventDefault();
     if (!partnerForm.name) return;
-    addPartner(partnerForm);
-    setPartnerForm({ name: '', type: 'Technique', description: '', website: '' });
-    alert('Partenaire ajouté !');
+
+    if (editingPartnerId) {
+      updatePartner(editingPartnerId, partnerForm);
+      setEditingPartnerId(null);
+      alert('Partenaire mis à jour !');
+    } else {
+      addPartner(partnerForm);
+      alert('Partenaire ajouté !');
+    }
+
+    setPartnerForm({ name: '', type: 'Technique', description: '', website: '', email: '', password: '' });
+  };
+
+  const startEditingPartner = (partner: any) => {
+    setEditingPartnerId(partner.id);
+    setPartnerForm({
+      name: partner.name,
+      type: partner.type,
+      description: partner.description || '',
+      website: partner.website || '',
+      email: partner.email || '',
+      password: partner.password || ''
+    });
+  };
+
+  const cancelEditingPartner = () => {
+    setEditingPartnerId(null);
+    setPartnerForm({ name: '', type: 'Technique', description: '', website: '', email: '', password: '' });
   };
 
   // --- Handlers for Gallery (Old Logic) ---
@@ -226,11 +275,11 @@ export default function Admin() {
         {/* Tabs */}
         <div className="bg-white rounded-lg shadow-md mb-6">
           <div className="flex border-b overflow-x-auto">
-            {['news', 'partners', 'gallery', 'resources', 'settings'].map((tab) => (
+            {['news', 'partners', 'gallery', 'resources', 'submissions', 'settings'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
-                className={`px-6 py-4 font-semibold transition-colors capitalize whitespace-nowrap ${activeTab === tab
+                className={`px-6 py-4 font-semibold transition-colors capitalize whitespace-nowrap flex items-center gap-2 ${activeTab === tab
                   ? 'text-blue-600 border-b-2 border-blue-600'
                   : 'text-gray-600 hover:text-gray-800'
                   }`}
@@ -239,6 +288,16 @@ export default function Admin() {
                 {tab === 'partners' && 'Partenaires'}
                 {tab === 'gallery' && 'Galerie'}
                 {tab === 'resources' && 'Ressources'}
+                {tab === 'submissions' && (
+                  <>
+                    Collecte de données
+                    {submissions.filter(s => s.status === 'en_attente').length > 0 && (
+                      <span className="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full animate-pulse shadow-sm">
+                        {submissions.filter(s => s.status === 'en_attente').length}
+                      </span>
+                    )}
+                  </>
+                )}
                 {tab === 'settings' && 'Paramètres'}
               </button>
             ))}
@@ -252,7 +311,7 @@ export default function Admin() {
           {activeTab === 'news' && (
             <div className="grid lg:grid-cols-2 gap-8">
               <div className="h-fit space-y-4">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">Ajouter une actualité</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">{editingNewsId ? 'Modifier l\'actualité' : 'Ajouter une actualité'}</h2>
                 <form onSubmit={handleAddNews} className="space-y-4 bg-gray-50 p-6 rounded-xl border">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Titre</label>
@@ -280,9 +339,23 @@ export default function Admin() {
                     <label className="block text-sm font-medium text-gray-700">Extrait</label>
                     <textarea value={newsForm.excerpt} onChange={e => setNewsForm({ ...newsForm, excerpt: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" rows={3}></textarea>
                   </div>
-                  <button type="submit" className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center gap-2">
-                    <Plus size={20} /> Ajouter
-                  </button>
+                  <div className="flex gap-2">
+                    <button type="submit" className={`flex-1 ${editingNewsId ? 'bg-green-600 hover:bg-green-700' : 'bg-blue-600 hover:bg-blue-700'} text-white px-4 py-2 rounded-lg transition-colors font-semibold flex items-center justify-center gap-2`}>
+                      {editingNewsId ? <><Save size={20} /> Enregistrer</> : <><Plus size={20} /> Ajouter</>}
+                    </button>
+                    {editingNewsId && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingNewsId(null);
+                          setNewsForm({ title: '', category: '', date: '', image: '', excerpt: '', content: '' });
+                        }}
+                        className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300"
+                      >
+                        Annuler
+                      </button>
+                    )}
+                  </div>
                 </form>
               </div>
 
@@ -297,9 +370,14 @@ export default function Admin() {
                         <p className="text-xs text-gray-500 mb-1">{item.date} • {item.category}</p>
                         <p className="text-sm text-gray-600 line-clamp-2">{item.excerpt}</p>
                       </div>
-                      <button onClick={() => deleteNews(item.id)} className="text-red-500 hover:text-red-700 h-fit p-1">
-                        <Trash2 size={20} />
-                      </button>
+                      <div className="flex flex-col gap-2">
+                        <button onClick={() => handleEditNews(item)} className="text-blue-600 hover:text-blue-800 p-1">
+                          <Edit size={20} />
+                        </button>
+                        <button onClick={() => deleteNews(item.id)} className="text-red-500 hover:text-red-700 p-1">
+                          <Trash2 size={20} />
+                        </button>
+                      </div>
                     </div>
                   ))}
                   {news.length === 0 && <p className="text-gray-500 italic text-center py-8">Aucune actualité.</p>}
@@ -312,7 +390,63 @@ export default function Admin() {
           {activeTab === 'resources' && (
             <div className="grid lg:grid-cols-2 gap-8">
               <div className="h-fit space-y-4">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">Ajouter une ressource</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Configuration Google Drive</h2>
+
+                <div className="bg-blue-50 border border-blue-200 p-6 rounded-2xl mb-8 shadow-sm">
+                  <div className="flex items-center gap-3 mb-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-8 h-8" />
+                    <h3 className="font-black text-blue-900 uppercase tracking-tight">Archive Documentaire Globale</h3>
+                  </div>
+                  <p className="text-sm text-blue-700 mb-6 leading-relaxed">
+                    Ce lien est le point d'entrée principal vers votre bibliothèque. Il permet aux visiteurs d'accéder à <strong>l'ensemble de vos dossiers</strong> d'un seul clic.
+                  </p>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Collez le lien du dossier Google Drive ici..."
+                      value={driveUrl}
+                      onChange={(e) => setDriveUrl(e.target.value)}
+                      className="flex-1 px-4 py-3 border-2 border-blue-100 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white font-medium"
+                    />
+                    <button
+                      onClick={() => alert('Lien global sauvegardé dans le système !')}
+                      className="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-900 transition-all font-bold shadow-lg shadow-blue-200"
+                    >
+                      Enregistrer
+                    </button>
+                  </div>
+                </div>
+
+                <div className="bg-white border-2 border-dashed border-gray-200 p-6 rounded-2xl mb-8">
+                  <h4 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <span className="w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xs">?</span>
+                    Comment rendre le Drive accessible à tous ?
+                  </h4>
+                  <div className="space-y-3">
+                    {[
+                      "Allez sur votre Google Drive",
+                      "Faites un clic droit sur votre dossier 'RESSOURCES'",
+                      "Cliquez sur 'Partager'",
+                      "Sous 'Accès général', changez 'Limité' par 'Tous les utilisateurs disposant du lien'",
+                      "Vérifiez que le rôle est bien 'Lecteur'",
+                      "Copiez le lien et collez-le ci-dessus !"
+                    ].map((step, i) => (
+                      <div key={i} className="flex gap-3 text-sm text-gray-600">
+                        <span className="font-black text-blue-600">{i + 1}.</span>
+                        <p>{step}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl mb-4">
+                  <p className="text-xs text-amber-800 leading-relaxed">
+                    <strong>Note Importante :</strong> Pour optimiser le site, les fichiers ne sont pas stockés ici.
+                    Téléchargez-les d'abord sur votre Google Drive, assurez-vous que le lien est <strong>Public</strong> (Tous les utilisateurs disposant du lien), puis collez le lien ci-dessous.
+                  </p>
+                </div>
+
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Répertorier un document</h2>
                 <form onSubmit={handleAddResource} className="space-y-4 bg-gray-50 p-6 rounded-xl border">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Titre</label>
@@ -380,8 +514,16 @@ export default function Admin() {
           {activeTab === 'partners' && (
             <div className="grid lg:grid-cols-2 gap-8">
               <div className="h-fit space-y-4">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">Ajouter un partenaire</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                  {editingPartnerId ? 'Modifier le partenaire' : 'Ajouter un partenaire'}
+                </h2>
                 <form onSubmit={handleAddPartner} className="space-y-4 bg-gray-50 p-6 rounded-xl border">
+                  {editingPartnerId && (
+                    <div className="bg-yellow-50 border border-yellow-200 p-2 rounded text-sm text-yellow-800 mb-2 flex justify-between items-center">
+                      <span>Mode édition activé</span>
+                      <button type="button" onClick={cancelEditingPartner} className="underline font-bold">Annuler</button>
+                    </div>
+                  )}
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Nom</label>
                     <input type="text" value={partnerForm.name} onChange={e => setPartnerForm({ ...partnerForm, name: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" required />
@@ -404,30 +546,109 @@ export default function Admin() {
                     <label className="block text-sm font-medium text-gray-700">Site Web</label>
                     <input type="text" value={partnerForm.website} onChange={e => setPartnerForm({ ...partnerForm, website: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" />
                   </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Email de connexion</label>
+                      <input type="email" value={partnerForm.email} onChange={e => setPartnerForm({ ...partnerForm, email: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Mot de passe</label>
+                      <input type="text" value={partnerForm.password} onChange={e => setPartnerForm({ ...partnerForm, password: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" />
+                    </div>
+                  </div>
                   <button type="submit" className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center gap-2">
-                    <Plus size={20} /> Ajouter
+                    {editingPartnerId ? <><Save size={20} /> Mettre à jour</> : <><Plus size={20} /> Ajouter</>}
                   </button>
                 </form>
               </div>
 
               <div>
-                <h2 className="text-2xl font-bold text-gray-800 mb-6">Liste des partenaires</h2>
-                <div className="space-y-4">
-                  {partners.map(item => (
-                    <div key={item.id} className="border border-gray-200 rounded-lg p-4 flex gap-4 bg-white shadow-sm items-center">
-                      <div className="bg-green-100 p-3 rounded-lg text-green-600">
-                        <Globe size={24} />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-bold text-gray-900">{item.name}</h3>
-                        <p className="text-sm text-gray-500">{item.type}</p>
-                      </div>
-                      <button onClick={() => deletePartner(item.id)} className="text-red-500 hover:text-red-700 p-2">
-                        <Trash2 size={20} />
-                      </button>
-                    </div>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-gray-800">Liste des partenaires</h2>
+                  <button
+                    onClick={() => { if (confirm('Cela réinitialisera la liste des partenaires avec les données par défaut. Continuer ?')) setPartners(initialPartners) }}
+                    className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-600 px-3 py-1 rounded-full transition-colors flex items-center gap-1"
+                  >
+                    <Handshake size={14} /> Synchroniser avec le site
+                  </button>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {[
+                    { id: 'International', label: 'International' },
+                    { id: 'National', label: 'National' },
+                    { id: 'Institutionnel', label: 'Institutionnel' },
+                    { id: 'Technique', label: 'PTF' }
+                  ].map(cat => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setActivePartnerCategory(cat.id as any)}
+                      className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${activePartnerCategory === cat.id
+                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-200'
+                        : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-100'
+                        }`}
+                    >
+                      {cat.label}
+                    </button>
                   ))}
-                  {partners.length === 0 && <p className="text-gray-500 italic text-center py-8">Aucun partenaire.</p>}
+                </div>
+
+                <div className="space-y-6">
+                  {(() => {
+                    const cat = [
+                      { id: 'International', label: 'ONG Internationales' },
+                      { id: 'National', label: 'ONG Nationales' },
+                      { id: 'Institutionnel', label: 'Partenaires Institutionnels' },
+                      { id: 'Technique', label: 'Partenaires Techniques & Financiers' }
+                    ].find(c => c.id === activePartnerCategory);
+
+                    if (!cat) return null;
+
+                    const filteredPartners = partners.filter(p =>
+                      cat.id === 'Technique'
+                        ? (p.type === 'Technique' || p.type === 'Financier')
+                        : p.type === cat.id
+                    );
+
+                    return (
+                      <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                        <h3 className="text-sm font-bold text-blue-600 uppercase tracking-wider flex items-center gap-2">
+                          <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                          {cat.label} ({filteredPartners.length})
+                        </h3>
+                        <div className="grid gap-4">
+                          {filteredPartners.map(item => (
+                            <div key={item.id} className="border border-gray-100 rounded-xl p-4 flex gap-4 bg-white shadow-sm hover:shadow-md transition-shadow items-center group">
+                              <div className="bg-gray-50 p-3 rounded-lg text-gray-400 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                                {cat.id === 'Institutionnel' ? <Building2 size={24} /> : <Users size={24} />}
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="font-bold text-gray-900 leading-tight">{item.name}</h3>
+                                {item.email && (
+                                  <p className="text-[10px] text-blue-600 font-mono mt-1 px-2 py-0.5 bg-blue-50 w-fit rounded">
+                                    {item.email} • {item.password}
+                                  </p>
+                                )}
+                              </div>
+                              <div className="flex gap-1">
+                                <button onClick={() => startEditingPartner(item)} className="text-blue-500 hover:bg-blue-50 p-2 rounded-lg transition-colors">
+                                  <Edit size={18} />
+                                </button>
+                                <button onClick={() => deletePartner(item.id)} className="text-red-500 hover:bg-red-50 p-2 rounded-lg transition-colors">
+                                  <Trash2 size={18} />
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                          {filteredPartners.length === 0 && (
+                            <div className="text-center py-12 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+                              <p className="text-sm text-gray-400 italic">Aucun partenaire enregistré dans cette catégorie.</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })()}
                 </div>
               </div>
             </div>
@@ -475,6 +696,133 @@ export default function Admin() {
                   </div>
                 ))}
                 {galleryItems.length === 0 && <p className="text-gray-500 italic text-center col-span-2 py-8">Aucune image.</p>}
+              </div>
+            </div>
+          )}
+
+          {/* SUBMISSIONS TAB */}
+          {activeTab === 'submissions' && (
+            <div className="space-y-6">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-800">Données collectées via le portail</h2>
+                  <p className="text-sm text-gray-500">Suivi des rapports et indicateurs WASH transmis par les partenaires</p>
+                </div>
+                <div className="flex gap-2 bg-gray-100 p-1 rounded-xl">
+                  {['tous', 'en_attente', 'reussi', 'echoue'].map(f => (
+                    <button
+                      key={f}
+                      onClick={() => setSubmissionFilter(f as any)}
+                      className={`px-4 py-2 rounded-lg text-xs font-bold uppercase transition-all ${submissionFilter === f ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                    >
+                      {f === 'reussi' ? 'Réussis' : f === 'echoue' ? 'Échoués' : f.replace('_', ' ')}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid gap-6">
+                {submissions
+                  .filter(s => submissionFilter === 'tous' || s.status === submissionFilter)
+                  .map(sub => (
+                    <div key={sub.id} className="bg-white border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                      <div className="p-6">
+                        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                          <div className="flex items-center gap-4">
+                            <div className="bg-blue-600 text-white w-12 h-12 rounded-xl flex items-center justify-center font-bold">
+                              {sub.partnerName.substring(0, 2).toUpperCase()}
+                            </div>
+                            <div>
+                              <h3 className="text-xl font-bold text-gray-900">{sub.projectTitle}</h3>
+                              <div className="flex items-center gap-2">
+                                <p className="text-gray-500 font-medium">{sub.partnerName}</p>
+                                <span className="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold uppercase">
+                                  {partners.find(p => p.name === sub.partnerName)?.type || 'Membre'}
+                                </span>
+                              </div>
+                              <p className="text-xs text-gray-400 mt-1">{sub.date}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase ${sub.status === 'reussi' ? 'bg-green-100 text-green-700' :
+                              sub.status === 'echoue' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
+                              }`}>
+                              {sub.status === 'reussi' ? 'Upload Réussi' : sub.status === 'echoue' ? 'Upload Échoué' : 'En attente'}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-4 gap-6 bg-gray-50 p-6 rounded-2xl mb-6">
+                          <div>
+                            <p className="text-xs text-gray-500 font-bold uppercase mb-1">Localisation</p>
+                            <p className="text-gray-800 font-semibold">{sub.location}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-500 font-bold uppercase mb-1">Période</p>
+                            <p className="text-gray-800 font-semibold">{sub.period}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-500 font-bold uppercase mb-1">Bénéficiaires</p>
+                            <p className="text-blue-600 font-bold text-lg">{sub.beneficiaries.toLocaleString()}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-500 font-bold uppercase mb-1">Budget</p>
+                            <p className="text-green-600 font-bold text-lg">{sub.budget}</p>
+                          </div>
+                        </div>
+
+                        <div className="mb-6">
+                          <p className="text-xs text-gray-500 font-bold uppercase mb-2">Détails techniques & Indicateurs</p>
+                          <p className="text-gray-700 whitespace-pre-wrap leading-relaxed bg-white border border-gray-100 p-4 rounded-xl">{sub.details}</p>
+                        </div>
+
+                        {sub.attachment && (
+                          <div className="mb-6">
+                            <p className="text-xs text-gray-500 font-bold uppercase mb-2">Pièce jointe</p>
+                            <a
+                              href={sub.attachment}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-xl border border-blue-100 hover:bg-blue-100 transition-colors font-medium text-sm"
+                            >
+                              <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" className="w-4 h-4" />
+                              Consulter le rapport sur Drive
+                            </a>
+                          </div>
+                        )}
+
+                        <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t">
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => updateSubmissionStatus(sub.id, 'reussi')}
+                              className="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center gap-2 text-sm"
+                            >
+                              <CheckCircle size={16} /> Marquer comme Réussi
+                            </button>
+                            <button
+                              onClick={() => updateSubmissionStatus(sub.id, 'echoue')}
+                              className="bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600 transition-colors flex items-center gap-2 text-sm"
+                            >
+                              <X size={16} /> Marquer comme Échoué
+                            </button>
+                          </div>
+                          <button
+                            onClick={() => { if (confirm('Supprimer définitivement ce rapport ?')) deleteSubmission(sub.id) }}
+                            className="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition-colors"
+                          >
+                            <Trash2 size={20} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+
+                {submissions.length === 0 && (
+                  <div className="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
+                    <FileText className="mx-auto text-gray-300 mb-4" size={64} />
+                    <p className="text-xl text-gray-500 font-medium">Aucune soumission reçue pour le moment.</p>
+                  </div>
+                )}
               </div>
             </div>
           )}
