@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ArrowRight, Droplet, Users, TrendingUp, Lightbulb, Sparkles, X, Megaphone, Droplets, GraduationCap, Award } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import i18n from '../i18n/config';
 import { AnimatePresence } from 'framer-motion';
 import { useData } from '../context/DataContext';
 import ContactForm from '../components/ContactForm';
@@ -92,7 +93,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-5xl font-bold text-blue-600 mb-3 group-hover:scale-110 transition-transform">{t('home.stat_water_title')}</h3>
                 <p className="text-gray-700 font-medium">{t('home.stat_water_desc')}</p>
-                <p className="text-sm text-gray-500 mt-2">(2020)</p>
+                <p className="text-sm text-gray-500 mt-2">{t('home.stat_water_year')}</p>
               </div>
               <div className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 text-center border-t-4 border-green-600 hover:-translate-y-2">
                 <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
@@ -100,7 +101,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-5xl font-bold text-green-600 mb-3 group-hover:scale-110 transition-transform">{t('home.stat_members_title')}</h3>
                 <p className="text-gray-700 font-medium">{t('home.stat_members_desc')}</p>
-                <p className="text-sm text-gray-500 mt-2">{t('home.stat_members_extra') || 'actives'}</p>
+                <p className="text-sm text-gray-500 mt-2">{t('home.stat_members_extra')}</p>
               </div>
               <div className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 text-center border-t-4 border-purple-600 hover:-translate-y-2">
                 <div className="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
@@ -108,7 +109,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-5xl font-bold text-purple-600 mb-3 group-hover:scale-110 transition-transform">{t('home.stat_years_title')}</h3>
                 <p className="text-gray-700 font-medium">{t('home.stat_years_desc')}</p>
-                <p className="text-sm text-gray-500 mt-2">{t('home.stat_years_extra') || "pour l'eau et l'assainissement"}</p>
+                <p className="text-sm text-gray-500 mt-2">{t('home.stat_years_extra')}</p>
               </div>
             </div>
           </div>
@@ -182,23 +183,37 @@ export default function Home() {
           </div>
 
           <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-6 mb-10">
-            {news.slice(0, 3).map((item) => (
-              <div
-                key={item.id}
-                onClick={() => navigate(`/news/${item.id}`)}
-                className="group bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border-l-4 border-blue-600 hover:-translate-y-1 cursor-pointer"
-              >
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="bg-blue-600 text-white rounded-lg p-2">
-                    <Award size={24} />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">{item.title}</h3>
-                    <p className="text-sm text-gray-600 line-clamp-3">{item.excerpt}</p>
+            {news.slice(0, 3).map((item, index) => {
+              // Use translation keys if available for the first 3 items (matching mock data), otherwise fallback to item content
+              const titleKey = `home.news_${index + 1}_title`;
+              const descKey = `home.news_${index + 1}_desc`;
+
+              // Use i18n.exists to strictly check if the translation key exists
+              const displayTitle = i18n.exists(titleKey) ? t(titleKey) : item.title;
+              const displayDesc = i18n.exists(descKey) ? t(descKey) : item.excerpt;
+
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => navigate(`/news/${item.id}`)}
+                  className="group bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border-l-4 border-blue-600 hover:-translate-y-1 cursor-pointer"
+                >
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="bg-blue-600 text-white rounded-lg p-2">
+                      <Award size={24} />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
+                        {displayTitle}
+                      </h3>
+                      <p className="text-sm text-gray-600 line-clamp-3">
+                        {displayDesc}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="text-center">

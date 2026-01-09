@@ -33,7 +33,7 @@ export default function Contact() {
                 {t('contact_page.address')}
               </p>
               <p className="mt-4 font-bold text-blue-700 italic bg-blue-50 p-3 rounded-xl inline-block">
-                260 BP 478 Kpalimé - Togo
+                {t('contact_page.po_box')}
               </p>
             </div>
 

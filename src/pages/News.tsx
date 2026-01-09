@@ -1,6 +1,7 @@
 import { Newspaper, Calendar, Image, Facebook, Linkedin } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import i18n from '../i18n/config';
 import { useData } from '../context/DataContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -110,43 +111,50 @@ export default function News() {
               <p className="text-center text-gray-500 py-12">{t('news_page.no_news')}</p>
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredNews.map((item) => (
-                  <article
-                    key={item.id}
-                    onClick={() => navigate(`/news/${item.id}`)}
-                    className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow overflow-hidden border border-gray-200 flex flex-col h-full cursor-pointer group"
-                  >
-                    <div className="bg-gray-200 h-48 overflow-hidden">
-                      {item.image ? (
-                        <img src={item.image} alt={item.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400 bg-gray-100">
-                          <Image size={48} />
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-6 flex flex-col flex-1">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Calendar className="text-gray-500" size={16} />
-                        <span className="text-sm text-gray-500">{item.date}</span>
+                {filteredNews.map((item) => {
+                  const titleKey = `home.news_${item.id}_title`;
+                  const descKey = `home.news_${item.id}_desc`;
+                  const displayTitle = i18n.exists(titleKey) ? t(titleKey) : item.title;
+                  const displayDesc = i18n.exists(descKey) ? t(descKey) : item.excerpt;
+
+                  return (
+                    <article
+                      key={item.id}
+                      onClick={() => navigate(`/news/${item.id}`)}
+                      className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow overflow-hidden border border-gray-200 flex flex-col h-full cursor-pointer group"
+                    >
+                      <div className="bg-gray-200 h-48 overflow-hidden">
+                        {item.image ? (
+                          <img src={item.image} alt={item.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-gray-400 bg-gray-100">
+                            <Image size={48} />
+                          </div>
+                        )}
                       </div>
-                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3 bg-${getCategoryColor(item.category)}-100 text-${getCategoryColor(item.category)}-800 w-fit`}>
-                        {item.category}
-                      </span>
-                      <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2">{item.title}</h3>
-                      <p className="text-gray-600 mb-4 line-clamp-3 flex-1">{item.excerpt}</p>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate(`/news/${item.id}`);
-                        }}
-                        className="text-blue-600 font-semibold hover:underline mt-auto self-start"
-                      >
-                        {t('news_page.read_more')} →
-                      </button>
-                    </div>
-                  </article>
-                ))}
+                      <div className="p-6 flex flex-col flex-1">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Calendar className="text-gray-500" size={16} />
+                          <span className="text-sm text-gray-500">{item.date}</span>
+                        </div>
+                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3 bg-${getCategoryColor(item.category)}-100 text-${getCategoryColor(item.category)}-800 w-fit`}>
+                          {item.category}
+                        </span>
+                        <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2">{displayTitle}</h3>
+                        <p className="text-gray-600 mb-4 line-clamp-3 flex-1">{displayDesc}</p>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/news/${item.id}`);
+                          }}
+                          className="text-blue-600 font-semibold hover:underline mt-auto self-start"
+                        >
+                          {t('news_page.read_more')} →
+                        </button>
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
             )}
           </div>

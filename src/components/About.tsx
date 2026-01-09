@@ -1,6 +1,8 @@
 import { Heart, Eye, Target, Handshake } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function About() {
+  const { t } = useTranslation();
   const values = [
     {
       icon: Heart,
@@ -37,18 +39,20 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-12 mb-16">
           <div className="bg-gradient-to-br from-cceabt-blue to-cceabt-blue/90 text-white p-8 rounded-2xl">
             <Eye size={48} className="mb-4" />
-            <h3 className="text-2xl font-bold mb-4">Notre Vision</h3>
+            <h3 className="text-2xl font-bold mb-4">{t('about.vision_title')}</h3>
             <p className="text-lg leading-relaxed">
-              Un Togo où chaque citoyen a accès à l'eau potable et à des services d'assainissement durables, contribuant ainsi à l'amélioration de la santé publique et au développement socio-économique.
+              {t('about.vision_desc')}
             </p>
           </div>
 
           <div className="bg-gradient-to-br from-cceabt-green to-cceabt-green/90 text-white p-8 rounded-2xl">
             <Target size={48} className="mb-4" />
-            <h3 className="text-2xl font-bold mb-4">Notre Mission</h3>
-            <p className="text-lg leading-relaxed">
-              Renforcer les capacités des organisations membres, promouvoir le plaidoyer pour des politiques publiques efficaces et coordonner les actions en faveur de l'accès universel à l'eau et à l'assainissement.
-            </p>
+            <h3 className="text-2xl font-bold mb-4">{t('about.mission_title')}</h3>
+            <ul className="text-lg leading-relaxed list-disc pl-5 space-y-2">
+              <li>{t('about.mission_desc_1')}</li>
+              <li>{t('about.mission_desc_2')}</li>
+              <li>{t('about.mission_desc_3')}</li>
+            </ul>
           </div>
         </div>
 

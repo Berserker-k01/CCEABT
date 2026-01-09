@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
 import { Shield, Scale, FileText, Lock } from 'lucide-react';
 
+import { useTranslation } from 'react-i18next';
+
 export default function LegalNotices() {
+    const { t } = useTranslation();
 
     return (
         <div className="min-h-screen bg-gray-50 pt-32 pb-20">
@@ -12,7 +15,7 @@ export default function LegalNotices() {
                     className="max-w-4xl mx-auto"
                 >
                     <div className="text-center mb-12">
-                        <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">Mentions Légales</h1>
+                        <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">{t('legal_notices.title')}</h1>
                         <div className="h-1.5 w-24 bg-blue-600 mx-auto rounded-full"></div>
                     </div>
 
@@ -22,26 +25,26 @@ export default function LegalNotices() {
                             <section className="space-y-4">
                                 <h2 className="flex items-center gap-3 text-2xl font-bold text-blue-900">
                                     <Scale className="text-blue-600" size={28} />
-                                    1. Éditeur du Site
+                                    {t('legal_notices.section_1_title')}
                                 </h2>
                                 <div className="grid md:grid-cols-2 gap-6 bg-blue-50/50 p-6 rounded-2xl border border-blue-100">
                                     <div>
-                                        <p className="font-bold text-gray-900 mb-1">Organisation</p>
-                                        <p>Conseil de Concertation pour l’Eau et l’Assainissement de Base au Togo (CCEABT)</p>
+                                        <p className="font-bold text-gray-900 mb-1">{t('legal_notices.org_label')}</p>
+                                        <p>{t('legal_notices.org_value')}</p>
                                     </div>
                                     <div>
-                                        <p className="font-bold text-gray-900 mb-1">Siège Social</p>
-                                        <p>Lomé, Togo</p>
-                                        <p>Quartier Adidoadine</p>
+                                        <p className="font-bold text-gray-900 mb-1">{t('legal_notices.hq_label')}</p>
+                                        <p>{t('legal_notices.hq_value_1')}</p>
+                                        <p>{t('legal_notices.hq_value_2')}</p>
                                     </div>
                                     <div>
-                                        <p className="font-bold text-gray-900 mb-1">Contacts</p>
-                                        <p>Tél : +228 91 35 93 98 / 90 22 78 55</p>
-                                        <p>Email : contact@cceabt.org</p>
+                                        <p className="font-bold text-gray-900 mb-1">{t('legal_notices.contacts_label')}</p>
+                                        <p>{t('legal_notices.contacts_tel')}</p>
+                                        <p>{t('legal_notices.contacts_email')}</p>
                                     </div>
                                     <div>
-                                        <p className="font-bold text-gray-900 mb-1">Statut Juridique</p>
-                                        <p>Association à but non lucratif</p>
+                                        <p className="font-bold text-gray-900 mb-1">{t('legal_notices.status_label')}</p>
+                                        <p>{t('legal_notices.status_value')}</p>
                                     </div>
                                 </div>
                             </section>
@@ -49,30 +52,30 @@ export default function LegalNotices() {
                             <section className="space-y-4">
                                 <h2 className="flex items-center gap-3 text-2xl font-bold text-blue-900">
                                     <Shield className="text-blue-600" size={28} />
-                                    2. Hébergement
+                                    {t('legal_notices.section_2_title')}
                                 </h2>
                                 <p className="leading-relaxed">
-                                    Ce site est hébergé sur les serveurs de la plateforme Vercel / Netlify (infrastructure Cloud mondiale).
+                                    {t('legal_notices.section_2_text')}
                                 </p>
                             </section>
 
                             <section className="space-y-4">
                                 <h2 className="flex items-center gap-3 text-2xl font-bold text-blue-900">
                                     <FileText className="text-blue-600" size={28} />
-                                    3. Propriété Intellectuelle
+                                    {t('legal_notices.section_3_title')}
                                 </h2>
                                 <p className="leading-relaxed">
-                                    L'ensemble des contenus (textes, graphiques, logos, photos) présents sur ce site est la propriété exclusive du CCEABT, sauf mention contraire. Toute reproduction, même partielle, est strictement interdite sans autorisation préalable écrite du Secrétariat Exécutif du CCEABT.
+                                    {t('legal_notices.section_3_text')}
                                 </p>
                             </section>
 
                             <section className="space-y-4">
                                 <h2 className="flex items-center gap-3 text-2xl font-bold text-blue-900">
                                     <Lock className="text-blue-600" size={28} />
-                                    4. Responsabilité
+                                    {t('legal_notices.section_4_title')}
                                 </h2>
                                 <p className="leading-relaxed">
-                                    Le CCEABT s'efforce d'assurer l'exactitude des informations diffusées sur ce site au moment de leur mise en ligne. Toutefois, nous ne saurions être tenus responsables des erreurs ou omissions, ou des résultats qui pourraient être obtenus par l'usage de ces informations.
+                                    {t('legal_notices.section_4_text')}
                                 </p>
                             </section>
 
@@ -80,7 +83,7 @@ export default function LegalNotices() {
                     </div>
 
                     <div className="text-center mt-8 text-gray-500 text-sm">
-                        Dernière mise à jour : Janvier 2026
+                        {t('legal_notices.last_update')}
                     </div>
                 </motion.div>
             </div>

@@ -202,9 +202,11 @@ export default function About() {
                 </div>
                 {t('about.mission_title')}
               </h3>
-              <p className="text-lg text-green-800 leading-relaxed">
-                {t('about.mission_desc')}
-              </p>
+              <ul className="text-lg text-green-800 leading-relaxed text-left space-y-2 list-disc pl-5">
+                <li>{t('about.mission_desc_1')}</li>
+                <li>{t('about.mission_desc_2')}</li>
+                <li>{t('about.mission_desc_3')}</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -410,23 +412,61 @@ export default function About() {
             <div className="bg-white p-8 rounded-3xl shadow-xl border-l-8 border-blue-600">
               <h3 className="text-2xl font-bold text-blue-900 mb-4">{t('about.actions_1_t')}</h3>
               <ul className="space-y-3 text-gray-700">
-                <li className="flex items-center gap-2"><CheckCircle className="text-blue-600" size={18} /> {t('about.actions_1_d1')}</li>
-                <li className="flex items-center gap-2"><CheckCircle className="text-blue-600" size={18} /> {t('about.actions_1_d2')}</li>
+                <li className="flex items-center gap-2"><CheckCircle className="text-blue-600 flex-shrink-0" size={18} /> {t('about.actions_1_l1')}</li>
+                <li className="flex items-center gap-2"><CheckCircle className="text-blue-600 flex-shrink-0" size={18} /> {t('about.actions_1_l2')}</li>
+                <li className="flex items-center gap-2"><CheckCircle className="text-blue-600 flex-shrink-0" size={18} /> {t('about.actions_1_l3')}</li>
               </ul>
             </div>
             <div className="bg-white p-8 rounded-3xl shadow-xl border-l-8 border-green-600">
               <h3 className="text-2xl font-bold text-green-900 mb-4">{t('about.actions_2_t')}</h3>
               <ul className="space-y-3 text-gray-700">
-                <li className="flex items-center gap-2"><CheckCircle className="text-green-600" size={18} /> {t('about.actions_2_d1')}</li>
-                <li className="flex items-center gap-2"><CheckCircle className="text-green-600" size={18} /> {t('about.actions_2_d2')}</li>
+                <li className="flex items-center gap-2"><CheckCircle className="text-green-600 flex-shrink-0" size={18} /> {t('about.actions_2_l1')}</li>
+                <li className="flex items-center gap-2"><CheckCircle className="text-green-600 flex-shrink-0" size={18} /> {t('about.actions_2_l2')}</li>
+                <li className="flex items-center gap-2"><CheckCircle className="text-green-600 flex-shrink-0" size={18} /> {t('about.actions_2_l3')}</li>
+                <li className="flex items-center gap-2"><CheckCircle className="text-green-600 flex-shrink-0" size={18} /> {t('about.actions_2_l4')}</li>
+                <li className="flex items-center gap-2"><CheckCircle className="text-green-600 flex-shrink-0" size={18} /> {t('about.actions_2_l5')}</li>
               </ul>
             </div>
             <div className="bg-white p-8 rounded-3xl shadow-xl border-l-8 border-purple-600">
               <h3 className="text-2xl font-bold text-purple-900 mb-4">{t('about.actions_3_t')}</h3>
               <ul className="space-y-3 text-gray-700">
-                <li className="flex items-center gap-2"><CheckCircle className="text-purple-600" size={18} /> {t('about.actions_3_d1')}</li>
-                <li className="flex items-center gap-2"><CheckCircle className="text-purple-600" size={18} /> {t('about.actions_3_d2')}</li>
+                <li className="flex items-center gap-2"><CheckCircle className="text-purple-600 flex-shrink-0" size={18} /> {t('about.actions_3_l1')}</li>
+                <li className="flex items-center gap-2"><CheckCircle className="text-purple-600 flex-shrink-0" size={18} /> {t('about.actions_3_l2')}</li>
+                <li className="flex items-center gap-2"><CheckCircle className="text-purple-600 flex-shrink-0" size={18} /> {t('about.actions_3_l3')}</li>
               </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Nos Réalisations Concrètes */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">{t('about.achievements_title')}</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">{t('about.achievements_subtitle')}</p>
+          </div>
+          <div className="max-w-5xl mx-auto">
+            <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent">
+              {[
+                { year: "2025", text: t('about.ach_2025_1'), color: "border-blue-500 text-blue-500" },
+                { year: "2025", text: t('about.ach_2025_2'), color: "border-blue-500 text-blue-500" },
+                { year: "2024", text: t('about.ach_2024'), color: "border-green-500 text-green-500" },
+                { year: "2023", text: t('about.ach_2023_1'), color: "border-purple-500 text-purple-500" },
+                { year: "2023", text: t('about.ach_2023_2'), color: "border-purple-500 text-purple-500" },
+                { year: "2021", text: t('about.ach_2021'), color: "border-yellow-500 text-yellow-500" },
+                { year: "2020", text: t('about.ach_2020'), color: "border-red-500 text-red-500" },
+              ].map((item, index) => (
+                <div key={index} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-100 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                    <div className={`w-3 h-3 rounded-full ${item.color.split(' ')[0].replace('border-', 'bg-')}`}></div>
+                  </div>
+                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-xl shadow-md border border-slate-100">
+                    <div className={`font-bold text-sm mb-1 ${item.color.split(' ')[1]}`}>{item.year}</div>
+                    <div className="text-gray-700 leading-relaxed font-medium">{item.text}</div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -436,24 +476,22 @@ export default function About() {
       <section className="py-20 bg-gradient-to-r from-blue-700 to-green-700 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-16">{t('about.results_title')}</h2>
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="bg-white/10 p-8 rounded-2xl">
-              <TrendingUp className="mx-auto mb-4" />
-              <p className="text-4xl font-bold">70,8%</p>
-              <p className="text-sm">{t('about.stat_coverage')}</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="bg-white/10 p-8 rounded-2xl backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-all duration-300">
+              <TrendingUp className="mx-auto mb-6 text-blue-200" size={40} />
+              <p className="text-lg font-bold leading-tight">{t('about.res_1')}</p>
             </div>
-            <div className="bg-white/10 p-8 rounded-2xl">
-              <Users className="mx-auto mb-4" />
-              <p className="text-4xl font-bold">60+</p>
-              <p className="text-sm">{t('about.stat_members')}</p>
+            <div className="bg-white/10 p-8 rounded-2xl backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-all duration-300">
+              <Users className="mx-auto mb-6 text-green-200" size={40} />
+              <p className="text-lg font-bold leading-tight">{t('about.res_2')}</p>
             </div>
-            <div className="bg-white/10 p-8 rounded-2xl">
-              <Handshake className="mx-auto mb-4" />
-              <p className="text-xl font-bold">{t('about.results_concertation')}</p>
+            <div className="bg-white/10 p-8 rounded-2xl backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-all duration-300">
+              <Handshake className="mx-auto mb-6 text-purple-200" size={40} />
+              <p className="text-lg font-bold leading-tight">{t('about.res_3')}</p>
             </div>
-            <div className="bg-white/10 p-8 rounded-2xl">
-              <Target className="mx-auto mb-4" />
-              <p className="text-xl font-bold">{t('about.results_strategy')}</p>
+            <div className="bg-white/10 p-8 rounded-2xl backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-all duration-300">
+              <Target className="mx-auto mb-6 text-yellow-200" size={40} />
+              <p className="text-lg font-bold leading-tight">{t('about.res_4')}</p>
             </div>
           </div>
         </div>

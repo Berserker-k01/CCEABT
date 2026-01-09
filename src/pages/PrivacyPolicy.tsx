@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
 import { Eye, ShieldCheck, Database, Bell } from 'lucide-react';
 
+import { useTranslation } from 'react-i18next';
+
 export default function PrivacyPolicy() {
+    const { t } = useTranslation();
 
     return (
         <div className="min-h-screen bg-gray-50 pt-32 pb-20">
@@ -12,10 +15,10 @@ export default function PrivacyPolicy() {
                     className="max-w-4xl mx-auto"
                 >
                     <div className="text-center mb-12">
-                        <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">Politique de Confidentialité</h1>
+                        <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">{t('privacy_policy.title')}</h1>
                         <div className="h-1.5 w-24 bg-green-600 mx-auto rounded-full"></div>
                         <p className="mt-6 text-gray-600 max-w-2xl mx-auto">
-                            Le CCEABT accorde une importance capitale à la protection de vos données personnelles et à votre vie privée.
+                            {t('privacy_policy.intro')}
                         </p>
                     </div>
 
@@ -25,53 +28,53 @@ export default function PrivacyPolicy() {
                             <section className="space-y-4">
                                 <h2 className="flex items-center gap-3 text-2xl font-bold text-green-900">
                                     <Database className="text-green-600" size={28} />
-                                    1. Collecte des Données
+                                    {t('privacy_policy.section_1_title')}
                                 </h2>
                                 <p className="leading-relaxed">
-                                    Nous collectons uniquement les données que vous nous transmettez volontairement via :
+                                    {t('privacy_policy.section_1_text')}
                                 </p>
                                 <ul className="list-disc pl-6 space-y-2">
-                                    <li>Les formulaires de contact (Nom, Email, Message)</li>
-                                    <li>Les formulaires d'adhésion (Coordonnées professionnelles)</li>
-                                    <li>Le portail partenaire (Rapports techniques, Liens Google Drive)</li>
+                                    <li>{t('privacy_policy.section_1_li_1')}</li>
+                                    <li>{t('privacy_policy.section_1_li_2')}</li>
+                                    <li>{t('privacy_policy.section_1_li_3')}</li>
                                 </ul>
                             </section>
 
                             <section className="space-y-4">
                                 <h2 className="flex items-center gap-3 text-2xl font-bold text-green-900">
                                     <Eye className="text-green-600" size={28} />
-                                    2. Utilisation des Données
+                                    {t('privacy_policy.section_2_title')}
                                 </h2>
                                 <p className="leading-relaxed">
-                                    Vos informations sont utilisées exclusivement pour :
+                                    {t('privacy_policy.section_2_text')}
                                 </p>
                                 <ul className="list-disc pl-6 space-y-2">
-                                    <li>Répondre à vos demandes d'information</li>
-                                    <li>Traiter votre demande d'adhésion au réseau CCEABT</li>
-                                    <li>Suivre et compiler les indicateurs WASH pour le plaidoyer national</li>
+                                    <li>{t('privacy_policy.section_2_li_1')}</li>
+                                    <li>{t('privacy_policy.section_2_li_2')}</li>
+                                    <li>{t('privacy_policy.section_2_li_3')}</li>
                                 </ul>
                                 <p className="font-bold text-green-700 bg-green-50 p-4 rounded-xl">
-                                    Le CCEABT s'engage à ne jamais vendre ou partager vos données à des tiers à des fins commerciales.
+                                    {t('privacy_policy.section_2_note')}
                                 </p>
                             </section>
 
                             <section className="space-y-4">
                                 <h2 className="flex items-center gap-3 text-2xl font-bold text-green-900">
                                     <ShieldCheck className="text-green-600" size={28} />
-                                    3. Stockage et Sécurité
+                                    {t('privacy_policy.section_3_title')}
                                 </h2>
                                 <p className="leading-relaxed">
-                                    Nous avons opté pour une approche moderne et sécurisée : les fichiers techniques lourds sont hébergés via des services externes sécurisés (Google Drive), limitant ainsi l'exposition des données sur nos serveurs locaux.
+                                    {t('privacy_policy.section_3_text')}
                                 </p>
                             </section>
 
                             <section className="space-y-4">
                                 <h2 className="flex items-center gap-3 text-2xl font-bold text-green-900">
                                     <Bell className="text-green-600" size={28} />
-                                    4. Vos Droits
+                                    {t('privacy_policy.section_4_title')}
                                 </h2>
                                 <p className="leading-relaxed">
-                                    Conformément aux réglementations en vigueur, vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles. Pour exercer ce droit, contactez-nous par email à : <span className="font-bold text-blue-600">info@cceabt.org</span>.
+                                    {t('privacy_policy.section_4_text')} <span className="font-bold text-blue-600">info@cceabt.org</span>.
                                 </p>
                             </section>
 
@@ -79,7 +82,7 @@ export default function PrivacyPolicy() {
                     </div>
 
                     <div className="text-center mt-8 text-gray-500 text-sm">
-                        Dernière mise à jour : Janvier 2026
+                        {t('privacy_policy.last_update')}
                     </div>
                 </motion.div>
             </div>
