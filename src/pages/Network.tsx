@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, FileText, Download, UserPlus, Handshake, X, Building2, ExternalLink, Globe } from 'lucide-react';
+import { Users, FileText, Download, UserPlus, Handshake, X, Building2, ExternalLink, Globe, Briefcase } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useData } from '../context/DataContext';
 import MembershipForm from '../components/MembershipForm';
@@ -24,7 +24,7 @@ export default function Network() {
     { id: 'International', label: t('network.cat_international'), icon: Globe, count: internationalMembers.length },
     { id: 'National', label: t('network.cat_national'), icon: Users, count: nationalMembers.length },
     { id: 'Institutionnel', label: t('network.cat_institutional'), icon: Building2, count: institutionalPartners.length },
-    { id: 'Technique', label: t('network.cat_technical'), icon: Download, count: technicalPartners.length },
+    { id: 'Technique', label: t('network.cat_technical'), icon: Briefcase, count: technicalPartners.length },
   ];
 
   const filteredPartners = partners.filter(p => {

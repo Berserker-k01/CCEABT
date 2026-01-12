@@ -1,4 +1,4 @@
-import { Target, Eye, Heart, Users, TrendingUp, Handshake, CheckCircle } from 'lucide-react';
+import { Target, Eye, Heart, Users, TrendingUp, Handshake, CheckCircle, Briefcase } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -42,7 +42,7 @@ export default function About() {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % totalSteps);
-    }, 6000); // Change toutes les 6 secondes
+    }, 10000); // Changed from 6000ms to 10000ms to slow down animation
     return () => clearInterval(interval);
   }, []);
 
@@ -108,6 +108,12 @@ export default function About() {
       textColor: "text-green-700",
       content: (
         <div className="space-y-6">
+          <div className="p-5 bg-red-50 rounded-2xl border border-red-100">
+            <h4 className="text-red-800 font-bold mb-2 text-sm">{t('about.journey_history_title')}</h4>
+            <p className="text-[11px] text-red-600 leading-relaxed">
+              {t('about.journey_history_desc')}
+            </p>
+          </div>
           <div className="bg-gradient-to-br from-green-600 to-blue-700 p-6 rounded-3xl text-white shadow-xl">
             <div className="flex items-center justify-between mb-4">
               <div className="text-3xl font-black">60+</div>
@@ -116,12 +122,6 @@ export default function About() {
             <p className="font-bold mb-2">{t('about.journey_voice_title')}</p>
             <p className="text-xs text-green-50 opacity-80 leading-relaxed">
               {t('about.journey_voice_desc')}
-            </p>
-          </div>
-          <div className="p-5 bg-red-50 rounded-2xl border border-red-100">
-            <h4 className="text-red-800 font-bold mb-2 text-sm">{t('about.journey_history_title')}</h4>
-            <p className="text-[11px] text-red-600 leading-relaxed">
-              {t('about.journey_history_desc')}
             </p>
           </div>
         </div>
@@ -396,6 +396,44 @@ export default function About() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* GOUVERNANCE */}
+      <section className="py-20 bg-blue-50/50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">{t('about.governance_title')}</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">{t('about.governance_subtitle')}</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* AG */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-blue-600 hover:-translate-y-2 transition-transform duration-300">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                <Users className="text-blue-600" size={32} />
+              </div>
+              <h3 className="text-xl font-bold text-center text-gray-900 mb-2">{t('about.gov_ag_title')}</h3>
+              <p className="text-center text-gray-600">{t('about.gov_ag_desc')}</p>
+            </div>
+
+            {/* CA */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-green-600 hover:-translate-y-2 transition-transform duration-300">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                <Target className="text-green-600" size={32} />
+              </div>
+              <h3 className="text-xl font-bold text-center text-gray-900 mb-2">{t('about.gov_ca_title')}</h3>
+              <p className="text-center text-gray-600">{t('about.gov_ca_desc')}</p>
+            </div>
+
+            {/* SE */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-purple-600 hover:-translate-y-2 transition-transform duration-300">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                <Briefcase className="text-purple-600" size={32} />
+              </div>
+              <h3 className="text-xl font-bold text-center text-gray-900 mb-2">{t('about.gov_se_title')}</h3>
+              <p className="text-center text-gray-600">{t('about.gov_se_desc')}</p>
             </div>
           </div>
         </div>

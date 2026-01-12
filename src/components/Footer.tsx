@@ -26,7 +26,7 @@ export default function Footer() {
             <img
               src="/images/logo CCEABT.png"
               alt="Logo CCEABT"
-              className="h-16 w-auto mb-4 brightness-0 invert"
+              className="h-16 w-auto mb-4 bg-white rounded-lg p-1"
             />
             <h3 className="text-xl font-bold mb-1">CCEABT</h3>
             <p className="text-xs font-semibold text-blue-200 mb-4 italic leading-tight">{t('footer.full_name')}</p>
