@@ -51,6 +51,39 @@ export default function About() {
 
   const wheelItems = [
     {
+      title: t('about.journey_title'),
+      subtitle: t('about.journey_subtitle'),
+      icon: TrendingUp,
+      color: "from-green-500 to-green-700",
+      bg: "bg-green-50",
+      textColor: "text-green-700",
+      content: (
+        <div className="space-y-6">
+          <div className="p-5 bg-red-50 rounded-2xl border border-red-100">
+            <h4 className="text-red-800 font-bold mb-2 text-sm">{t('about.journey_history_title')}</h4>
+            <p className="text-[11px] text-red-600 leading-relaxed font-medium">
+              {t('about.journey_history_desc')}
+            </p>
+          </div>
+
+          <p className="text-xs text-gray-500 font-semibold text-center italic">
+            {t('about.journey_transition')}
+          </p>
+
+          <div className="bg-gradient-to-br from-green-600 to-blue-700 p-6 rounded-3xl text-white shadow-xl">
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-3xl font-black">60+</div>
+              <Users size={24} className="opacity-50" />
+            </div>
+            <p className="font-bold mb-2">{t('about.journey_voice_title')}</p>
+            <p className="text-xs text-green-50 opacity-80 leading-relaxed">
+              {t('about.journey_voice_desc')}
+            </p>
+          </div>
+        </div>
+      )
+    },
+    {
       title: t('about.values_title'),
       subtitle: t('about.values_subtitle'),
       icon: Heart,
@@ -96,34 +129,6 @@ export default function About() {
               <p className="text-sm text-gray-600 leading-relaxed">{p.d}</p>
             </div>
           ))}
-        </div>
-      )
-    },
-    {
-      title: t('about.journey_title'),
-      subtitle: t('about.journey_subtitle'),
-      icon: TrendingUp,
-      color: "from-green-500 to-green-700",
-      bg: "bg-green-50",
-      textColor: "text-green-700",
-      content: (
-        <div className="space-y-6">
-          <div className="p-5 bg-red-50 rounded-2xl border border-red-100">
-            <h4 className="text-red-800 font-bold mb-2 text-sm">{t('about.journey_history_title')}</h4>
-            <p className="text-[11px] text-red-600 leading-relaxed">
-              {t('about.journey_history_desc')}
-            </p>
-          </div>
-          <div className="bg-gradient-to-br from-green-600 to-blue-700 p-6 rounded-3xl text-white shadow-xl">
-            <div className="flex items-center justify-between mb-4">
-              <div className="text-3xl font-black">60+</div>
-              <Users size={24} className="opacity-50" />
-            </div>
-            <p className="font-bold mb-2">{t('about.journey_voice_title')}</p>
-            <p className="text-xs text-green-50 opacity-80 leading-relaxed">
-              {t('about.journey_voice_desc')}
-            </p>
-          </div>
         </div>
       )
     }
