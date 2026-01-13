@@ -1,16 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Trash2, LogOut, Lock, Eye, EyeOff, Save, Upload, Edit, FileText, Building2, Users } from 'lucide-react';
-
-// Interface pour la Galerie (non gérée par DataContext pour l'instant)
-interface GalleryItem {
-  id: string;
-  title: string;
-  imageUrl: string;
-  description: string;
-  date: string;
-}
+import { Plus, Trash2, LogOut, Lock, Eye, EyeOff, Save, Edit, FileText, Building2, Users } from 'lucide-react';
 
 export default function Admin() {
   const { news, partners, addNews, updateNews, deleteNews, addPartner, updatePartner, deletePartner, addResource, deleteResource, resources, driveUrl, setDriveUrl } = useData();
@@ -28,10 +19,7 @@ export default function Admin() {
   const [adminPassword, setAdminPassword] = useState('admin123');
   const [isEditingCredentials, setIsEditingCredentials] = useState(false);
 
-  // Gallery State (Local)
-  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
-
-  const [activeTab, setActiveTab] = useState<'news' | 'partners' | 'gallery' | 'resources' | 'settings'>('news');
+  const [activeTab, setActiveTab] = useState<'news' | 'partners' | 'resources' | 'settings'>('news');
 
   // Form States (New Logic)
   const [newsForm, setNewsForm] = useState({ title: '', category: '', date: '', image: '', excerpt: '', content: '' });
@@ -47,10 +35,6 @@ export default function Admin() {
     const savedPassword = localStorage.getItem('adminPassword') || 'admin123';
     setAdminEmail(savedEmail);
     setAdminPassword(savedPassword);
-
-    // Load Gallery
-    const savedGallery = localStorage.getItem('galleryItems');
-    if (savedGallery) setGalleryItems(JSON.parse(savedGallery));
   }, []);
 
 
@@ -149,49 +133,6 @@ export default function Admin() {
     setPartnerForm({ name: '', type: 'Technique', description: '', website: '', email: '', password: '' });
   };
 
-  // --- Handlers for Gallery (Old Logic) ---
-  const saveGallery = () => {
-    localStorage.setItem('galleryItems', JSON.stringify(galleryItems));
-    alert('Galerie sauvegardée !');
-  };
-
-  const addGalleryItem = () => {
-    const newItem: GalleryItem = {
-      id: Date.now().toString(),
-      title: 'Nouvelle image',
-      imageUrl: '',
-      description: 'Description...',
-      date: new Date().toISOString().split('T')[0]
-    };
-    setGalleryItems([...galleryItems, newItem]);
-  };
-
-  const deleteGalleryItem = (id: string) => {
-    if (confirm('Supprimer cette image ?')) {
-      const updated = galleryItems.filter(item => item.id !== id);
-      setGalleryItems(updated);
-      localStorage.setItem('galleryItems', JSON.stringify(updated));
-    }
-  };
-
-  const updateGalleryItem = (id: string, field: string, value: string) => {
-    setGalleryItems(galleryItems.map(item =>
-      item.id === id ? { ...item, [field]: value } : item
-    ));
-  };
-
-  const handleImageUpload = (id: string, event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        updateGalleryItem(id, 'imageUrl', reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center px-4 py-24">
@@ -277,7 +218,7 @@ export default function Admin() {
         {/* Tabs */}
         <div className="bg-white rounded-lg shadow-md mb-6">
           <div className="flex border-b overflow-x-auto">
-            {['news', 'partners', 'gallery', 'resources', 'settings'].map((tab) => (
+            {['news', 'partners', 'resources', 'settings'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
@@ -288,7 +229,6 @@ export default function Admin() {
               >
                 {tab === 'news' && 'Actualités'}
                 {tab === 'partners' && 'Partenaires'}
-                {tab === 'gallery' && 'Galerie'}
                 {tab === 'resources' && 'Ressources'}
                 {tab === 'settings' && 'Paramètres'}
               </button>
@@ -637,52 +577,6 @@ export default function Admin() {
                     );
                   })()}
                 </div>
-              </div>
-            </div>
-          )}
-
-          {/* GALLERY TAB (Legacy Support) */}
-          {activeTab === 'gallery' && (
-            <div>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">Gestion de la galerie</h2>
-                <div className="flex gap-3">
-                  <button onClick={addGalleryItem} className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors">
-                    <Plus size={20} /> Ajouter
-                  </button>
-                  <button onClick={saveGallery} className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                    <Save size={20} /> Sauvegarder
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-4">
-                {galleryItems.map((item) => (
-                  <div key={item.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50">
-                    <div className="space-y-3">
-                      <input type="text" value={item.title} onChange={(e) => updateGalleryItem(item.id, 'title', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg font-semibold" placeholder="Titre" />
-
-                      {/* Upload Image */}
-                      <div className="flex gap-2 items-center">
-                        <label className="flex-1 cursor-pointer bg-white border border-dashed border-gray-400 rounded-lg p-2 text-center hover:bg-blue-50">
-                          <span className="text-sm flex items-center justify-center gap-2 text-gray-600"><Upload size={16} /> Upload Image</span>
-                          <input type="file" accept="image/*" onChange={(e) => handleImageUpload(item.id, e)} className="hidden" />
-                        </label>
-                        {item.imageUrl && <img src={item.imageUrl} alt="Preview" className="w-12 h-12 rounded object-cover border" />}
-                      </div>
-
-                      <textarea value={item.description} onChange={(e) => updateGalleryItem(item.id, 'description', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg" rows={2} placeholder="Description" />
-
-                      <div className="flex items-center justify-between">
-                        <input type="date" value={item.date} onChange={(e) => updateGalleryItem(item.id, 'date', e.target.value)} className="px-3 py-2 border border-gray-300 rounded-lg" />
-                        <button onClick={() => deleteGalleryItem(item.id)} className="text-red-600 hover:text-red-800 p-2">
-                          <Trash2 size={20} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                {galleryItems.length === 0 && <p className="text-gray-500 italic text-center col-span-2 py-8">Aucune image.</p>}
               </div>
             </div>
           )}
