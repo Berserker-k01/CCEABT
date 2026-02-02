@@ -52,6 +52,8 @@ export default function Network() {
     }
   };
 
+  const [selectedPartner, setSelectedPartner] = useState<typeof partners[0] | null>(null);
+
   return (
     <div>
       {/* Hero Section */}
@@ -148,29 +150,54 @@ export default function Network() {
                     {/* Background decoration */}
                     <div className="absolute -right-4 -top-4 w-24 h-24 bg-blue-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-0"></div>
 
-                    <div className="relative z-10">
+                    <div className="relative z-10 flex flex-col h-full">
                       <div className="flex items-center justify-between mb-6">
-                        <div className={`p-4 rounded-2xl ${partner.type === 'Institutionnel' ? 'bg-purple-100 text-purple-600' :
-                          partner.type === 'International' ? 'bg-blue-100 text-blue-600' :
-                            partner.type === 'National' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'
-                          }`}>
-                          {partner.type === 'Institutionnel' ? <Building2 size={24} /> :
-                            partner.type === 'International' ? <Globe size={24} /> : <Users size={24} />}
-                        </div>
-                        {partner.website && (
-                          <a href={partner.website} target="_blank" rel="noopener noreferrer"
-                            className="p-2 bg-gray-50 text-gray-400 hover:bg-blue-600 hover:text-white rounded-xl transition-all duration-300">
-                            <ExternalLink size={18} />
-                          </a>
+                        {partner.logo ? (
+                          <div className="h-20 w-full flex items-center justify-start mb-2">
+                            <img
+                              src={partner.logo}
+                              alt={partner.name}
+                              className="max-h-full max-w-[150px] object-contain"
+                            />
+                          </div>
+                        ) : (
+                          <div className={`p-4 rounded-2xl ${partner.type === 'Institutionnel' ? 'bg-purple-100 text-purple-600' :
+                            partner.type === 'International' ? 'bg-blue-100 text-blue-600' :
+                              partner.type === 'National' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'
+                            }`}>
+                            {partner.type === 'Institutionnel' ? <Building2 size={24} /> :
+                              partner.type === 'International' ? <Globe size={24} /> : <Users size={24} />}
+                          </div>
                         )}
+                        {/* New Actions */}
+                        <div className="flex gap-2">
+                          {partner.website && (
+                            <a href={partner.website} target="_blank" rel="noopener noreferrer"
+                              className="p-2 bg-gray-50 text-gray-400 hover:bg-blue-600 hover:text-white rounded-xl transition-all duration-300">
+                              <ExternalLink size={18} />
+                            </a>
+                          )}
+                        </div>
+
                       </div>
 
                       <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
                         {partner.name}
                       </h3>
-                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">
+                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4 flex-grow">
                         {partner.description || t('partners_page.committed_desc')}
                       </p>
+
+                      {/* Bouton Détails si info dispo */}
+                      {(partner.vision || partner.mission) && (
+                        <button
+                          onClick={() => setSelectedPartner(partner)}
+                          className="w-full mt-auto py-2 bg-blue-50 text-blue-600 rounded-xl font-semibold hover:bg-blue-100 transition-colors flex items-center justify-center gap-2"
+                        >
+                          <FileText size={16} />
+                          <span>Voir Détails</span>
+                        </button>
+                      )}
 
                       <div className="mt-6 pt-6 border-t border-gray-50 flex items-center justify-between">
                         <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">
@@ -197,6 +224,120 @@ export default function Network() {
           </div>
         </div>
       </section>
+
+      {/* Modal Détails Partenaire */}
+      <AnimatePresence>
+        {selectedPartner && (
+          <div className="fixed inset-0 z-50 overflow-y-auto">
+            <div className="flex min-h-screen items-center justify-center p-4">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/60 backdrop-blur-md"
+                onClick={() => setSelectedPartner(null)}
+              />
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 30 }}
+                className="relative bg-white rounded-3xl shadow-2xl max-w-4xl w-full mx-auto p-8 md:p-12 text-left overflow-hidden border border-white/20 max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => setSelectedPartner(null)}
+                  className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 bg-gray-100 p-2 rounded-full transition-colors z-10"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  {/* Colonne Gauche: Identité */}
+                  <div className="lg:col-span-1 space-y-6">
+                    <div className="bg-gray-50 rounded-2xl p-6 flex items-center justify-center h-48">
+                      {selectedPartner.logo ? (
+                        <img src={selectedPartner.logo} alt={selectedPartner.name} className="max-h-full max-w-full object-contain" />
+                      ) : (
+                        <div className="text-gray-300">
+                          <Building2 size={64} />
+                        </div>
+                      )}
+                    </div>
+
+                    <div>
+                      <h2 className="text-2xl font-bold text-gray-900 mb-2">{selectedPartner.acronym || selectedPartner.name}</h2>
+                      <p className="text-gray-500 text-sm">{selectedPartner.name}</p>
+                    </div>
+
+                    {selectedPartner.website && (
+                      <a href={selectedPartner.website} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-3 w-full justify-center bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-colors">
+                        <Globe size={20} />
+                        Visiter le site
+                      </a>
+                    )}
+
+                    <div className="bg-blue-50 p-4 rounded-xl text-sm">
+                      <h4 className="font-bold text-blue-900 mb-2 flex items-center gap-2"><Building2 size={16} /> Siège</h4>
+                      <p className="text-blue-800">{selectedPartner.headquarters || "Non spécifié"}</p>
+                    </div>
+                  </div>
+
+                  {/* Colonne Droite: Détails Stratégiques */}
+                  <div className="lg:col-span-2 space-y-8">
+                    {selectedPartner.vision && (
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 border-l-4 border-green-500 pl-3">Vision</h3>
+                        <p className="text-gray-600 leading-relaxed bg-green-50/50 p-4 rounded-xl italic">
+                          "{selectedPartner.vision}"
+                        </p>
+                      </div>
+                    )}
+
+                    {selectedPartner.mission && (
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 border-l-4 border-blue-500 pl-3">Mission</h3>
+                        <p className="text-gray-600 leading-relaxed">
+                          {selectedPartner.mission}
+                        </p>
+                      </div>
+                    )}
+
+                    {selectedPartner.intervention_domains && (
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 border-l-4 border-purple-500 pl-3">Domaines d'Intervention</h3>
+                        <div className="flex flex-wrap gap-2">
+                          {selectedPartner.intervention_domains.map((domain, i) => (
+                            <span key={i} className="bg-purple-50 text-purple-700 px-3 py-1 rounded-lg text-sm font-medium">
+                              {domain}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedPartner.projects && (
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 border-l-4 border-orange-500 pl-3">Projets Réalisés</h3>
+                        <ul className="space-y-3">
+                          {selectedPartner.projects.map((proj, i) => (
+                            <li key={i} className="flex gap-3 text-gray-600 text-sm">
+                              <span className="text-orange-500 mt-1">•</span>
+                              <span>{proj}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+              </motion.div>
+            </div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Ressources partagées */}
       <section className="py-24 bg-gray-50">

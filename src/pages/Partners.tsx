@@ -44,9 +44,20 @@ export default function Partners() {
             >
               <div className="p-6">
                 <div className="flex items-start justify-between mb-4">
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                    {partner.name}
-                  </h3>
+                  <div className="flex-1">
+                    {partner.logo && (
+                      <div className="mb-4 h-16 flex items-center justify-start">
+                        <img
+                          src={partner.logo}
+                          alt={partner.name}
+                          className="max-h-full max-w-[150px] object-contain"
+                        />
+                      </div>
+                    )}
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                      {partner.name}
+                    </h3>
+                  </div>
                   {partner.website && (
                     <a
                       href={partner.website}
