@@ -10,6 +10,10 @@ import Contact from './pages/Contact';
 import Partners from './pages/Partners';
 import Admin from './pages/Admin';
 
+import Resources from './pages/Resources';
+import NewsReader from './pages/NewsReader';
+import PartnerPortal from './pages/PartnerPortal';
+
 function App() {
   const { pathname } = useLocation();
 
@@ -26,6 +30,9 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/network" element={<Network />} />
           <Route path="/news" element={<News />} />
+          <Route path="/news/:id" element={<NewsReader />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/partner-portal" element={<PartnerPortal />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/partners" element={<Partners />} />
           <Route path="/cceabtadmin" element={<Admin />} />

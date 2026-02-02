@@ -814,23 +814,43 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     });
 
     const [news, setNews] = useState<NewsItem[]>(() => {
-        const saved = localStorage.getItem('cceabt_news');
-        return saved ? JSON.parse(saved) : initialNews;
+        try {
+            const saved = localStorage.getItem('cceabt_news');
+            return saved ? JSON.parse(saved) : initialNews;
+        } catch (error) {
+            console.error('Error parsing news from localStorage', error);
+            return initialNews;
+        }
     });
 
     const [resources, setResources] = useState<ResourceItem[]>(() => {
-        const saved = localStorage.getItem('cceabt_resources');
-        return saved ? JSON.parse(saved) : initialResources;
+        try {
+            const saved = localStorage.getItem('cceabt_resources');
+            return saved ? JSON.parse(saved) : initialResources;
+        } catch (error) {
+            console.error('Error parsing resources from localStorage', error);
+            return initialResources;
+        }
     });
 
     const [partners, setPartners] = useState<PartnerItem[]>(() => {
-        const saved = localStorage.getItem('cceabt_partners_v9');
-        return saved ? JSON.parse(saved) : initialPartners;
+        try {
+            const saved = localStorage.getItem('cceabt_partners_v9');
+            return saved ? JSON.parse(saved) : initialPartners;
+        } catch (error) {
+            console.error('Error parsing partners from localStorage', error);
+            return initialPartners;
+        }
     });
 
     const [submissions, setSubmissions] = useState<Submission[]>(() => {
-        const saved = localStorage.getItem('cceabt_submissions');
-        return saved ? JSON.parse(saved) : [];
+        try {
+            const saved = localStorage.getItem('cceabt_submissions');
+            return saved ? JSON.parse(saved) : [];
+        } catch (error) {
+            console.error('Error parsing submissions from localStorage', error);
+            return [];
+        }
     });
 
 
@@ -845,10 +865,14 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         const handleStorageChange = (e: StorageEvent) => {
             if (e.key === 'cceabt_drive_url' && e.newValue) setDriveUrl(e.newValue);
-            if (e.key === 'cceabt_partners_v9' && e.newValue) setPartners(JSON.parse(e.newValue));
-            if (e.key === 'cceabt_news' && e.newValue) setNews(JSON.parse(e.newValue));
-            if (e.key === 'cceabt_resources' && e.newValue) setResources(JSON.parse(e.newValue));
-            if (e.key === 'cceabt_submissions' && e.newValue) setSubmissions(JSON.parse(e.newValue));
+            try {
+                if (e.key === 'cceabt_partners_v9' && e.newValue) setPartners(JSON.parse(e.newValue));
+                if (e.key === 'cceabt_news' && e.newValue) setNews(JSON.parse(e.newValue));
+                if (e.key === 'cceabt_resources' && e.newValue) setResources(JSON.parse(e.newValue));
+                if (e.key === 'cceabt_submissions' && e.newValue) setSubmissions(JSON.parse(e.newValue));
+            } catch (error) {
+                console.error('Error syncing storage change', error);
+            }
         };
         window.addEventListener('storage', handleStorageChange);
         return () => window.removeEventListener('storage', handleStorageChange);
