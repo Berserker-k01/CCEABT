@@ -260,7 +260,8 @@ export default function Home() {
               gradientTo="to-green-50"
               borderColor="border-blue-200"
               hoverColor="group-hover:text-blue-600"
-              animationDuration="35s"
+              animationDuration="25s"
+              partnerType="CA"
             />
 
             {/* Partenaires Techniques et Financiers (PTF) */}
@@ -272,7 +273,8 @@ export default function Home() {
               gradientTo="to-orange-50"
               borderColor="border-yellow-200"
               hoverColor="group-hover:text-yellow-600"
-              animationDuration="45s"
+              animationDuration="30s"
+              partnerType="PTF"
             />
 
             {/* Bouton pour voir tous les partenaires */}

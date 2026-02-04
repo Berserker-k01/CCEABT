@@ -87,6 +87,18 @@ export const partnerNameMapping: Record<string, string[]> = {
   'CAWST': ['cawst', 'c-a-w-s-t', 'cawst-togo', 'cawst-tg']
 };
 
+// Mapping direct des URLs des logos (priorité haute)
+// Ces URLs sont utilisées directement pour un chargement immédiat
+export const partnerLogoUrls: Record<string, string> = {
+  'Coalition Eau': 'https://coalition-eau.org/wp-content/themes/coalition-eau/assets/images/logo.png',
+  'AFD': 'https://www.afd.fr/sites/afd/files/logo_0.png',
+  'UE': 'https://europa.eu/european-union/sites/default/files/logo/logo-eu-1500x844.png',
+  'AAFEA': 'https://alliance-aafea.org/wp-content/uploads/2025/04/Nouveau-logo-AAFEA-format-horizontal-08-01-2025.png',
+  'ENDWATERPOVERTY': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPm6p9ICZW4lqgjCivVeD5vdDLqUpsx2iALQ&s',
+  'Plan International Togo': 'https://yop.l-frii.com/wp-content/uploads/2024/09/PLAN-INTERNATIONAL-recrute-pour-ce-poste-30-Septembre-2024.jpg',
+  'SEVES': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIyZb_0lQoUifxOQ0KnrZA1K27cumupDcR6A&s'
+};
+
 // Extensions d'images à essayer
 const imageExtensions = ['.png', '.jpg', '.jpeg', '.webp', '.svg'];
 
@@ -128,8 +140,14 @@ export function generateImagePaths(partnerName: string): string[] {
 
 /**
  * Trouve le premier chemin d'image valide pour un partenaire
+ * Priorité : URL directe > fichiers locaux
  */
 export function findPartnerImage(partnerName: string): string | null {
+  // D'abord vérifier si on a une URL directe
+  if (partnerLogoUrls[partnerName]) {
+    return partnerLogoUrls[partnerName];
+  }
+  
   const paths = generateImagePaths(partnerName);
   // On retourne le premier chemin (le plus probable)
   // Le composant React testera si l'image existe
