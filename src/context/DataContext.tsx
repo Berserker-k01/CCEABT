@@ -121,35 +121,7 @@ const initialResources: ResourceItem[] = [
 ];
 
 const initialPartners: PartnerItem[] = [
-    {
-        "id": "padie____743",
-        "name": "PADIE - Pionniers en Action pour le Développempent Intégré à l’Environnement",
-        "type": "National",
-        "description": "Membre du réseau CCEABT",
-        "email": "contact@cceabt.tg",
-        "phone": "",
-        "website": "",
-        "logo": "/partners/image1.png",
-        "password": "password123",
-        "acronym": "PADIE",
-        "headquarters": "Le siège statutaire de l'ONG est basée à Kpalimé et dispose d'un Bureau national domicilié à Lomé, quartier Vakpossito.",
-        "vision": "Promouvoir le partenariat public-privé société civile comme stratégie de concrétisation des enjeux locaux d'une bonne gouvernance partagée et de développement durable des territoires décentralisés.",
-        "mission": "Contribuer à un développement durable des territoires à travers la recherche action et un appui conseil participatif, adapté et inclusif en gouvernance locale et en alternatives innovantes d'accès aux services financiers et sociaux soucieuses de la gestion durable des ressources naturelles.",
-        "intervention_zone": "Les actions de PADIE couvrent l'ensemble du territoire national (Togo) et sont en extension vers les autres territoires d'Afrique...",
-        "intervention_domains": [
-            "Plaidoyer et partenariat durable au service du développement durable des territoires",
-            "Gouvernance locale partagée, aménagement et développement durable des territoires",
-            "Accès durable aux services sociaux de base dans les territoires",
-            "Economie locale et solidaires soucieuses de la gestion durable des ressources naturelles",
-            "Appui conseil et intermédiation participatifs"
-        ],
-        "projects": [
-            "Projet d'Amélioration du Service d'Eau potable des communes de Kloto 1 et Kloto 2, Togo. PASEK 2",
-            "Projet de Promotion de l'accès durable aux services d'eau, d'hygiène et d'assainissement dans la commune de Hako 1 (Miwoedebu/Faisons autrement)",
-            "Projet de Protection contre les inondations à Kloto 1, Golfe 1 et Golfe 7 Initiatives Durables pour l'accès à l'Eau et l'Assainissement (INIDEA)",
-            "Projet FSPI composante 2 « accompagnement des communes togolaises dans le développement de leurs services publics locaux essentiels de gestion des déchets »"
-        ]
-    },
+
     {
         "id": "crt____154",
         "name": "CRT - Croix-Rouge Togolaise",
@@ -711,74 +683,11 @@ const initialPartners: PartnerItem[] = [
         "password": "password123"
     },
     {
-        "id": "seves___economiquement_187",
-        "name": "SEVES - Systèmes Economiquement Viables pour l'Eau aux Suds",
-        "type": "International",
-        "description": "Membre du réseau CCEABT",
-        "email": "contact@cceabt.tg",
-        "phone": "",
-        "website": "http://asso-seves.org/",
-        "logo": "/partners/image33.png",
-        "password": "password123"
-    },
-    {
-        "id": "hsf____843",
-        "name": "HSF - Hydraulique Sans Frontières",
-        "type": "International",
-        "description": "Membre du réseau CCEABT",
-        "email": "contact@cceabt.tg",
-        "phone": "",
-        "website": "",
-        "logo": "/partners/image34.jpeg",
-        "password": "password123"
-    },
-    {
-        id: "inst1",
-        name: "Ministère délégué chargé de l’eau et de l’assainissement",
-        type: "Institutionnel",
-        description: "Partenaire Institutionnel",
-        website: "https://eau.gouv.tg/",
-        email: "ministereeau@cceabt.org",
-        password: "password123",
-        logo: ""
-    },
-    {
-        id: "inst2",
-        name: "Ministère de la Santé, de l’Hygiène Publique et de la Couverture Sanitaire Universelle",
-        type: "Institutionnel",
-        description: "Partenaire Institutionnel",
-        website: "https://sante.gouv.tg/",
-        email: "ministeresante@cceabt.org",
-        password: "password123",
-        logo: ""
-    },
-    {
-        id: "inst3",
-        name: "Ministère de l’Environnement, des Ressources Forestières, de la Protection Côtière et du Changement Climatique",
-        type: "Institutionnel",
-        description: "Partenaire Institutionnel",
-        website: "https://environnement.gouv.tg/",
-        email: "ministereenvironnement@cceabt.org",
-        password: "password123",
-        logo: ""
-    },
-    {
-        id: "inst4",
-        name: "Ministère de l'Administration Territoriale, de la Gouvernance Locale et des Affaires Coutumières",
-        type: "Institutionnel",
-        description: "Partenaire Institutionnel",
-        website: "https://territoire.gouv.tg/",
-        email: "ministereterritoire@cceabt.org",
-        password: "password123",
-        logo: ""
-    },
-    {
-        id: "inst5",
-        name: "Autorité de régulation du secteur de l'électricité",
-        type: "Institutionnel",
-        description: "Partenaire Institutionnel",
-        website: "https://www.arse.tg/",
-        email: "arse@cceabt.org",
+        id: "ptf_aesen",
+        name: "AESEN (Agence de l'eau Seine-Normandie)",
+        type: "Technique",
+        description: "Partenaire Technique et Financier",
+        email: "aesen@cceabt.org",
         password: "password123",
         logo: ""
     },
@@ -801,17 +710,8 @@ const initialPartners: PartnerItem[] = [
         logo: "/partners/eu.png"
     },
     {
-        id: "ptf_aesen",
-        name: "AESEN",
-        type: "Technique",
-        description: "Partenaire Technique et Financier",
-        email: "aesen@cceabt.org",
-        password: "password123",
-        logo: ""
-    },
-    {
         id: "ptf_pseau",
-        name: "PSEAU",
+        name: "pS-Eau",
         type: "Technique",
         description: "Partenaire Technique et Financier",
         email: "pseau@cceabt.org",
@@ -839,7 +739,7 @@ const initialPartners: PartnerItem[] = [
     {
         id: "ptf_aafea",
         name: "AAFEA",
-        type: "Technique",
+        type: "International",
         description: "Partenaire Technique et Financier",
         email: "aafea@cceabt.org",
         password: "password123",
@@ -857,7 +757,7 @@ const initialPartners: PartnerItem[] = [
     {
         id: "ptf_ambassade_france",
         name: "Ambassade de France au Togo",
-        type: "Institutionnel",
+        type: "Technique",
         description: "Partenaire Technique et Financier",
         email: "ambassadefrance@cceabt.org",
         password: "password123",
@@ -873,6 +773,28 @@ const initialPartners: PartnerItem[] = [
         logo: ""
     },
     {
+        "id": "plan_international_togo_988",
+        "name": "Plan International Togo",
+        "type": "International",
+        "description": "Partenaire Technique et Financier",
+        "email": "contact@cceabt.tg",
+        "phone": "",
+        "website": "https://plan-international.org/togo/",
+        "logo": "/partners/image32.png",
+        "password": "password123"
+    },
+    {
+        id: "seves___economiquement_187",
+        name: "SEVES - Systèmes Economiquement Viables pour l'Eau aux Suds",
+        type: "Technique",
+        description: "Partenaire Technique et Financier",
+        email: "contact@cceabt.tg",
+        phone: "",
+        website: "http://asso-seves.org/",
+        logo: "/partners/image33.png",
+        password: "password123"
+    },
+    {
         id: "ptf_cawst",
         name: "CAWST",
         type: "Technique",
@@ -880,6 +802,53 @@ const initialPartners: PartnerItem[] = [
         email: "cawst@cceabt.org",
         password: "password123",
         logo: ""
+    },
+    {
+        id: "ptf_sedif",
+        name: "SEDIF (Service Public de l'eau)",
+        type: "Technique",
+        description: "Partenaire Technique et Financier",
+        email: "sedif@cceabt.org",
+        password: "password123",
+        logo: ""
+    },
+    {
+        id: "ptf_commune_lacs1",
+        name: "Commune des Lacs 1",
+        type: "Technique",
+        description: "Partenaire Technique et Financier",
+        email: "commune.lacs1@cceabt.org",
+        password: "password123",
+        logo: ""
+    },
+    {
+        id: "padie____743",
+        name: "PADIE - Pionniers en Action pour le Développempent Intégré à l’Environnement",
+        type: "Technique",
+        description: "Partenaire Technique et Financier",
+        email: "contact@cceabt.tg",
+        phone: "",
+        website: "",
+        logo: "/partners/image1.png",
+        "password": "password123",
+        "acronym": "PADIE",
+        "headquarters": "Le siège statutaire de l'ONG est basée à Kpalimé et dispose d'un Bureau national domicilié à Lomé, quartier Vakpossito.",
+        "vision": "Promouvoir le partenariat public-privé société civile comme stratégie de concrétisation des enjeux locaux d'une bonne gouvernance partagée et de développement durable des territoires décentralisés.",
+        "mission": "Contribuer à un développement durable des territoires à travers la recherche action et un appui conseil participatif, adapté et inclusif en gouvernance locale et en alternatives innovantes d'accès aux services financiers et sociaux soucieuses de la gestion durable des ressources naturelles.",
+        "intervention_zone": "Les actions de PADIE couvrent l'ensemble du territoire national (Togo) et sont en extension vers les autres territoires d'Afrique...",
+        "intervention_domains": [
+            "Plaidoyer et partenariat durable au service du développement durable des territoires",
+            "Gouvernance locale partagée, aménagement et développement durable des territoires",
+            "Accès durable aux services sociaux de base dans les territoires",
+            "Economie locale et solidaires soucieuses de la gestion durable des ressources naturelles",
+            "Appui conseil et intermédiation participatifs"
+        ],
+        "projects": [
+            "Projet d'Amélioration du Service d'Eau potable des communes de Kloto 1 et Kloto 2, Togo. PASEK 2",
+            "Projet de Promotion de l'accès durable aux services d'eau, d'hygiène et d'assainissement dans la commune de Hako 1 (Miwoedebu/Faisons autrement)",
+            "Projet de Protection contre les inondations à Kloto 1, Golfe 1 et Golfe 7 Initiatives Durables pour l'accès à l'Eau et l'Assainissement (INIDEA)",
+            "Projet FSPI composante 2 « accompagnement des communes togolaises dans le développement de leurs services publics locaux essentiels de gestion des déchets »"
+        ]
     }
 ];
 
@@ -916,7 +885,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
     const [partners, setPartners] = useState<PartnerItem[]>(() => {
         try {
-            const savedPartners = localStorage.getItem('cceabt_partners_v11');
+            const savedPartners = localStorage.getItem('cceabt_partners_v15');
             return savedPartners ? JSON.parse(savedPartners) : initialPartners;
         } catch (error) {
             console.error('Error parsing partners from localStorage', error);
@@ -940,7 +909,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => { localStorage.setItem('cceabt_news', JSON.stringify(news)); }, [news]);
     useEffect(() => { localStorage.setItem('cceabt_resources', JSON.stringify(resources)); }, [resources]);
     useEffect(() => {
-        localStorage.setItem('cceabt_partners_v11', JSON.stringify(partners));
+        localStorage.setItem('cceabt_partners_v15', JSON.stringify(partners));
     }, [partners]);
     useEffect(() => { localStorage.setItem('cceabt_submissions', JSON.stringify(submissions)); }, [submissions]);
 

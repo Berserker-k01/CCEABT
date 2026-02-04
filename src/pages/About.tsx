@@ -1,4 +1,4 @@
-import { Target, Eye, Heart, Users, TrendingUp, Handshake, CheckCircle, Briefcase, Share2 } from 'lucide-react';
+import { Target, Eye, Heart, Users, TrendingUp, Handshake, CheckCircle, Briefcase, Share2, ArrowRight } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -407,55 +407,62 @@ export default function About() {
       </section>
 
       {/* GOUVERNANCE */}
-      <section className="py-20 bg-blue-50/50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">{t('about.governance_title')}</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">{t('about.governance_subtitle')}</p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-            {/* AG */}
-            <div className="bg-white p-6 rounded-2xl shadow-lg border-t-8 border-blue-600 hover:-translate-y-2 transition-transform duration-300 h-full flex flex-col justify-between">
-              <div>
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-                  <Users className="text-blue-600" size={32} />
-                </div>
-                <h3 className="text-lg font-bold text-center text-gray-900 mb-2">{t('about.gov_ag_title')}</h3>
-                <p className="text-center text-gray-600 text-sm">{t('about.gov_ag_desc')}</p>
+      {/* GOUVERNANCE CTA */}
+      <section className="py-24 bg-gradient-to-br from-slate-900 to-slate-800 text-white overflow-hidden relative">
+        {/* Background Elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-[100px] opacity-20 -mr-20 -mt-20"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-500 rounded-full blur-[100px] opacity-20 -ml-20 -mb-20"></div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12 max-w-6xl mx-auto">
+            <div className="lg:w-1/2">
+              <span className="inline-block px-4 py-2 bg-blue-500/20 text-blue-300 rounded-full text-sm font-semibold mb-6 border border-blue-500/30">
+                Structure & Organisation
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                Comment sommes-nous <span className="text-blue-400">organisés</span> ?
+              </h2>
+              <p className="text-lg text-slate-300 mb-8 leading-relaxed">
+                Le CCEABT repose sur une gouvernance démocratique et transparente, structurée autour de plusieurs organes clés garantissant notre efficacité et notre ancrage local sur toute l'étendue du territoire.
+              </p>
+
+              <div className="flex flex-wrap gap-4">
+                <button
+                  onClick={() => navigate('/organization')}
+                  className="group bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-500 transition-all shadow-lg hover:shadow-blue-500/25 flex items-center gap-3"
+                >
+                  Découvrir notre organigramme
+                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                </button>
               </div>
             </div>
 
-            {/* CA */}
-            <div className="bg-white p-6 rounded-2xl shadow-lg border-t-8 border-green-600 hover:-translate-y-2 transition-transform duration-300 h-full flex flex-col justify-between">
-              <div>
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-                  <Target className="text-green-600" size={32} />
+            <div className="lg:w-1/2 relative">
+              <div className="relative z-10 grid grid-cols-2 gap-4">
+                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default">
+                  <Users className="text-blue-400 mb-3" size={32} />
+                  <h4 className="font-bold text-lg">Assemblée Générale</h4>
+                  <p className="text-xs text-slate-400">Organe suprême</p>
                 </div>
-                <h3 className="text-lg font-bold text-center text-gray-900 mb-2">{t('about.gov_ca_title')}</h3>
-                <p className="text-center text-gray-600 text-sm">{t('about.gov_ca_desc')}</p>
+                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default translate-y-8">
+                  <Target className="text-green-400 mb-3" size={32} />
+                  <h4 className="font-bold text-lg">Conseil d'Admin</h4>
+                  <p className="text-xs text-slate-400">Pilotage stratégique</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default">
+                  <Briefcase className="text-purple-400 mb-3" size={32} />
+                  <h4 className="font-bold text-lg">Secrétariat Exécutif</h4>
+                  <p className="text-xs text-slate-400">Coordination</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default translate-y-8">
+                  <Share2 className="text-orange-400 mb-3" size={32} />
+                  <h4 className="font-bold text-lg">Plateformes</h4>
+                  <p className="text-xs text-slate-400">Ancrage local</p>
+                </div>
               </div>
-            </div>
 
-            {/* SE */}
-            <div className="bg-white p-6 rounded-2xl shadow-lg border-t-8 border-purple-600 hover:-translate-y-2 transition-transform duration-300 h-full flex flex-col justify-between">
-              <div>
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-                  <Briefcase className="text-purple-600" size={32} />
-                </div>
-                <h3 className="text-lg font-bold text-center text-gray-900 mb-2">{t('about.gov_se_title')}</h3>
-                <p className="text-center text-gray-600 text-sm">{t('about.gov_se_desc')}</p>
-              </div>
-            </div>
-
-            {/* Plateformes Décentralisées */}
-            <div className="bg-white p-6 rounded-2xl shadow-lg border-t-8 border-orange-500 hover:-translate-y-2 transition-transform duration-300 h-full flex flex-col justify-between">
-              <div>
-                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-                  <Share2 className="text-orange-600" size={32} />
-                </div>
-                <h3 className="text-lg font-bold text-center text-gray-900 mb-2">{t('about.gov_platforms_title')}</h3>
-                <p className="text-center text-gray-600 text-sm">{t('about.gov_platforms_desc')}</p>
-              </div>
+              {/* Decorative Circle behind cards */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-tr from-blue-600 to-green-600 rounded-full blur-2xl opacity-20 -z-0"></div>
             </div>
           </div>
         </div>

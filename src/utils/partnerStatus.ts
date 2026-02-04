@@ -3,7 +3,6 @@
 
 // Membres du Conseil d'Administration
 export const CA_MEMBERS = [
-  'PADI',
   'Chaine de l\'espoir',
   'Chaîne de l\'Espoir',
   'La Chaîne de l\'Espoir',
@@ -21,7 +20,7 @@ export const PTF_MEMBERS = [
   'AESEN',
   'AFD',
   'UE',
-  'PSEAU',
+  'pS-Eau',
   'Coalition Eau',
   'SWA',
   'AAFEA',
@@ -30,8 +29,14 @@ export const PTF_MEMBERS = [
   'GENDA Water Alliance',
   'Plan International Togo',
   'SEVES',
-  'CAWST'
-  // Il n'y a pas d'autres PTF
+  'CAWST',
+  'SEDIF',
+  'Commune des Lacs 1',
+  'PADIE',
+  'Agence de l\'eau Seine-Normandie',
+  'Service Public de l\'eau',
+  'Région Maritime',
+  'République Française'
 ];
 
 /**
@@ -135,7 +140,40 @@ export function getPartnerStatus(partnerName: string): 'CA' | 'PTF' | 'Other' {
     if (ptf === 'GENDA Water Alliance' && normalizedName.includes('genda') && normalizedName.includes('water')) {
       return 'PTF';
     }
-    if (ptf === 'Plan International Togo' && normalizedName.includes('plan international') && normalizedName.includes('togo')) {
+    if (ptf === 'UE' && (normalizedName === 'ue' || normalizedName.includes('union europeenne'))) {
+      return 'PTF';
+    }
+    if (ptf === 'SWA' && (normalizedName === 'swa' || normalizedName.includes('sanitation') || normalizedName.includes('water for all'))) {
+      return 'PTF';
+    }
+    if (ptf === 'AAFEA' && (normalizedName.includes('aafea') || normalizedName.includes('alliance africaine'))) {
+      return 'PTF';
+    }
+    if (ptf === 'ENDWATERPOVERTY' && (normalizedName.includes('endwaterpoverty') || normalizedName.includes('end water poverty'))) {
+      return 'PTF';
+    }
+    if (ptf === 'GENDA Water Alliance' && (normalizedName.includes('genda') || normalizedName.includes('gender water'))) {
+      return 'PTF';
+    }
+    if (ptf === 'Plan International Togo' && normalizedName.includes('plan international')) {
+      return 'PTF';
+    }
+    if (ptf === 'CAWST' && normalizedName.includes('cawst')) {
+      return 'PTF';
+    }
+    if (ptf === 'pS-Eau' && (normalizedName.includes('pseau') || normalizedName.includes('ps-eau'))) {
+      return 'PTF';
+    }
+    if (ptf === 'SEDIF' && (normalizedName.includes('sedif') || normalizedName.includes('service public'))) {
+      return 'PTF';
+    }
+    if (ptf === 'AESEN' && (normalizedName.includes('aesen') || normalizedName.includes('seine-normandie') || normalizedName.includes('seine normandie'))) {
+      return 'PTF';
+    }
+    if (ptf === 'Commune des Lacs 1' && (normalizedName.includes('lacs 1') || normalizedName.includes('lacs1') || normalizedName.includes('region maritime'))) {
+      return 'PTF';
+    }
+    if (ptf === 'PADIE' && (normalizedName.includes('padie') || normalizedName.includes('pionniers'))) {
       return 'PTF';
     }
     if (ptf === 'SEVES' && normalizedName.includes('seves')) {

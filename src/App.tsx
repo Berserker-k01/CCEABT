@@ -16,6 +16,8 @@ import PartnerPortal from './pages/PartnerPortal';
 import JoiningProcess from './pages/JoiningProcess';
 import Gallery from './pages/Gallery';
 
+import Organization from './pages/Organization';
+
 function App() {
   const { pathname } = useLocation();
 
@@ -30,6 +32,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/organization" element={<Organization />} />
           <Route path="/network" element={<Network />} />
           <Route path="/news" element={<News />} />
           <Route path="/news/:id" element={<NewsReader />} />

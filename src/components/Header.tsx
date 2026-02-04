@@ -55,7 +55,7 @@ export default function Header() {
           </Link>
 
           <nav className="hidden lg:flex items-center space-x-8">
-            {navItems.map((item) => (
+            {location.pathname !== '/organization' && navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
@@ -73,6 +73,23 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-4">
+            {/* Si Organisation, bouton Quitter sinon Rejoindre */}
+            {location.pathname === '/organization' ? (
+              <Link
+                to="/about"
+                className="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm font-bold text-gray-500 transition-all duration-200 bg-gray-100 rounded-full hover:bg-gray-200 hover:text-gray-900 border border-gray-200"
+              >
+                Quitter l'organigramme
+              </Link>
+            ) : (
+              <Link
+                to="/join"
+                className="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm font-bold text-white transition-all duration-200 bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+              >
+                Rejoindre
+              </Link>
+            )}
+
             <button
               onClick={toggleLanguage}
               className="flex items-center gap-2 px-3 py-1.5 rounded-full border-2 border-blue-100 hover:border-blue-600 hover:bg-blue-50 transition-all group font-bold text-sm text-blue-700"
@@ -91,7 +108,8 @@ export default function Header() {
         </div>
       </div>
 
-      {isMenuOpen && (
+      {/* Masquer le menu hamburger sur la page Organisation */}
+      {isMenuOpen && location.pathname !== '/organization' && (
         <div className="lg:hidden bg-white border-t">
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4">
             {navItems.map((item) => (
