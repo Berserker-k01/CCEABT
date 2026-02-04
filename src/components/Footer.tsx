@@ -15,7 +15,7 @@ export default function Footer() {
     { name: t('header.network'), path: '/network' },
     { name: t('header.news'), path: '/news' },
     { name: t('header.contact'), path: '/contact' },
-    { name: t('header.portal'), path: '/portal' },
+    { name: t('header.portal'), path: '/partner-portal' },
   ];
 
   const scrollToTop = () => {

@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -8,41 +9,39 @@ import News from './pages/News';
 import Contact from './pages/Contact';
 import Partners from './pages/Partners';
 import Admin from './pages/Admin';
+
 import Resources from './pages/Resources';
-import PartnerPortal from './pages/PartnerPortal';
 import NewsReader from './pages/NewsReader';
-import TestAnimation from './pages/TestAnimation';
-import LegalNotices from './pages/LegalNotices';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import ScrollToTop from './components/ScrollToTop';
+import PartnerPortal from './pages/PartnerPortal';
 
 function App() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [pathname]);
+
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <div className="min-h-screen bg-white flex flex-col">
-        <Header />
-        <main className="flex-grow pt-24">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/network" element={<Network />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/news/:id" element={<NewsReader />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/partners" element={<Partners />} />
-            <Route path="/cceabtadmin" element={<Admin />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/portal" element={<PartnerPortal />} />
-            <Route path="/test-animation" element={<TestAnimation />} />
-            <Route path="/legal" element={<LegalNotices />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </BrowserRouter>
+    <div className="min-h-screen bg-white flex flex-col">
+      <Header />
+      <main className="flex-grow pt-24">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/network" element={<Network />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/news/:id" element={<NewsReader />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/partner-portal" element={<PartnerPortal />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/partners" element={<Partners />} />
+          <Route path="/cceabtadmin" element={<Admin />} />
+          {/* Fallback route */}
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
