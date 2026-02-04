@@ -1,4 +1,4 @@
-import { Target, Eye, Heart, Users, TrendingUp, Handshake, CheckCircle, Briefcase } from 'lucide-react';
+import { Target, Eye, Heart, Users, TrendingUp, Handshake, CheckCircle, Briefcase, Share2 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -413,32 +413,49 @@ export default function About() {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">{t('about.governance_title')}</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">{t('about.governance_subtitle')}</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {/* AG */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-blue-600 hover:-translate-y-2 transition-transform duration-300">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-                <Users className="text-blue-600" size={32} />
+            <div className="bg-white p-6 rounded-2xl shadow-lg border-t-8 border-blue-600 hover:-translate-y-2 transition-transform duration-300 h-full flex flex-col justify-between">
+              <div>
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                  <Users className="text-blue-600" size={32} />
+                </div>
+                <h3 className="text-lg font-bold text-center text-gray-900 mb-2">{t('about.gov_ag_title')}</h3>
+                <p className="text-center text-gray-600 text-sm">{t('about.gov_ag_desc')}</p>
               </div>
-              <h3 className="text-xl font-bold text-center text-gray-900 mb-2">{t('about.gov_ag_title')}</h3>
-              <p className="text-center text-gray-600">{t('about.gov_ag_desc')}</p>
             </div>
 
             {/* CA */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-green-600 hover:-translate-y-2 transition-transform duration-300">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-                <Target className="text-green-600" size={32} />
+            <div className="bg-white p-6 rounded-2xl shadow-lg border-t-8 border-green-600 hover:-translate-y-2 transition-transform duration-300 h-full flex flex-col justify-between">
+              <div>
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                  <Target className="text-green-600" size={32} />
+                </div>
+                <h3 className="text-lg font-bold text-center text-gray-900 mb-2">{t('about.gov_ca_title')}</h3>
+                <p className="text-center text-gray-600 text-sm">{t('about.gov_ca_desc')}</p>
               </div>
-              <h3 className="text-xl font-bold text-center text-gray-900 mb-2">{t('about.gov_ca_title')}</h3>
-              <p className="text-center text-gray-600">{t('about.gov_ca_desc')}</p>
             </div>
 
             {/* SE */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-purple-600 hover:-translate-y-2 transition-transform duration-300">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-                <Briefcase className="text-purple-600" size={32} />
+            <div className="bg-white p-6 rounded-2xl shadow-lg border-t-8 border-purple-600 hover:-translate-y-2 transition-transform duration-300 h-full flex flex-col justify-between">
+              <div>
+                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                  <Briefcase className="text-purple-600" size={32} />
+                </div>
+                <h3 className="text-lg font-bold text-center text-gray-900 mb-2">{t('about.gov_se_title')}</h3>
+                <p className="text-center text-gray-600 text-sm">{t('about.gov_se_desc')}</p>
               </div>
-              <h3 className="text-xl font-bold text-center text-gray-900 mb-2">{t('about.gov_se_title')}</h3>
-              <p className="text-center text-gray-600">{t('about.gov_se_desc')}</p>
+            </div>
+
+            {/* Plateformes Décentralisées */}
+            <div className="bg-white p-6 rounded-2xl shadow-lg border-t-8 border-orange-500 hover:-translate-y-2 transition-transform duration-300 h-full flex flex-col justify-between">
+              <div>
+                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                  <Share2 className="text-orange-600" size={32} />
+                </div>
+                <h3 className="text-lg font-bold text-center text-gray-900 mb-2">{t('about.gov_platforms_title')}</h3>
+                <p className="text-center text-gray-600 text-sm">{t('about.gov_platforms_desc')}</p>
+              </div>
             </div>
           </div>
         </div>

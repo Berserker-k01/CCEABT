@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-type MembershipType = 'member' | 'partner' | '';
+type MembershipType = 'osc_national' | 'osc_international' | 'partner' | '';
 
-export default function MembershipForm({ onClose }: { onClose: () => void }) {
+export default function MembershipForm({ onClose, isFullPage = false }: { onClose?: () => void, isFullPage?: boolean }) {
   const { t } = useTranslation();
   const [membershipType, setMembershipType] = useState<MembershipType>('');
   const [formData, setFormData] = useState({
@@ -33,9 +33,16 @@ export default function MembershipForm({ onClose }: { onClose: () => void }) {
 
     // Simulate form submission
     try {
+      let typeLabel = '';
+      switch (membershipType) {
+        case 'osc_national': typeLabel = 'OSC Nationale'; break;
+        case 'osc_international': typeLabel = 'OSC Internationale'; break;
+        case 'partner': typeLabel = 'Partenaire Institutionnel'; break;
+      }
+
       const summary = `
 --- DEMANDE D'ADHÉSION CCEABT ---
-Type : ${membershipType === 'member' ? 'Membre Individuel' : 'Partenaire Institutionnel'}
+Type : ${typeLabel}
 Nom : ${formData.name}
 Email : ${formData.email}
 Téléphone : ${formData.phone}
@@ -71,13 +78,15 @@ ${formData.message}
         <p className="text-sm text-gray-500 mb-6">
           {t('forms.success_desc')}
         </p>
-        <button
-          type="button"
-          onClick={onClose}
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          {t('forms.close')}
-        </button>
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            {t('forms.close')}
+          </button>
+        )}
       </div>
     );
   }
@@ -85,63 +94,73 @@ ${formData.message}
   return (
     <div className="relative">
       <div className="text-center">
-        <h3 className="text-lg font-medium text-gray-900 mb-2">
-          {t('forms.membership_title')}
-        </h3>
-        <p className="text-sm text-gray-500 mb-6">
+        {!isFullPage && (
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            {t('forms.membership_title')}
+          </h3>
+        )}
+        <p className="text-sm text-gray-500 mb-8">
           {t('forms.membership_subtitle')}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <button
           type="button"
-          onClick={() => setMembershipType('member')}
-          className={`p-4 border rounded-lg text-left transition-colors ${membershipType === 'member'
-            ? 'border-blue-500 bg-blue-50'
-            : 'border-gray-300 hover:border-blue-300'
+          onClick={() => setMembershipType('osc_national')}
+          className={`p-4 border rounded-xl text-left transition-all hover:shadow-md ${membershipType === 'osc_national'
+            ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
+            : 'border-gray-200 hover:border-blue-300'
             }`}
         >
-          <div className="flex items-center">
-            <div className={`flex-shrink-0 h-5 w-5 rounded-full border-2 ${membershipType === 'member'
-              ? 'border-blue-500 bg-blue-500 flex items-center justify-center'
+          <div className="flex items-center mb-2">
+            <div className={`flex-shrink-0 h-5 w-5 rounded-full border-2 mr-3 ${membershipType === 'osc_national'
+              ? 'border-blue-500 bg-blue-500'
               : 'border-gray-300'
-              }`}>
-              {membershipType === 'member' && (
-                <svg className="h-3 w-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              )}
-            </div>
-            <span className="ml-3 font-medium">{t('forms.member_individual')}</span>
+              }`} />
+            <span className="font-bold text-gray-800 text-sm">{t('forms.osc_national')}</span>
           </div>
-          <p className="mt-2 text-sm text-gray-500">
-            {t('forms.member_individual_desc')}
+          <p className="text-xs text-gray-500 leading-relaxed ml-8">
+            {t('forms.osc_national_desc')}
+          </p>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setMembershipType('osc_international')}
+          className={`p-4 border rounded-xl text-left transition-all hover:shadow-md ${membershipType === 'osc_international'
+            ? 'border-green-500 bg-green-50 ring-2 ring-green-200'
+            : 'border-gray-200 hover:border-green-300'
+            }`}
+        >
+          <div className="flex items-center mb-2">
+            <div className={`flex-shrink-0 h-5 w-5 rounded-full border-2 mr-3 ${membershipType === 'osc_international'
+              ? 'border-green-500 bg-green-500'
+              : 'border-gray-300'
+              }`} />
+            <span className="font-bold text-gray-800 text-sm">{t('forms.osc_international')}</span>
+          </div>
+          <p className="text-xs text-gray-500 leading-relaxed ml-8">
+            {t('forms.osc_international_desc')}
           </p>
         </button>
 
         <button
           type="button"
           onClick={() => setMembershipType('partner')}
-          className={`p-4 border rounded-lg text-left transition-colors ${membershipType === 'partner'
-            ? 'border-blue-500 bg-blue-50'
-            : 'border-gray-300 hover:border-blue-300'
+          className={`p-4 border rounded-xl text-left transition-all hover:shadow-md ${membershipType === 'partner'
+            ? 'border-purple-500 bg-purple-50 ring-2 ring-purple-200'
+            : 'border-gray-200 hover:border-purple-300'
             }`}
         >
-          <div className="flex items-center">
-            <div className={`flex-shrink-0 h-5 w-5 rounded-full border-2 ${membershipType === 'partner'
-              ? 'border-blue-500 bg-blue-500 flex items-center justify-center'
+          <div className="flex items-center mb-2">
+            <div className={`flex-shrink-0 h-5 w-5 rounded-full border-2 mr-3 ${membershipType === 'partner'
+              ? 'border-purple-500 bg-purple-500'
               : 'border-gray-300'
-              }`}>
-              {membershipType === 'partner' && (
-                <svg className="h-3 w-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              )}
-            </div>
-            <span className="ml-3 font-medium">{t('forms.partner_institutional')}</span>
+              }`} />
+            <span className="font-bold text-gray-800 text-sm">{t('forms.partner_institutional')}</span>
           </div>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="text-xs text-gray-500 leading-relaxed ml-8">
             {t('forms.partner_institutional_desc')}
           </p>
         </button>

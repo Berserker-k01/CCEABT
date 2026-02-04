@@ -238,15 +238,15 @@ export default function PartnerScrollBand({
 
     return (
       <div
-        className="flex-shrink-0 mx-8 flex flex-col items-center justify-center w-80 h-56"
+        className="w-full flex flex-col items-center justify-center h-64"
       >
-        <div className={`w-full h-full flex items-center justify-center bg-transparent p-4 relative overflow-visible group transition-all duration-300 hover:scale-105`}>
+        <div className={`w-full h-full flex items-center justify-center bg-transparent p-6 relative overflow-visible group transition-all duration-300 hover:scale-110`}>
           {hasImage ? (
             <div className="w-full h-full flex items-center justify-center overflow-visible min-h-0">
               <img
                 src={state.currentPath!}
                 alt={name}
-                className="max-w-[280px] max-h-[180px] w-auto h-auto object-contain group-hover:scale-110 transition-transform duration-300 filter brightness-100 group-hover:brightness-105 opacity-95 group-hover:opacity-100"
+                className="max-w-full max-h-[150px] w-auto h-auto object-contain group-hover:scale-110 transition-all duration-300 filter brightness-100 group-hover:brightness-105 opacity-95 group-hover:opacity-100 drop-shadow-sm group-hover:drop-shadow-md"
                 onError={() => {
                   handleImageError(name);
                 }}
@@ -259,10 +259,10 @@ export default function PartnerScrollBand({
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center w-full h-full">
-              <div className={`w-20 h-20 rounded-full ${gradientFrom} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+              <div className={`w-24 h-24 rounded-full ${gradientFrom} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-xl`}>
                 {getPartnerIcon(name)}
               </div>
-              <span className={`text-gray-600 font-medium text-center text-xs leading-tight ${hoverColor} transition-colors px-2`}>
+              <span className={`text-gray-600 font-semibold text-center text-sm leading-tight ${hoverColor} transition-colors px-2`}>
                 {name}
               </span>
             </div>
@@ -283,28 +283,51 @@ export default function PartnerScrollBand({
         </div>
       </div>
 
-      {/* Bande de défilement avec masques de gradient */}
-      <div className="relative overflow-hidden bg-transparent py-12">
-        {/* Masques de gradient pour effet fade */}
-        <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-white via-white/90 to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-white via-white/90 to-transparent z-10 pointer-events-none"></div>
+      {/* Bande de défilement par groupes de 4 */}
+      <div className="relative overflow-hidden bg-transparent py-16">
+        {/* Masques de gradient pour effet fade professionnel */}
+        <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-white via-white/98 to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-white via-white/98 to-transparent z-10 pointer-events-none"></div>
         
-        <div className="flex animate-scroll-horizontal" style={{ animationDuration }}>
-          {/* Première série */}
-          {partners.map((name, index) => (
-            <PartnerCard key={`partner-1-${index}`} name={name} />
-          ))}
+        {/* Grouper les partenaires par groupes de 4 */}
+        {(() => {
+          const groups: string[][] = [];
+          for (let i = 0; i < partners.length; i += 4) {
+            groups.push(partners.slice(i, i + 4));
+          }
           
-          {/* Duplication pour effet infini continu */}
-          {partners.map((name, index) => (
-            <PartnerCard key={`partner-2-${index}`} name={name} isDuplicate={true} />
-          ))}
+          // Dupliquer les groupes pour l'effet infini (3 séries)
+          const allGroups = [...groups, ...groups, ...groups];
           
-          {/* Troisième série pour garantir la continuité */}
-          {partners.map((name, index) => (
-            <PartnerCard key={`partner-3-${index}`} name={name} isDuplicate={true} />
-          ))}
-        </div>
+          return (
+            <div 
+              className="flex animate-slide-groups" 
+              style={{ 
+                animationDuration: `${Math.max(groups.length * 10, 40)}s`
+              }}
+            >
+              {allGroups.map((group, groupIndex) => (
+                <div
+                  key={`group-${groupIndex}`}
+                  className="flex-shrink-0 w-full flex items-center justify-center gap-10 px-10"
+                >
+                  {group.map((name, index) => (
+                    <div 
+                      key={`${groupIndex}-${index}`} 
+                      className="flex-1 max-w-[240px] min-w-[200px] flex justify-center"
+                    >
+                      <PartnerCard name={name} />
+                    </div>
+                  ))}
+                  {/* Remplir avec des espaces vides si le groupe a moins de 4 éléments */}
+                  {Array.from({ length: 4 - group.length }).map((_, i) => (
+                    <div key={`empty-${groupIndex}-${i}`} className="flex-1 max-w-[240px] min-w-[200px]"></div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          );
+        })()}
       </div>
     </div>
   );

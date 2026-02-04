@@ -12,7 +12,7 @@ import PartnerScrollBand from '../components/PartnerScrollBand';
 export default function Home() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { partners, news } = useData();
+  const { news } = useData();
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
   return (
@@ -49,21 +49,21 @@ export default function Home() {
 
             <div className="flex flex-wrap gap-4 justify-center animate-fade-in mt-20" style={{ animationDelay: '0.4s' }}>
               <button
-                onClick={() => navigate('/about')}
-                className="group bg-white text-green-600 px-8 py-4 rounded-full font-bold hover:shadow-2xl transition-all duration-300 shadow-lg flex items-center gap-2 hover:scale-105"
+                onClick={() => navigate('/join?type=member')}
+                className="bg-white/10 backdrop-blur-md text-white px-8 py-4 rounded-full font-bold hover:bg-white/20 transition-all border border-white/30 hover:scale-105"
               >
-                {t('home.discover_btn')}
+                {t('home.join_btn')} {/* Adhérer */}
+              </button>
+              <button
+                onClick={() => navigate('/join?type=partner')}
+                className="bg-white text-blue-900 px-8 py-4 rounded-full font-bold hover:shadow-2xl transition-all duration-300 shadow-lg flex items-center gap-2 hover:scale-105"
+              >
+                Devenir Partenaire
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <button
-                onClick={() => navigate('/network')}
-                className="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105"
-              >
-                {t('home.join_btn')}
-              </button>
-              <button
                 onClick={() => setIsDonationModalOpen(true)}
-                className="bg-white text-green-600 px-8 py-4 rounded-full font-bold hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105"
+                className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white px-8 py-4 rounded-full font-bold hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105"
               >
                 {t('home.donate_btn')}
               </button>
@@ -260,7 +260,7 @@ export default function Home() {
               gradientTo="to-green-50"
               borderColor="border-blue-200"
               hoverColor="group-hover:text-blue-600"
-              animationDuration="25s"
+              animationDuration="45s"
               partnerType="CA"
             />
 
@@ -273,7 +273,7 @@ export default function Home() {
               gradientTo="to-orange-50"
               borderColor="border-yellow-200"
               hoverColor="group-hover:text-yellow-600"
-              animationDuration="30s"
+              animationDuration="50s"
               partnerType="PTF"
             />
 

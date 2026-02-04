@@ -1,37 +1,45 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, FileText, Download, UserPlus, Handshake, X, Building2, ExternalLink, Globe, Briefcase } from 'lucide-react';
+import { Users, FileText, Download, UserPlus, Handshake, X, Building2, ExternalLink, Globe, Award, TrendingUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useData } from '../context/DataContext';
-import MembershipForm from '../components/MembershipForm';
+import { getPartnerStatus, getPartnerDisplayOrder } from '../utils/partnerStatus';
 
 export default function Network() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { partners } = useData();
-  const [isMembershipModalOpen, setIsMembershipModalOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<'All' | 'International' | 'National' | 'Institutionnel' | 'Technique'>('All');
 
-  // Grouping partners dynamically
-  const internationalMembers = partners.filter(p => p.type === 'International');
-  const nationalMembers = partners.filter(p => p.type === 'National');
-  const institutionalPartners = partners.filter(p => p.type === 'Institutionnel');
-  const technicalPartners = partners.filter(p => p.type === 'Technique' || p.type === 'Financier');
+  // Filtrer uniquement les CA et PTF
+  const caAndPtfPartners = partners
+    .map(p => ({
+      ...p,
+      status: getPartnerStatus(p.name),
+      displayOrder: getPartnerDisplayOrder(getPartnerStatus(p.name), p.type)
+    }))
+    .filter(p => {
+      // Exclure explicitement les ministères et organisations gouvernementales
+      const normalizedName = p.name.toLowerCase();
+      if (normalizedName.includes('ministère') || normalizedName.includes('ministere') ||
+        normalizedName.includes('autorité') || normalizedName.includes('autorite')) {
+        return false;
+      }
+      // Seulement CA et PTF de la liste définitive
+      return p.status === 'CA' || p.status === 'PTF';
+    })
+    .sort((a, b) => {
+      // D'abord par ordre hiérarchique (CA > PTF)
+      if (a.displayOrder !== b.displayOrder) {
+        return a.displayOrder - b.displayOrder;
+      }
+      // Ensuite par ordre alphabétique du nom
+      return a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' });
+    });
 
-  const categories = [
-    { id: 'All', label: t('network.cat_all'), icon: Handshake, count: partners.length },
-    { id: 'International', label: t('network.cat_international'), icon: Globe, count: internationalMembers.length },
-    { id: 'National', label: t('network.cat_national'), icon: Users, count: nationalMembers.length },
-    { id: 'Institutionnel', label: t('network.cat_institutional'), icon: Building2, count: institutionalPartners.length },
-    { id: 'Technique', label: t('network.cat_technical'), icon: Briefcase, count: technicalPartners.length },
-  ];
-
-  const filteredPartners = partners.filter(p => {
-    if (selectedCategory === 'All') return true;
-    if (selectedCategory === 'Technique') return p.type === 'Technique' || p.type === 'Financier';
-    return p.type === selectedCategory;
-  });
+  // Compter les CA et PTF
+  const caCount = caAndPtfPartners.filter(p => p.status === 'CA').length;
+  const ptfCount = caAndPtfPartners.filter(p => p.status === 'PTF').length;
 
   const resources = [
     { title: t('network.resource_1'), type: 'PDF', size: '2.5 MB' },
@@ -108,117 +116,186 @@ export default function Network() {
               </p>
             </div>
 
-            {/* Barre d'onglets Premium */}
-            <div className="flex flex-wrap justify-center gap-3 mb-16">
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id as any)}
-                  className={`group relative flex items-center gap-3 px-6 py-4 rounded-2xl font-bold transition-all duration-300 ${selectedCategory === cat.id
-                    ? 'bg-blue-600 text-white shadow-xl shadow-blue-200 scale-105'
-                    : 'bg-gray-50 text-gray-600 hover:bg-blue-50 hover:text-blue-600'
-                    }`}
-                >
-                  <cat.icon size={20} className={selectedCategory === cat.id ? 'text-white' : 'text-blue-500'} />
-                  <span>{cat.label}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${selectedCategory === cat.id ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-500'
-                    }`}>
-                    {cat.count}
-                  </span>
-                </button>
-              ))}
+            {/* Informations sur les CA et PTF */}
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
+              <div className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-blue-50 border-2 border-blue-200">
+                <Award className="text-blue-600" size={24} />
+                <div>
+                  <div className="text-sm text-gray-600 font-medium">Membres du Conseil d'Administration</div>
+                  <div className="text-2xl font-bold text-blue-700">{caCount}</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-yellow-50 border-2 border-yellow-200">
+                <TrendingUp className="text-yellow-600" size={24} />
+                <div>
+                  <div className="text-sm text-gray-600 font-medium">Partenaires Techniques et Financiers</div>
+                  <div className="text-2xl font-bold text-yellow-700">{ptfCount}</div>
+                </div>
+              </div>
             </div>
 
-            {/* Grille de Partenaires Dynamique */}
+            {/* Grille de Partenaires CA et PTF */}
             <AnimatePresence mode="wait">
               <motion.div
-                key={selectedCategory}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                className="space-y-12"
               >
-                {filteredPartners.map((partner, index) => (
-                  <motion.div
-                    key={partner.id}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="group bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden"
-                  >
-                    {/* Background decoration */}
-                    <div className="absolute -right-4 -top-4 w-24 h-24 bg-blue-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-0"></div>
+                {/* Grouper les partenaires par statut */}
+                {(() => {
+                  const groupedPartners: Record<string, typeof caAndPtfPartners> = {
+                    'CA': [],
+                    'PTF': []
+                  };
 
-                    <div className="relative z-10 flex flex-col h-full">
-                      <div className="flex items-center justify-between mb-6">
-                        {partner.logo ? (
-                          <div className="h-20 w-full flex items-center justify-start mb-2">
-                            <img
-                              src={partner.logo}
-                              alt={partner.name}
-                              className="max-h-full max-w-[150px] object-contain"
-                            />
+                  caAndPtfPartners.forEach(partner => {
+                    const status = partner.status || 'Other';
+                    if (status === 'CA' || status === 'PTF') {
+                      groupedPartners[status].push(partner);
+                    }
+                  });
+
+                  const statusOrder = ['CA', 'PTF'];
+
+                  return statusOrder.map(status => {
+                    if (!groupedPartners[status] || groupedPartners[status].length === 0) return null;
+
+                    const statusData = groupedPartners[status];
+                    const statusLabel = status === 'CA'
+                      ? "Membres du Conseil d'Administration"
+                      : "Partenaires Techniques et Financiers (PTF)";
+                    const StatusIcon = status === 'CA' ? Award : TrendingUp;
+                    const statusStyles = {
+                      'CA': {
+                        border: 'border-blue-200',
+                        bg: 'bg-blue-100',
+                        text: 'text-blue-600',
+                        title: 'text-blue-700'
+                      },
+                      'PTF': {
+                        border: 'border-yellow-200',
+                        bg: 'bg-yellow-100',
+                        text: 'text-yellow-600',
+                        title: 'text-yellow-700'
+                      }
+                    };
+                    const styles = statusStyles[status as 'CA' | 'PTF'];
+
+                    return (
+                      <div key={status} className="space-y-8">
+                        {/* En-tête de section statut */}
+                        <div className={`flex items-center gap-4 pb-4 border-b-2 ${styles.border}`}>
+                          <div className={`p-3 rounded-xl ${styles.bg} ${styles.text}`}>
+                            <StatusIcon size={24} />
                           </div>
-                        ) : (
-                          <div className={`p-4 rounded-2xl ${partner.type === 'Institutionnel' ? 'bg-purple-100 text-purple-600' :
-                            partner.type === 'International' ? 'bg-blue-100 text-blue-600' :
-                              partner.type === 'National' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'
-                            }`}>
-                            {partner.type === 'Institutionnel' ? <Building2 size={24} /> :
-                              partner.type === 'International' ? <Globe size={24} /> : <Users size={24} />}
+                          <div>
+                            <h3 className={`text-2xl font-bold ${styles.title}`}>{statusLabel}</h3>
+                            <p className="text-sm text-gray-500">
+                              {statusData.length} organisation{statusData.length > 1 ? 's' : ''}
+                            </p>
                           </div>
-                        )}
-                        {/* New Actions */}
-                        <div className="flex gap-2">
-                          {partner.website && (
-                            <a href={partner.website} target="_blank" rel="noopener noreferrer"
-                              className="p-2 bg-gray-50 text-gray-400 hover:bg-blue-600 hover:text-white rounded-xl transition-all duration-300">
-                              <ExternalLink size={18} />
-                            </a>
-                          )}
                         </div>
 
-                      </div>
+                        {/* Grille des partenaires */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                          {statusData.map((partner, index) => (
+                            <motion.div
+                              key={partner.id}
+                              initial={{ opacity: 0, scale: 0.9 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ delay: index * 0.05 }}
+                              className="group bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden"
+                            >
+                              {/* Background decoration */}
+                              <div className="absolute -right-4 -top-4 w-24 h-24 bg-blue-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-0"></div>
 
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
-                        {partner.name}
-                      </h3>
-                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4 flex-grow">
-                        {partner.description || t('partners_page.committed_desc')}
-                      </p>
+                              <div className="relative z-10 flex flex-col h-full">
+                                <div className="flex items-center justify-between mb-6">
+                                  {partner.logo ? (
+                                    <div className="h-20 w-full flex items-center justify-start mb-2">
+                                      <img
+                                        src={partner.logo}
+                                        alt={partner.name}
+                                        className="max-h-full max-w-[150px] object-contain"
+                                      />
+                                    </div>
+                                  ) : (
+                                    <div className={`p-4 rounded-2xl ${partner.type === 'Institutionnel' ? 'bg-purple-100 text-purple-600' :
+                                      partner.type === 'International' ? 'bg-blue-100 text-blue-600' :
+                                        partner.type === 'National' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'
+                                      }`}>
+                                      {partner.type === 'Institutionnel' ? <Building2 size={24} /> :
+                                        partner.type === 'International' ? <Globe size={24} /> : <Users size={24} />}
+                                    </div>
+                                  )}
+                                  {/* New Actions */}
+                                  <div className="flex gap-2">
+                                    {partner.website && (
+                                      <a href={partner.website} target="_blank" rel="noopener noreferrer"
+                                        className="p-2 bg-gray-50 text-gray-400 hover:bg-blue-600 hover:text-white rounded-xl transition-all duration-300">
+                                        <ExternalLink size={18} />
+                                      </a>
+                                    )}
+                                  </div>
 
-                      {/* Bouton Détails si info dispo */}
-                      {(partner.vision || partner.mission) && (
-                        <button
-                          onClick={() => setSelectedPartner(partner)}
-                          className="w-full mt-auto py-2 bg-blue-50 text-blue-600 rounded-xl font-semibold hover:bg-blue-100 transition-colors flex items-center justify-center gap-2"
-                        >
-                          <FileText size={16} />
-                          <span>Voir Détails</span>
-                        </button>
-                      )}
+                                </div>
 
-                      <div className="mt-6 pt-6 border-t border-gray-50 flex items-center justify-between">
-                        <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">
-                          {getTranslatedType(partner.type)}
-                        </span>
-                        <div className="flex gap-1">
-                          {[1, 2, 3].map(i => (
-                            <div key={i} className="w-1 h-1 bg-blue-200 rounded-full"></div>
+                                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                                  {partner.name}
+                                </h3>
+                                <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4 flex-grow">
+                                  {partner.description || t('partners_page.committed_desc')}
+                                </p>
+
+                                {/* Bouton Détails si info dispo */}
+                                {(partner.vision || partner.mission) && (
+                                  <button
+                                    onClick={() => setSelectedPartner(partner)}
+                                    className="w-full mt-auto py-2 bg-blue-50 text-blue-600 rounded-xl font-semibold hover:bg-blue-100 transition-colors flex items-center justify-center gap-2"
+                                  >
+                                    <FileText size={16} />
+                                    <span>Voir Détails</span>
+                                  </button>
+                                )}
+
+                                <div className="mt-6 pt-6 border-t border-gray-50 flex items-center justify-between">
+                                  <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">
+                                    {getTranslatedType(partner.type)}
+                                  </span>
+                                  <div className="flex gap-1">
+                                    {[1, 2, 3].map(i => (
+                                      <div key={i} className="w-1 h-1 bg-blue-200 rounded-full"></div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </motion.div>
                           ))}
                         </div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    );
+                  }).filter(Boolean);
+                })()}
 
-                {filteredPartners.length === 0 && (
-                  <div className="col-span-full py-20 text-center">
+                {caAndPtfPartners.length === 0 && (
+                  <div className="py-20 text-center">
                     <Handshake size={64} className="mx-auto text-gray-200 mb-4" />
                     <p className="text-gray-400 text-xl italic font-display">{t('network.no_partners')}</p>
                   </div>
                 )}
+
+                {/* Bouton pour voir tous les partenaires */}
+                <div className="text-center pt-12">
+                  <button
+                    onClick={() => navigate('/partners')}
+                    className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-green-600 text-white px-10 py-4 rounded-full font-bold hover:from-blue-700 hover:to-green-700 transition-all duration-300 shadow-xl hover:scale-105"
+                  >
+                    <span>Voir tous les partenaires</span>
+                    <ExternalLink size={20} className="group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </div>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -389,7 +466,7 @@ export default function Network() {
             {t('network.join_desc')}
           </p>
           <button
-            onClick={() => setIsMembershipModalOpen(true)}
+            onClick={() => navigate('/join')}
             className="bg-white text-blue-700 px-12 py-5 rounded-full font-bold text-xl hover:bg-blue-50 transition-all shadow-2xl hover:scale-110"
           >
             {t('network.join_btn_full')}
@@ -397,41 +474,7 @@ export default function Network() {
         </div>
       </section>
 
-      {/* Modal d'adhésion */}
-      <AnimatePresence>
-        {isMembershipModalOpen && (
-          <div className="fixed inset-0 z-50 overflow-y-auto">
-            <div className="flex min-h-screen items-center justify-center p-4 text-center">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/60 backdrop-blur-md"
-                onClick={() => setIsMembershipModalOpen(false)}
-              />
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 30 }}
-                className="relative bg-white rounded-3xl shadow-2xl max-w-3xl w-full mx-auto p-10 text-left overflow-hidden border border-white/20"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button
-                  onClick={() => setIsMembershipModalOpen(false)}
-                  className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 bg-gray-100 p-2 rounded-full transition-colors"
-                >
-                  <X className="h-6 w-6" />
-                </button>
-
-                <div className="w-full">
-                  <MembershipForm onClose={() => setIsMembershipModalOpen(false)} />
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        )}
-      </AnimatePresence>
+      {/* Modal d'adhésion supprimé au profit de la page /join */}
     </div>
   );
 }

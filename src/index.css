@@ -147,6 +147,39 @@
     }
   }
   
+  @keyframes slide-groups {
+    0% {
+      transform: translateX(0);
+    }
+    15% {
+      transform: translateX(0);
+    }
+    20% {
+      transform: translateX(calc(-100% / 3));
+    }
+    35% {
+      transform: translateX(calc(-100% / 3));
+    }
+    40% {
+      transform: translateX(calc(-200% / 3));
+    }
+    55% {
+      transform: translateX(calc(-200% / 3));
+    }
+    60% {
+      transform: translateX(calc(-300% / 3));
+    }
+    75% {
+      transform: translateX(calc(-300% / 3));
+    }
+    80% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
   /* Animation classes */
   .animate-fade-in {
     animation: fade-in 0.8s ease-out;
@@ -194,6 +227,32 @@
   
   .animate-scroll-horizontal:hover {
     animation-play-state: paused;
+  }
+  
+  .animate-slide-groups {
+    animation: slide-groups 20s ease-in-out infinite;
+    will-change: transform;
+    display: flex;
+  }
+  
+  .animate-slide-groups:hover {
+    animation-play-state: paused;
+  }
+  
+  /* Pause entre les groupes pour un effet plus professionnel */
+  @keyframes slide-groups-pause {
+    0%, 15% {
+      transform: translateX(0);
+    }
+    20%, 35% {
+      transform: translateX(calc(-100% / 3));
+    }
+    40%, 55% {
+      transform: translateX(calc(-200% / 3));
+    }
+    60%, 100% {
+      transform: translateX(calc(-300% / 3));
+    }
   }
   
   /* Amélioration de la fluidité du défilement */

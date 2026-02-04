@@ -15,7 +15,8 @@ export const partnerNameMapping: Record<string, string[]> = {
   'ODIAE': ['odiae', 'o-d-i-a-e', 'odiae-togo', 'odiae-tg'],
   'ADESCO': ['adesco', 'a-d-e-s-c-o', 'adesco-togo', 'adesco-tg'],
   'AJT': ['ajt', 'a-j-t', 'ajt-togo', 'ajt-tg'],
-  'CDD': ['cdd', 'c-d-d', 'cdd-togo', 'cdd-tg'],
+  'CDD': ['cdd', 'c-d-d', 'cdd-togo', 'cdd-tg', 'communication-developpement-durable'],
+  'CCDD': ['ccdd', 'c-c-d-d', 'ccdd-togo', 'ccdd-tg', 'collectif-citoyens-developpement-durable'],
   
   // PTF
   'AESEN': ['aesen', 'a-e-s-e-n', 'aesen-togo', 'aesen-tg'],
@@ -89,7 +90,20 @@ export const partnerNameMapping: Record<string, string[]> = {
 
 // Mapping direct des URLs des logos (priorité haute)
 // Ces URLs sont utilisées directement pour un chargement immédiat
+// 
+// Logos documentés :
+// - CDD: Triangle jaune avec "CDD" en vert (Communication Développement Durable)
+// - SEVES: Logo avec forme blanche et texte "SEVES" sur fond bleu-gris foncé
+// - Plan International: Logo avec forme bleue et texte "PLAN INTERNATIONAL"
+// - END WATER POVERTY: Logo avec main noire et goutte d'eau bleue
+// - AAFEA: Logo avec formes bleues ressemblant à des gouttes d'eau
+// - UE: Drapeau européen avec étoiles dorées sur fond bleu
+// - AFD: Logo avec cercle dégradé bleu-rouge et texte "AFD"
 export const partnerLogoUrls: Record<string, string> = {
+  // Conseil d'administration
+  'CDD': '', // Logo CDD - Triangle jaune avec "CDD" en vert - Cherche dans /public/images/partners/cdd.png
+  
+  // PTF
   'Coalition Eau': 'https://coalition-eau.org/wp-content/themes/coalition-eau/assets/images/logo.png',
   'AFD': 'https://www.afd.fr/sites/afd/files/logo_0.png',
   'UE': 'https://europa.eu/european-union/sites/default/files/logo/logo-eu-1500x844.png',
@@ -140,14 +154,16 @@ export function generateImagePaths(partnerName: string): string[] {
 
 /**
  * Trouve le premier chemin d'image valide pour un partenaire
- * Priorité : URL directe > fichiers locaux
+ * Priorité : URL directe (si non vide) > fichiers locaux
  */
 export function findPartnerImage(partnerName: string): string | null {
-  // D'abord vérifier si on a une URL directe
-  if (partnerLogoUrls[partnerName]) {
-    return partnerLogoUrls[partnerName];
+  // D'abord vérifier si on a une URL directe (et qu'elle n'est pas vide)
+  const directUrl = partnerLogoUrls[partnerName];
+  if (directUrl && directUrl.trim() !== '') {
+    return directUrl;
   }
   
+  // Sinon, chercher dans les fichiers locaux
   const paths = generateImagePaths(partnerName);
   // On retourne le premier chemin (le plus probable)
   // Le composant React testera si l'image existe

@@ -105,7 +105,7 @@ export default function Footer() {
               </div>
               <div className="space-y-2">
                 <Link
-                  to="/network"
+                  to="/join"
                   onClick={scrollToTop}
                   className="block w-full bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded transition-colors text-center"
                 >

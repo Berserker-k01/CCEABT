@@ -13,6 +13,8 @@ import Admin from './pages/Admin';
 import Resources from './pages/Resources';
 import NewsReader from './pages/NewsReader';
 import PartnerPortal from './pages/PartnerPortal';
+import JoiningProcess from './pages/JoiningProcess';
+import Gallery from './pages/Gallery';
 
 function App() {
   const { pathname } = useLocation();
@@ -33,6 +35,8 @@ function App() {
           <Route path="/news/:id" element={<NewsReader />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/partner-portal" element={<PartnerPortal />} />
+          <Route path="/join" element={<JoiningProcess />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/partners" element={<Partners />} />
           <Route path="/cceabtadmin" element={<Admin />} />

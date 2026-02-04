@@ -161,6 +161,65 @@ export default function News() {
         </div>
       </section>
 
+      {/* Hero Galerie Integration */}
+      <section className="py-24 bg-slate-900 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row gap-0 bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700">
+
+            {/* Left: Auto-scrolling Carousel */}
+            <div className="lg:w-2/3 h-96 relative overflow-hidden group">
+              {/* Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-10 pointer-events-none"></div>
+
+              <div className="absolute inset-0 flex animate-news-scroll">
+                {/* Duplicated images for infinite scroll effect */}
+                {[1, 2, 3, 4, 1, 2].map((num, i) => (
+                  <img
+                    key={i}
+                    src={`/images/${num}.jpg`}
+                    alt="Gallery Preview"
+                    className="h-full w-2/3 object-cover flex-shrink-0"
+                  />
+                ))}
+              </div>
+
+              <div className="absolute bottom-8 left-8 z-20 max-w-md">
+                <span className="inline-block px-3 py-1 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest rounded mb-3">
+                  Immersion
+                </span>
+                <h3 className="text-3xl font-bold text-white mb-2 leading-tight">
+                  Retour en images sur nos actions terrain
+                </h3>
+              </div>
+            </div>
+
+            {/* Right: CTA Sidebar */}
+            <div className="lg:w-1/3 p-10 flex flex-col justify-center bg-gradient-to-br from-slate-800 to-slate-900 relative">
+              <div className="absolute top-0 right-0 p-32 bg-blue-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+
+              <Image className="text-blue-500 mb-6" size={48} />
+              <h3 className="text-2xl font-bold text-white mb-4">
+                {t('news_page.gallery_title') || "Notre Médiathèque"}
+              </h3>
+              <p className="text-slate-400 mb-8 leading-relaxed">
+                {t('news_page.gallery_subtitle') || "Découvrez l'ensemble de nos reportages photos, événements et conférences dans notre nouvelle galerie interactive."}
+              </p>
+
+              <button
+                onClick={() => navigate('/gallery')}
+                className="w-full bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-600/20 transition-all flex items-center justify-center gap-3 group"
+              >
+                <span>Accéder à la galerie</span>
+                <div className="bg-white/20 p-1 rounded group-hover:bg-white/30 transition-colors">
+                  <Image size={16} />
+                </div>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* Footer Socials & Newsletter (kept as is) */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">

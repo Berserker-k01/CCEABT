@@ -798,6 +798,87 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "ue@cceabt.org",
         password: "password123",
+        logo: "/partners/eu.png"
+    },
+    {
+        id: "ptf_aesen",
+        name: "AESEN",
+        type: "Technique",
+        description: "Partenaire Technique et Financier",
+        email: "aesen@cceabt.org",
+        password: "password123",
+        logo: ""
+    },
+    {
+        id: "ptf_pseau",
+        name: "PSEAU",
+        type: "Technique",
+        description: "Partenaire Technique et Financier",
+        email: "pseau@cceabt.org",
+        password: "password123",
+        logo: ""
+    },
+    {
+        id: "ptf_coalition_eau",
+        name: "Coalition Eau",
+        type: "Technique",
+        description: "Partenaire Technique et Financier",
+        email: "coalitioneau@cceabt.org",
+        password: "password123",
+        logo: ""
+    },
+    {
+        id: "ptf_swa",
+        name: "SWA - Sanitation and Water for All",
+        type: "International",
+        description: "Partenaire Technique et Financier",
+        email: "swa@cceabt.org",
+        password: "password123",
+        logo: ""
+    },
+    {
+        id: "ptf_aafea",
+        name: "AAFEA",
+        type: "Technique",
+        description: "Partenaire Technique et Financier",
+        email: "aafea@cceabt.org",
+        password: "password123",
+        logo: ""
+    },
+    {
+        id: "ptf_endwaterpoverty",
+        name: "ENDWATERPOVERTY",
+        type: "International",
+        description: "Partenaire Technique et Financier",
+        email: "endwaterpoverty@cceabt.org",
+        password: "password123",
+        logo: ""
+    },
+    {
+        id: "ptf_ambassade_france",
+        name: "Ambassade de France au Togo",
+        type: "Institutionnel",
+        description: "Partenaire Technique et Financier",
+        email: "ambassadefrance@cceabt.org",
+        password: "password123",
+        logo: ""
+    },
+    {
+        id: "ptf_genda",
+        name: "GENDA Water Alliance",
+        type: "International",
+        description: "Partenaire Technique et Financier",
+        email: "genda@cceabt.org",
+        password: "password123",
+        logo: ""
+    },
+    {
+        id: "ptf_cawst",
+        name: "CAWST",
+        type: "Technique",
+        description: "Partenaire Technique et Financier",
+        email: "cawst@cceabt.org",
+        password: "password123",
         logo: ""
     }
 ];
@@ -835,8 +916,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
     const [partners, setPartners] = useState<PartnerItem[]>(() => {
         try {
-            const saved = localStorage.getItem('cceabt_partners_v9');
-            return saved ? JSON.parse(saved) : initialPartners;
+            const savedPartners = localStorage.getItem('cceabt_partners_v11');
+            return savedPartners ? JSON.parse(savedPartners) : initialPartners;
         } catch (error) {
             console.error('Error parsing partners from localStorage', error);
             return initialPartners;
@@ -858,7 +939,9 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => { localStorage.setItem('cceabt_drive_url', driveUrl); }, [driveUrl]);
     useEffect(() => { localStorage.setItem('cceabt_news', JSON.stringify(news)); }, [news]);
     useEffect(() => { localStorage.setItem('cceabt_resources', JSON.stringify(resources)); }, [resources]);
-    useEffect(() => { localStorage.setItem('cceabt_partners_v9', JSON.stringify(partners)); }, [partners]);
+    useEffect(() => {
+        localStorage.setItem('cceabt_partners_v11', JSON.stringify(partners));
+    }, [partners]);
     useEffect(() => { localStorage.setItem('cceabt_submissions', JSON.stringify(submissions)); }, [submissions]);
 
     // Sync across tabs
@@ -866,7 +949,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         const handleStorageChange = (e: StorageEvent) => {
             if (e.key === 'cceabt_drive_url' && e.newValue) setDriveUrl(e.newValue);
             try {
-                if (e.key === 'cceabt_partners_v9' && e.newValue) setPartners(JSON.parse(e.newValue));
+                if (e.key === 'cceabt_partners_v10' && e.newValue) setPartners(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_news' && e.newValue) setNews(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_resources' && e.newValue) setResources(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_submissions' && e.newValue) setSubmissions(JSON.parse(e.newValue));

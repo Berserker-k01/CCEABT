@@ -1,16 +1,26 @@
 import { ExternalLink, Handshake, Globe, Users, Building2, ShieldCheck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useData } from '../context/DataContext';
+import { getPartnerStatus } from '../utils/partnerStatus';
 
 export default function Partners() {
   const { t } = useTranslation();
   const { partners } = useData();
 
-  // Grouping partners
-  const internationalMembers = partners.filter(p => p.type === 'International');
-  const nationalMembers = partners.filter(p => p.type === 'National');
-  const institutionalPartners = partners.filter(p => p.type === 'Institutionnel');
-  const techFinPartners = partners.filter(p => p.type === 'Technique' || p.type === 'Financier');
+  // Grouping partners and sorting alphabetically
+  const internationalMembers = partners
+    .filter(p => p.type === 'International')
+    .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
+  const nationalMembers = partners
+    .filter(p => p.type === 'National')
+    .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
+  const institutionalPartners = partners
+    .filter(p => p.type === 'Institutionnel')
+    .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
+  // Filtrer uniquement les 13 PTF de la liste définitive (pas tous les Technique/Financier)
+  const techFinPartners = partners
+    .filter(p => getPartnerStatus(p.name) === 'PTF')
+    .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
 
   const getTranslatedType = (type: string) => {
     switch (type) {
@@ -125,19 +135,19 @@ export default function Partners() {
               </div>
 
               <PartnerSection
-                title={t('partners_page.international_title')}
-                subtitle={t('partners_page.international_subtitle')}
-                icon={Globe}
-                colorClass="bg-blue-600"
-                data={internationalMembers}
-              />
-
-              <PartnerSection
                 title={t('partners_page.national_title')}
                 subtitle={t('partners_page.national_subtitle')}
                 icon={Users}
                 colorClass="bg-green-600"
                 data={nationalMembers}
+              />
+
+              <PartnerSection
+                title={t('partners_page.international_title')}
+                subtitle={t('partners_page.international_subtitle')}
+                icon={Globe}
+                colorClass="bg-blue-600"
+                data={internationalMembers}
               />
             </div>
 

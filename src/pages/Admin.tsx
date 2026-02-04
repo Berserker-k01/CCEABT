@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Trash2, LogOut, Lock, Eye, EyeOff, Save, Edit, FileText, Building2, Users } from 'lucide-react';
+import { getPartnerStatus } from '../utils/partnerStatus';
 
 export default function Admin() {
   const { news, partners, addNews, updateNews, deleteNews, addPartner, updatePartner, deletePartner, addResource, deleteResource, resources, driveUrl, setDriveUrl } = useData();
@@ -27,7 +28,7 @@ export default function Admin() {
   const [partnerForm, setPartnerForm] = useState({ name: '', type: 'Technique' as const, description: '', website: '', email: '', password: '' });
   const [editingPartnerId, setEditingPartnerId] = useState<string | null>(null);
   const [editingNewsId, setEditingNewsId] = useState<string | null>(null);
-  const [activePartnerCategory, setActivePartnerCategory] = useState<'International' | 'National' | 'Institutionnel' | 'Technique'>('International');
+  const [activePartnerCategory, setActivePartnerCategory] = useState<'National' | 'International' | 'Institutionnel' | 'Technique'>('National');
 
   useEffect(() => {
     // Load admin credentials
@@ -502,8 +503,8 @@ export default function Admin() {
 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {[
-                    { id: 'International', label: 'International' },
                     { id: 'National', label: 'National' },
+                    { id: 'International', label: 'International' },
                     { id: 'Institutionnel', label: 'Institutionnel' },
                     { id: 'Technique', label: 'PTF' }
                   ].map(cat => (
@@ -523,19 +524,23 @@ export default function Admin() {
                 <div className="space-y-6">
                   {(() => {
                     const cat = [
-                      { id: 'International', label: 'ONG Internationales' },
                       { id: 'National', label: 'ONG Nationales' },
+                      { id: 'International', label: 'ONG Internationales' },
                       { id: 'Institutionnel', label: 'Partenaires Institutionnels' },
                       { id: 'Technique', label: 'Partenaires Techniques & Financiers' }
                     ].find(c => c.id === activePartnerCategory);
 
                     if (!cat) return null;
 
-                    const filteredPartners = partners.filter(p =>
-                      cat.id === 'Technique'
-                        ? (p.type === 'Technique' || p.type === 'Financier')
-                        : p.type === cat.id
-                    );
+                    const filteredPartners = partners
+                      .filter(p => {
+                        if (cat.id === 'Technique') {
+                          // Pour PTF, utiliser getPartnerStatus pour n'afficher que les 13 PTF de la liste
+                          return getPartnerStatus(p.name) === 'PTF';
+                        }
+                        return p.type === cat.id;
+                      })
+                      .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
 
                     return (
                       <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
