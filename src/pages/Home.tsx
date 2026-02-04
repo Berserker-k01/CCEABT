@@ -7,6 +7,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useData } from '../context/DataContext';
 import ContactForm from '../components/ContactForm';
 import DonationModal from '../components/DonationModal';
+import PartnerScrollBand from '../components/PartnerScrollBand';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -229,152 +230,59 @@ export default function Home() {
       </section>
 
       {/* Nos partenaires */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">{t('home.our_partners')}</h2>
-            <p className="text-xl text-gray-600 mb-8">{t('home.partners_subtitle')}</p>
+      <section className="py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
+        {/* Décoration de fond */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-blue-400 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-green-400 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-block mb-6">
+              <div className="h-1 w-20 bg-gradient-to-r from-blue-600 to-green-600 mx-auto rounded-full"></div>
+            </div>
+            <h2 className="text-5xl md:text-6xl font-extrabold text-gray-800 mb-6 bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+              {t('home.our_partners')}
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              {t('home.partners_subtitle')}
+            </p>
           </div>
 
-          <div className="max-w-7xl mx-auto space-y-16">
+          <div className="max-w-7xl mx-auto space-y-20">
             {/* Organisations membres du Conseil d'administration */}
-            <div>
-              <div className="text-center mb-10">
-                <div className="inline-flex items-center gap-3 bg-blue-100 px-6 py-3 rounded-full mb-4">
-                  <Users className="text-blue-600" size={24} />
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-800">
-                    Organisations membres du Conseil d'administration
-                  </h3>
-                </div>
-                <p className="text-gray-600 max-w-3xl mx-auto">
-                  Les organisations qui composent notre Conseil d'administration et contribuent à la gouvernance du CCEABT
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                {partners
-                  .filter(p => p.type === 'International' || p.type === 'National')
-                  .map((partner, index) => (
-                    <div
-                      key={partner.id || index}
-                      className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:border-blue-200 hover:-translate-y-2 flex flex-col items-center justify-center min-h-[180px]"
-                    >
-                      {partner.logo ? (
-                        <div className="w-full h-32 flex items-center justify-center mb-4 overflow-hidden">
-                          <img
-                            src={partner.logo}
-                            alt={partner.name}
-                            className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.style.display = 'none';
-                              const fallback = target.nextElementSibling as HTMLElement;
-                              if (fallback) fallback.style.display = 'flex';
-                            }}
-                          />
-                          <div className="hidden items-center justify-center w-full h-full bg-gray-50 rounded-lg">
-                            <span className="text-gray-400 text-xs text-center px-2">{partner.name}</span>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="w-full h-32 flex items-center justify-center mb-4 bg-gradient-to-br from-blue-50 to-green-50 rounded-lg">
-                          <span className="text-gray-500 text-sm font-semibold text-center px-2 line-clamp-2">
-                            {partner.name}
-                          </span>
-                        </div>
-                      )}
-                      <h4 className="text-sm font-semibold text-gray-700 text-center line-clamp-2 group-hover:text-blue-600 transition-colors">
-                        {partner.name}
-                      </h4>
-                      {partner.website && (
-                        <a
-                          href={partner.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-2 text-blue-600 hover:text-blue-700 text-xs opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          Visiter le site →
-                        </a>
-                      )}
-                    </div>
-                  ))}
-              </div>
-            </div>
+            <PartnerScrollBand
+              partners={['PADI', 'Chaine de l\'espoir', 'FIADI', 'ODIAE', 'ADESCO', 'AJT', 'CDD']}
+              title="Organisations membres du Conseil d'administration"
+              icon={<Users className="text-blue-600" size={28} />}
+              gradientFrom="from-blue-50"
+              gradientTo="to-green-50"
+              borderColor="border-blue-200"
+              hoverColor="group-hover:text-blue-600"
+              animationDuration="35s"
+            />
 
             {/* Partenaires Techniques et Financiers (PTF) */}
-            <div>
-              <div className="text-center mb-10">
-                <div className="inline-flex items-center gap-3 bg-yellow-100 px-6 py-3 rounded-full mb-4">
-                  <TrendingUp className="text-yellow-600" size={24} />
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-800">
-                    Partenaires Techniques et Financiers (PTF)
-                  </h3>
-                </div>
-                <p className="text-gray-600 max-w-3xl mx-auto">
-                  Nos partenaires qui apportent un soutien technique et financier essentiel à nos projets
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                {partners
-                  .filter(p => p.type === 'Technique' || p.type === 'Financier')
-                  .map((partner, index) => (
-                    <div
-                      key={partner.id || index}
-                      className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:border-yellow-200 hover:-translate-y-2 flex flex-col items-center justify-center min-h-[180px]"
-                    >
-                      {partner.logo ? (
-                        <div className="w-full h-32 flex items-center justify-center mb-4 overflow-hidden">
-                          <img
-                            src={partner.logo}
-                            alt={partner.name}
-                            className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.style.display = 'none';
-                              const fallback = target.nextElementSibling as HTMLElement;
-                              if (fallback) fallback.style.display = 'flex';
-                            }}
-                          />
-                          <div className="hidden items-center justify-center w-full h-full bg-gray-50 rounded-lg">
-                            <span className="text-gray-400 text-xs text-center px-2">{partner.name}</span>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="w-full h-32 flex items-center justify-center mb-4 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg">
-                          <span className="text-gray-500 text-sm font-semibold text-center px-2 line-clamp-2">
-                            {partner.name}
-                          </span>
-                        </div>
-                      )}
-                      <h4 className="text-sm font-semibold text-gray-700 text-center line-clamp-2 group-hover:text-yellow-600 transition-colors">
-                        {partner.name}
-                      </h4>
-                      {partner.website && (
-                        <a
-                          href={partner.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-2 text-yellow-600 hover:text-yellow-700 text-xs opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          Visiter le site →
-                        </a>
-                      )}
-                    </div>
-                  ))}
-              </div>
-            </div>
+            <PartnerScrollBand
+              partners={['AESEN', 'AFD', 'UE', 'PSEAU', 'Coalition Eau', 'SWA', 'AAFEA', 'ENDWATERPOVERTY', 'Ambassade de France au Togo', 'GENDA Water Alliance', 'Plan International Togo', 'SEVES', 'CAWST']}
+              title="Partenaires Techniques et Financiers (PTF)"
+              icon={<TrendingUp className="text-yellow-600" size={28} />}
+              gradientFrom="from-yellow-50"
+              gradientTo="to-orange-50"
+              borderColor="border-yellow-200"
+              hoverColor="group-hover:text-yellow-600"
+              animationDuration="45s"
+            />
 
             {/* Bouton pour voir tous les partenaires */}
-            <div className="text-center pt-8">
+            <div className="text-center pt-12">
               <button
                 onClick={() => navigate('/partners')}
-                className="group inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-green-600 text-white px-8 py-4 rounded-full font-semibold hover:from-blue-700 hover:to-green-700 hover:shadow-xl transition-all duration-300 hover:scale-105"
+                className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 via-blue-700 to-green-600 text-white px-10 py-5 rounded-full font-bold text-lg hover:from-blue-700 hover:via-blue-800 hover:to-green-700 hover:shadow-2xl transition-all duration-300 hover:scale-110 transform"
               >
-                {t('home.view_all_members')}
-                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                <span>{t('home.view_all_members')}</span>
+                <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform duration-300" />
               </button>
             </div>
           </div>
