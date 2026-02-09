@@ -31,90 +31,85 @@ export default function Partners() {
     }
   };
 
-  // Logo Carousel Component - Professional Premium Version
-  const HeroLogoCarousel = ({ logos }: { logos: string[] }) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [progress, setProgress] = useState(0);
+  // --- Premium Components ---
 
-    useEffect(() => {
-      if (logos.length === 0) return;
-      const interval = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % logos.length);
-        setProgress(0);
-      }, 4000);
-      const progressInterval = setInterval(() => {
-        setProgress((prev) => (prev >= 100 ? 0 : prev + 1));
-      }, 40);
-      return () => {
-        clearInterval(interval);
-        clearInterval(progressInterval);
-      };
-    }, [logos.length]);
-
-    if (logos.length === 0) return null;
+  // 1. Infinite Moving Marquee (Social Proof)
+  const LogoMarquee = ({ logos }: { logos: string[] }) => {
+    // Duplicate logos to ensure seamless loop
+    const displayLogos = [...logos, ...logos, ...logos, ...logos];
 
     return (
-      <div className="relative max-w-5xl mx-auto -mt-16 mb-20 z-20">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-green-600 rounded-[2rem] blur-2xl opacity-20 animate-pulse"></div>
-        <div className="relative bg-white/80 backdrop-blur-xl border border-white/50 rounded-[2.5rem] p-10 shadow-2xl flex flex-col md:flex-row items-center gap-12 overflow-hidden">
-          {/* Active Logo with premium animation */}
-          <div className="relative w-48 h-48 flex-shrink-0 group">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-green-50 rounded-2xl opacity-50"></div>
-            <div className="absolute inset-0 flex items-center justify-center p-8">
-              {logos.map((logo, index) => (
-                <div
-                  key={index}
-                  className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${index === currentIndex ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-90 -rotate-6'
-                    }`}
-                >
-                  <img src={logo} alt="Partner" className="max-w-full max-h-full object-contain filter drop-shadow-xl" />
-                </div>
-              ))}
+      <div className="relative w-full overflow-hidden bg-white/50 backdrop-blur-sm border-y border-gray-100 py-10 z-20">
+        <div className="flex animate-marquee whitespace-nowrap items-center">
+          {displayLogos.map((logo, i) => (
+            <div key={i} className="inline-block mx-12 grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100">
+              <img src={logo} alt="Partner" className="h-12 w-auto object-contain pointer-events-none" />
             </div>
+          ))}
+        </div>
+        {/* Gradients for fading edges */}
+        <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-gray-50 to-transparent z-10"></div>
+        <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-gray-50 to-transparent z-10"></div>
+      </div>
+    );
+  };
 
-            {/* Progress Circular Indicator */}
-            <svg className="absolute -inset-2 w-[calc(100%+1rem)] h-[calc(100%+1rem)] -rotate-90">
-              <circle
-                cx="50%" cy="50%" r="48%"
-                stroke="currentColor" strokeWidth="2"
-                fill="none" className="text-gray-100"
-              />
-              <circle
-                cx="50%" cy="50%" r="48%"
-                stroke="url(#premium-gradient)" strokeWidth="3"
-                fill="none" strokeDasharray="100 100"
-                strokeDashoffset={100 - progress}
-                className="transition-all duration-100"
-              />
-              <defs>
-                <linearGradient id="premium-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#2563eb" />
-                  <stop offset="100%" stopColor="#16a34a" />
-                </linearGradient>
-              </defs>
-            </svg>
+  // 2. Partner Spotlight (Immersive Focus)
+  const PartnerSpotlight = ({ partners }: { partners: any[] }) => {
+    const [index, setIndex] = useState(0);
+    const partner = partners[index % partners.length];
+
+    useEffect(() => {
+      if (partners.length === 0) return;
+      const timer = setInterval(() => setIndex(i => i + 1), 6000);
+      return () => clearInterval(timer);
+    }, [partners.length]);
+
+    if (!partner) return null;
+
+    return (
+      <div className="relative w-full max-w-6xl mx-auto mb-32 group">
+        {/* Dynamic Atmospheric Background */}
+        <div className="absolute -inset-4 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-green-600/20 rounded-[3rem] blur-3xl opacity-50 transition-all duration-1000 group-hover:opacity-75"></div>
+
+        <div className="relative overflow-hidden bg-white/80 backdrop-blur-2xl rounded-[2.5rem] border border-white shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] flex flex-col lg:flex-row min-h-[500px]">
+          {/* Visual Showcase Side */}
+          <div className="relative w-full lg:w-1/2 bg-gray-50/50 flex items-center justify-center p-12 overflow-hidden">
+            <div className="absolute inset-0 opacity-10 blur-2xl scale-150 transition-all duration-1000">
+              <img src={partner.logo} alt="" className="w-full h-full object-contain" />
+            </div>
+            <div className="relative z-10 transform transition-all duration-700 group-hover:scale-110">
+              <img src={partner.logo} alt={partner.name} className="max-w-[280px] max-h-[160px] object-contain drop-shadow-2xl" />
+            </div>
           </div>
 
-          <div className="flex-1 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-blue-700 rounded-full text-sm font-bold mb-4">
-              <ShieldCheck size={16} />
-              <span>{t('network.hero_title')}</span>
+          {/* Content Side */}
+          <div className="w-full lg:w-1/2 p-12 lg:p-16 flex flex-col justify-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-6">
+              <div className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-ping"></div>
+              {t('network.hero_title')}
             </div>
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-green-700">
-              {partners[currentIndex]?.name || "Nos Partenaires"}
+
+            <h2 className="text-4xl lg:text-5xl font-black text-gray-900 mb-6 leading-tight transition-all duration-500">
+              {partner.name}
             </h2>
-            <p className="text-gray-600 text-lg leading-relaxed max-w-xl">
-              {partners[currentIndex]?.description || t('partners_page.committed_desc')}
+
+            <p className="text-xl text-gray-600 leading-relaxed mb-8 flex-grow">
+              {partner.description || t('partners_page.committed_desc')}
             </p>
 
-            <div className="mt-8 flex items-center justify-center md:justify-start gap-4">
-              <div className="flex gap-1.5">
-                {logos.slice(0, 8).map((_, i) => (
-                  <div key={i} className={`h-1.5 rounded-full transition-all duration-500 ${i === currentIndex % 8 ? 'w-8 bg-blue-600' : 'w-2 bg-gray-200'}`}></div>
+            <div className="flex items-center gap-6 pt-8 border-t border-gray-100 mt-auto">
+              <div className="flex gap-2">
+                {[...Array(Math.min(partners.length, 5))].map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setIndex(i)}
+                    className={`h-2 rounded-full transition-all duration-500 ${i === index % partners.length ? 'w-10 bg-blue-600' : 'w-2 bg-gray-300 hover:bg-gray-400'}`}
+                  />
                 ))}
               </div>
-              <span className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-2">
-                {currentIndex + 1} / {logos.length}
+              <span className="text-sm font-medium text-gray-400">
+                {String((index % partners.length) + 1).padStart(2, '0')} / {String(partners.length).padStart(2, '0')}
               </span>
             </div>
           </div>
@@ -123,60 +118,74 @@ export default function Partners() {
     );
   };
 
-  const PartnerSection = ({ title, subtitle, icon: Icon, colorClass, data }: any) => {
+  const PartnerCard = ({ partner }: { partner: any }) => (
+    <div className="group relative bg-white rounded-3xl p-8 border border-transparent hover:border-blue-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(59,130,246,0.1)] transition-all duration-500 h-full flex flex-col">
+      {/* Glossy Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/0 to-blue-50/30 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+      <div className="relative z-10 flex flex-col h-full">
+        <div className="flex items-start justify-between mb-8">
+          <div className="h-16 w-32 flex items-center justify-start group-hover:scale-110 transition-transform duration-500 origin-left">
+            {partner.logo ? (
+              <img src={partner.logo} alt={partner.name} className="max-h-full max-w-full object-contain" />
+            ) : (
+              <div className="h-full w-full bg-gray-50 rounded-xl flex items-center justify-center">
+                <Users className="text-gray-300" />
+              </div>
+            )}
+          </div>
+          {partner.website && (
+            <a
+              href={partner.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-2xl bg-gray-50 text-gray-400 hover:bg-blue-600 hover:text-white transition-all duration-300 transform group-hover:-translate-y-1"
+            >
+              <ExternalLink size={18} />
+            </a>
+          )}
+        </div>
+
+        <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-4 line-clamp-2">
+          {partner.name}
+        </h3>
+
+        <p className="text-gray-500 text-sm leading-relaxed mb-8 flex-grow line-clamp-3">
+          {partner.description || t('partners_page.committed_desc')}
+        </p>
+
+        <div className="pt-6 border-t border-gray-50">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600/40 py-1.5 px-3 bg-blue-50/50 rounded-full group-hover:bg-blue-100/50 transition-colors">
+              {getTranslatedType(partner.type)}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const PartnerSection = ({ title, icon: Icon, colorClass, data }: any) => {
     if (data.length === 0) return null;
 
     return (
-      <div className="mb-24">
-        <div className="flex items-center gap-4 mb-12 border-b border-gray-100 pb-6">
-          <div className={`${colorClass} p-3 rounded-2xl text-white shadow-lg`}>
-            <Icon size={32} />
+      <div className="mb-32">
+        <div className="flex items-end justify-between mb-16 px-4">
+          <div className="flex flex-col gap-4">
+            <div className={`w-12 h-1.5 rounded-full ${colorClass}`}></div>
+            <h2 className="text-4xl font-black text-gray-900 tracking-tight flex items-center gap-4">
+              <Icon className="text-gray-300" size={32} />
+              {title}
+            </h2>
           </div>
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900">{title}</h2>
-            <p className="text-gray-600">{subtitle}</p>
+          <div className="hidden md:block text-sm font-bold text-gray-400 uppercase tracking-widest">
+            {data.length} Total
           </div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {data.map((partner: any, index: number) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden group hover:-translate-y-1 flex flex-col h-full"
-            >
-              <div className="p-8 flex flex-col h-full">
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex-1">
-                    {partner.logo && (
-                      <div className="mb-6 h-20 flex items-center justify-start group-hover:scale-105 transition-transform">
-                        <img src={partner.logo} alt={partner.name} className="max-h-full max-w-[150px] object-contain" />
-                      </div>
-                    )}
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                      {partner.name}
-                    </h3>
-                  </div>
-                  {partner.website && (
-                    <a
-                      href={partner.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors"
-                    >
-                      <ExternalLink className="text-blue-600" size={20} />
-                    </a>
-                  )}
-                </div>
-                <p className="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">
-                  {partner.description || t('partners_page.committed_desc')}
-                </p>
-                <div className="pt-6 border-t border-gray-50 flex items-center justify-between">
-                  <span className="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold rounded-full uppercase tracking-wider">
-                    {getTranslatedType(partner.type)}
-                  </span>
-                </div>
-              </div>
-            </div>
+            <PartnerCard key={index} partner={partner} />
           ))}
         </div>
       </div>
@@ -184,77 +193,91 @@ export default function Partners() {
   };
 
   const allLogos = partners.filter(p => p.logo).map(p => p.logo as string);
+  const spotlightPartners = partners.filter(p => getPartnerStatus(p.name) === 'PTF').slice(0, 5);
 
   return (
-    <div className="bg-white">
-      {/* Hero Section */}
-      <section className="relative text-white py-32 overflow-hidden bg-gradient-to-br from-blue-700 via-blue-800 to-green-700">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-yellow-300 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+    <div className="bg-gray-50/50">
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 40s linear infinite;
+        }
+        .animate-marquee:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
+      {/* Hero Section - Refined */}
+      <section className="relative text-white pt-40 pb-52 overflow-hidden bg-[#0A0F1E]">
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600 rounded-full blur-[120px]"></div>
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-green-600 rounded-full blur-[100px] opacity-20"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-6 py-2 rounded-full mb-8 border border-white/20">
-              <Handshake className="text-blue-200" size={20} />
-              <span className="text-sm font-semibold tracking-wide">{t('home.partners_subtitle')}</span>
+            <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-md px-6 py-2 rounded-full mb-10 border border-white/10">
+              <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
+              <span className="text-sm font-bold tracking-widest uppercase opacity-80">{t('home.partners_subtitle')}</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-8 leading-tight">
-              {t('network.hero_title')}
+            <h1 className="text-6xl md:text-8xl font-black mb-8 leading-[0.95] tracking-tighter">
+              {t('network.hero_title').split(' ').map((word, i) => (
+                <span key={i} className={i % 2 === 1 ? 'text-transparent bg-clip-text bg-gradient-to-b from-blue-400 to-blue-600' : ''}>
+                  {word}{' '}
+                </span>
+              ))}
             </h1>
 
-            <p className="text-xl md:text-2xl leading-relaxed text-blue-50 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl leading-relaxed text-gray-400 max-w-2xl mx-auto font-medium">
               {t('network.hero_desc')}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="pb-24 pt-12 bg-gray-50/30">
+      {/* Infinite Marquee Section */}
+      <div className="-mt-12 relative z-20">
+        <LogoMarquee logos={allLogos} />
+      </div>
+
+      {/* Main Content Area */}
+      <section className="py-32">
         <div className="container mx-auto px-4">
-          <HeroLogoCarousel logos={allLogos} />
+          {/* Spotlight Section */}
+          <PartnerSpotlight partners={spotlightPartners} />
 
-          <div className="max-w-7xl mx-auto">
-            {/* 1. Organisations membres */}
-            <div className="mb-24">
-              <div className="flex items-center gap-4 mb-16 px-4">
-                <div className="h-10 w-2 bg-blue-600 rounded-full"></div>
-                <h2 className="text-4xl font-extrabold text-gray-900">{t('partners_page.orgs_members_title')}</h2>
-              </div>
+          <div className="max-w-7xl mx-auto mt-20">
+            {/* National Members */}
+            <PartnerSection
+              title={t('partners_page.national_title')}
+              icon={Users}
+              colorClass="bg-green-600"
+              data={nationalMembers}
+            />
 
-              <PartnerSection
-                title={t('partners_page.national_title')}
-                subtitle={t('partners_page.national_subtitle')}
-                icon={Users}
-                colorClass="bg-green-600"
-                data={nationalMembers}
-              />
+            {/* International Members */}
+            <PartnerSection
+              title={t('partners_page.international_title')}
+              icon={Globe}
+              colorClass="bg-blue-600"
+              data={internationalMembers}
+            />
 
-              <PartnerSection
-                title={t('partners_page.international_title')}
-                subtitle={t('partners_page.international_subtitle')}
-                icon={Globe}
-                colorClass="bg-blue-600"
-                data={internationalMembers}
-              />
-            </div>
-
-            {/* 2. Partenaires institutionnels */}
+            {/* Institutional Partners */}
             <PartnerSection
               title={t('partners_page.institutional_title')}
-              subtitle={t('partners_page.institutional_subtitle')}
               icon={Building2}
               colorClass="bg-purple-600"
               data={institutionalPartners}
             />
 
-            {/* 3. Partenaires techniques et financiers */}
+            {/* Technical & Financial Partners */}
             <PartnerSection
               title={t('partners_page.tech_fin_title')}
-              subtitle={t('partners_page.tech_fin_subtitle')}
               icon={ShieldCheck}
               colorClass="bg-yellow-600"
               data={techFinPartners}
@@ -264,11 +287,11 @@ export default function Partners() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gray-50 border-t border-gray-100">
+      <section className="py-24 bg-white border-t border-gray-100">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
             <Handshake className="mx-auto mb-8 text-blue-600" size={70} />
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl font-black text-gray-900 mb-6">
               {t('home.view_all_members').split('...').join('')}
             </h2>
             <p className="text-xl text-gray-600 mb-10">
