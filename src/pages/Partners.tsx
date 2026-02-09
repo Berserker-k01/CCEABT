@@ -272,12 +272,7 @@ export default function Partners() {
         </div>
       </section>
 
-      {/* Infinite Marquee - Floating Version */}
-      <div className="-mt-16 relative z-30">
-        <div className="max-w-[95vw] mx-auto rounded-[2rem] overflow-hidden bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_24px_80px_rgba(0,0,0,0.4)]">
-          <LogoMarquee logos={allLogos} />
-        </div>
-      </div>
+
 
       {/* Main Content Area */}
       <section className="py-40">
