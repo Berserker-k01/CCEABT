@@ -9,16 +9,18 @@ export default function Partners() {
   const { partners } = useData();
 
   // Grouping partners and sorting alphabetically
+  const isPTF = (name: string) => getPartnerStatus(name) === 'PTF';
+
   const internationalMembers = partners
-    .filter(p => p.type === 'International');
+    .filter(p => p.type === 'International' && !isPTF(p.name));
   const nationalMembers = partners
-    .filter(p => p.type === 'National')
+    .filter(p => p.type === 'National' && !isPTF(p.name))
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const institutionalPartners = partners
-    .filter(p => p.type === 'Institutionnel');
-  // Filtrer uniquement les 13 PTF de la liste définitive (pas tous les Technique/Financier)
+    .filter(p => p.type === 'Institutionnel' && !isPTF(p.name));
+  // Filtrer uniquement les 13 PTF de la liste définitive
   const techFinPartners = partners
-    .filter(p => getPartnerStatus(p.name) === 'PTF');
+    .filter(p => isPTF(p.name));
 
   const getTranslatedType = (type: string) => {
     switch (type) {

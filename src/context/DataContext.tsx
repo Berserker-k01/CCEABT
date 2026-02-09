@@ -671,17 +671,7 @@ const initialPartners: PartnerItem[] = [
         "logo": "/partners/image31.jpeg",
         "password": "password123"
     },
-    {
-        "id": "plan_international_togo_988",
-        "name": "Plan International Togo",
-        "type": "International",
-        "description": "Membre du réseau CCEABT",
-        "email": "contact@cceabt.tg",
-        "phone": "",
-        "website": "https://plan-international.org/togo/",
-        "logo": "/partners/image32.png",
-        "password": "password123"
-    },
+
     {
         id: "ptf_aesen",
         name: "AESEN (Agence de l'eau Seine-Normandie)",
@@ -775,7 +765,7 @@ const initialPartners: PartnerItem[] = [
     {
         "id": "plan_international_togo_988",
         "name": "Plan International Togo",
-        "type": "International",
+        "type": "Technique",
         "description": "Partenaire Technique et Financier",
         "email": "contact@cceabt.tg",
         "phone": "",
