@@ -121,19 +121,18 @@ export default function Partners() {
   };
 
   const PartnerCard = ({ partner }: { partner: any }) => (
-    <div className="group relative bg-white/[0.03] backdrop-blur-sm rounded-3xl p-8 border border-white/5 hover:border-blue-500/30 shadow-2xl transition-all duration-700 h-full flex flex-col overflow-hidden">
-      {/* Animated Border Trace Effect */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></div>
-      <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-blue-500/50 to-transparent scale-y-0 group-hover:scale-y-100 transition-transform duration-700 delay-100"></div>
+    <div className="group relative bg-white rounded-[2.5rem] p-8 border border-gray-100 hover:border-blue-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(59,130,246,0.1)] transition-all duration-700 h-full flex flex-col overflow-hidden">
+      {/* Subtle Gradient Glow */}
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-blue-500/20 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></div>
 
       <div className="relative z-10 flex flex-col h-full">
         <div className="flex items-start justify-between mb-8">
           <div className="h-16 w-32 flex items-center justify-start group-hover:scale-105 transition-transform duration-500 origin-left">
             {partner.logo ? (
-              <img src={partner.logo} alt={partner.name} className="max-h-full max-w-full object-contain brightness-110 contrast-125" />
+              <img src={partner.logo} alt={partner.name} className="max-h-full max-w-full object-contain" />
             ) : (
-              <div className="h-full w-full bg-white/5 rounded-xl flex items-center justify-center">
-                <Users className="text-gray-600" />
+              <div className="h-full w-full bg-gray-50 rounded-xl flex items-center justify-center">
+                <Users className="text-gray-300" />
               </div>
             )}
           </div>
@@ -142,24 +141,24 @@ export default function Partners() {
               href={partner.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-2xl bg-white/5 text-gray-500 hover:bg-blue-600 hover:text-white transition-all duration-300 transform group-hover:-translate-y-1 border border-white/5"
+              className="p-3 rounded-2xl bg-gray-50 text-gray-400 hover:bg-blue-600 hover:text-white transition-all duration-300 transform group-hover:-translate-y-1"
             >
               <ExternalLink size={18} />
             </a>
           )}
         </div>
 
-        <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors mb-4 line-clamp-2">
+        <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-4 line-clamp-2">
           {partner.name}
         </h3>
 
-        <p className="text-gray-400 text-sm leading-relaxed mb-8 flex-grow line-clamp-3 font-light">
+        <p className="text-gray-500 text-sm leading-relaxed mb-8 flex-grow line-clamp-3">
           {partner.description || t('partners_page.committed_desc')}
         </p>
 
-        <div className="pt-6 border-t border-white/5">
+        <div className="pt-6 border-t border-gray-50">
           <div className="flex items-center gap-2">
-            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-blue-400/60 py-1.5 px-3 bg-blue-500/5 rounded-full border border-blue-500/10 group-hover:bg-blue-500/10 transition-colors">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600/60 py-1.5 px-3 bg-blue-50 rounded-full group-hover:bg-blue-100 transition-colors">
               {getTranslatedType(partner.type)}
             </span>
           </div>
@@ -176,12 +175,12 @@ export default function Partners() {
         <div className="flex items-end justify-between mb-16 px-4">
           <div className="flex flex-col gap-4">
             <div className={`w-12 h-1.5 rounded-full ${colorClass}`}></div>
-            <h2 className="text-4xl font-black text-white tracking-tight flex items-center gap-4">
-              <Icon className="text-gray-400" size={32} />
+            <h2 className="text-4xl font-black text-gray-900 tracking-tight flex items-center gap-4">
+              <Icon className="text-gray-300" size={32} />
               {title}
             </h2>
           </div>
-          <div className="hidden md:block text-sm font-bold text-gray-500 uppercase tracking-widest">
+          <div className="hidden md:block text-sm font-bold text-gray-400 uppercase tracking-widest">
             {data.length} {t('header.network')}
           </div>
         </div>
@@ -207,7 +206,7 @@ export default function Partners() {
   const spotlightPartners = partners.filter(p => getPartnerStatus(p.name) === 'PTF').slice(0, 5);
 
   return (
-    <div className="relative bg-[#050810] text-gray-100 min-h-screen selection:bg-blue-500/30">
+    <div className="relative bg-white text-gray-900 min-h-screen selection:bg-blue-500/30">
       {/* 1. Cinematic Noise Texture Overlay */}
       <div className="fixed inset-0 pointer-events-none z-[100] opacity-[0.03] mix-blend-overlay">
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -333,35 +332,29 @@ export default function Partners() {
         </div>
       </section>
 
-      {/* CTA Section - Elite Version */}
-      <section className="py-40 bg-[#050810] relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 blur-[100px] pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600 rounded-full"></div>
+      {/* CTA Section - Elite Hybrid Version */}
+      <section className="py-40 bg-gray-50 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600 rounded-full blur-[120px]"></div>
         </div>
 
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-4xl mx-auto reveal-view">
-            <div className="mb-12 inline-block">
-              <div className="relative">
-                <div className="absolute inset-0 bg-blue-500 blur-2xl opacity-20 animate-pulse"></div>
-                <Handshake className="relative text-blue-500 opacity-80" size={100} />
-              </div>
-            </div>
+            <Handshake className="mx-auto mb-12 text-blue-600/40" size={100} />
 
-            <h2 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter">
+            <h2 className="text-5xl md:text-7xl font-black text-gray-900 mb-8 tracking-tighter">
               {t('home.view_all_members').split('...').join('')}
             </h2>
 
-            <p className="text-2xl text-gray-400 mb-16 font-light max-w-2xl mx-auto leading-relaxed">
+            <p className="text-2xl text-gray-600 mb-16 font-light max-w-2xl mx-auto leading-relaxed">
               {t('home.cta_subtitle')}
             </p>
 
             <button
               onClick={() => window.location.href = '/contact'}
-              className="group relative bg-white text-black px-12 py-6 rounded-full font-black text-xl hover:bg-blue-500 hover:text-white transition-all duration-500 shadow-[0_20px_50px_rgba(255,255,255,0.1)] hover:shadow-[0_20px_50px_rgba(59,130,246,0.3)] hover:scale-105 overflow-hidden"
+              className="group relative bg-blue-600 text-white px-12 py-6 rounded-full font-black text-xl hover:bg-blue-700 transition-all duration-500 shadow-xl hover:scale-105 overflow-hidden"
             >
               <span className="relative z-10">{t('home.contact_us')}</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
             </button>
           </div>
         </div>
