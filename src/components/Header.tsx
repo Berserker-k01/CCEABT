@@ -60,11 +60,11 @@ export default function Header() {
                 key={item.path}
                 to={item.path}
                 onClick={scrollToTop}
-                className={`relative font-semibold transition-all duration-300 px-3 py-2 rounded-lg ${location.pathname === item.path
-                  ? 'text-white bg-blue-700 shadow-lg'
+                className={`relative font-semibold transition-all duration-300 px-4 py-2.5 rounded-lg ${location.pathname === item.path
+                  ? 'text-white bg-blue-700 shadow-md transform hover:scale-105'
                   : item.path === '/network'
-                    ? 'text-green-600 hover:text-green-700 hover:bg-green-50'
-                    : 'text-cceabt-blue hover:text-cceabt-green hover:bg-blue-50'
+                    ? 'text-green-600 hover:text-green-700 hover:bg-green-50 font-bold'
+                    : 'text-gray-700 hover:text-blue-700 hover:bg-blue-50'
                   }`}
               >
                 {item.name}
@@ -73,7 +73,15 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-4">
-
+            {/* Si Organisation, bouton Quitter sinon Rejoindre */}
+            {location.pathname === '/organization' && (
+              <Link
+                to="/about"
+                className="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm font-bold text-gray-500 transition-all duration-200 bg-gray-100 rounded-full hover:bg-gray-200 hover:text-gray-900 border border-gray-200"
+              >
+                Quitter l'organigramme
+              </Link>
+            )}
 
             <button
               onClick={toggleLanguage}

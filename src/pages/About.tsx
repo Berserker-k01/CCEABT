@@ -444,7 +444,7 @@ export default function About() {
                   <h4 className="font-bold text-lg">Assemblée Générale</h4>
                   <p className="text-xs text-slate-400">Organe suprême</p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default translate-y-8">
+                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default translate-y-0">
                   <Target className="text-green-400 mb-3" size={32} />
                   <h4 className="font-bold text-lg">Conseil d'Admin</h4>
                   <p className="text-xs text-slate-400">Pilotage stratégique</p>
@@ -454,7 +454,7 @@ export default function About() {
                   <h4 className="font-bold text-lg">Secrétariat Exécutif</h4>
                   <p className="text-xs text-slate-400">Coordination</p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default translate-y-8">
+                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default translate-y-0">
                   <Share2 className="text-orange-400 mb-3" size={32} />
                   <h4 className="font-bold text-lg">Plateformes</h4>
                   <p className="text-xs text-slate-400">Ancrage local</p>
