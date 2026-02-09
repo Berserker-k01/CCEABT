@@ -119,18 +119,19 @@ export default function Partners() {
   };
 
   const PartnerCard = ({ partner }: { partner: any }) => (
-    <div className="group relative bg-white rounded-3xl p-8 border border-transparent hover:border-blue-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(59,130,246,0.1)] transition-all duration-500 h-full flex flex-col">
-      {/* Glossy Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/0 to-blue-50/30 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+    <div className="group relative bg-white/[0.03] backdrop-blur-sm rounded-3xl p-8 border border-white/5 hover:border-blue-500/30 shadow-2xl transition-all duration-700 h-full flex flex-col overflow-hidden">
+      {/* Animated Border Trace Effect */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></div>
+      <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-blue-500/50 to-transparent scale-y-0 group-hover:scale-y-100 transition-transform duration-700 delay-100"></div>
 
       <div className="relative z-10 flex flex-col h-full">
         <div className="flex items-start justify-between mb-8">
-          <div className="h-16 w-32 flex items-center justify-start group-hover:scale-110 transition-transform duration-500 origin-left">
+          <div className="h-16 w-32 flex items-center justify-start group-hover:scale-105 transition-transform duration-500 origin-left">
             {partner.logo ? (
-              <img src={partner.logo} alt={partner.name} className="max-h-full max-w-full object-contain" />
+              <img src={partner.logo} alt={partner.name} className="max-h-full max-w-full object-contain brightness-110 contrast-125" />
             ) : (
-              <div className="h-full w-full bg-gray-50 rounded-xl flex items-center justify-center">
-                <Users className="text-gray-300" />
+              <div className="h-full w-full bg-white/5 rounded-xl flex items-center justify-center">
+                <Users className="text-gray-600" />
               </div>
             )}
           </div>
@@ -139,24 +140,24 @@ export default function Partners() {
               href={partner.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-2xl bg-gray-50 text-gray-400 hover:bg-blue-600 hover:text-white transition-all duration-300 transform group-hover:-translate-y-1"
+              className="p-3 rounded-2xl bg-white/5 text-gray-500 hover:bg-blue-600 hover:text-white transition-all duration-300 transform group-hover:-translate-y-1 border border-white/5"
             >
               <ExternalLink size={18} />
             </a>
           )}
         </div>
 
-        <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-4 line-clamp-2">
+        <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors mb-4 line-clamp-2">
           {partner.name}
         </h3>
 
-        <p className="text-gray-500 text-sm leading-relaxed mb-8 flex-grow line-clamp-3">
+        <p className="text-gray-400 text-sm leading-relaxed mb-8 flex-grow line-clamp-3 font-light">
           {partner.description || t('partners_page.committed_desc')}
         </p>
 
-        <div className="pt-6 border-t border-gray-50">
+        <div className="pt-6 border-t border-white/5">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600/40 py-1.5 px-3 bg-blue-50/50 rounded-full group-hover:bg-blue-100/50 transition-colors">
+            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-blue-400/60 py-1.5 px-3 bg-blue-500/5 rounded-full border border-blue-500/10 group-hover:bg-blue-500/10 transition-colors">
               {getTranslatedType(partner.type)}
             </span>
           </div>
@@ -196,112 +197,160 @@ export default function Partners() {
   const spotlightPartners = partners.filter(p => getPartnerStatus(p.name) === 'PTF').slice(0, 5);
 
   return (
-    <div className="bg-gray-50/50">
+    <div className="relative bg-[#050810] text-gray-100 min-h-screen selection:bg-blue-500/30">
+      {/* 1. Cinematic Noise Texture Overlay */}
+      <div className="fixed inset-0 pointer-events-none z-[100] opacity-[0.03] mix-blend-overlay">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <filter id="noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#noise)" />
+        </svg>
+      </div>
+
       <style>{`
         @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
+        @keyframes reveal {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
         .animate-marquee {
-          animation: marquee 40s linear infinite;
+          animation: marquee 60s linear infinite;
         }
         .animate-marquee:hover {
           animation-play-state: paused;
         }
+        .reveal-view {
+          animation: reveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
       `}</style>
 
-      {/* Hero Section - Refined */}
-      <section className="relative text-white pt-40 pb-52 overflow-hidden bg-[#0A0F1E]">
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600 rounded-full blur-[120px]"></div>
-          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-green-600 rounded-full blur-[100px] opacity-20"></div>
+      {/* Hero Section - Elite Cinematic Style */}
+      <section className="relative pt-48 pb-64 overflow-hidden border-b border-white/5">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] bg-blue-600/10 rounded-full blur-[150px] animate-pulse"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-green-500/5 rounded-full blur-[120px]"></div>
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-50"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-md px-6 py-2 rounded-full mb-10 border border-white/10">
-              <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
-              <span className="text-sm font-bold tracking-widest uppercase opacity-80">{t('home.partners_subtitle')}</span>
+          <div className="max-w-5xl mx-auto">
+            <div className="reveal-view">
+              <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-xl px-5 py-2 rounded-full mb-12 border border-white/10 shadow-2xl">
+                <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.8)]"></div>
+                <span className="text-[10px] font-black tracking-[0.3em] uppercase opacity-60">{t('home.partners_subtitle')}</span>
+              </div>
+
+              <h1 className="text-7xl md:text-[10rem] font-black mb-10 leading-[0.85] tracking-[-0.04em]">
+                {t('network.hero_title').split(' ').map((word, i) => (
+                  <span key={i} className={`inline-block ${i % 2 === 1 ? 'text-transparent bg-clip-text bg-[linear-gradient(135deg,#60A5FA_0%,#3B82F6_50%,#2563EB_100%)]' : 'text-white'}`}>
+                    {word}{' '}
+                  </span>
+                ))}
+              </h1>
+
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-10 mt-16 mt-20">
+                <div className="h-px w-24 bg-gradient-to-r from-blue-500 to-transparent hidden md:block"></div>
+                <p className="text-xl md:text-2xl leading-relaxed text-gray-400 max-w-2xl font-light tracking-wide">
+                  {t('network.hero_desc')}
+                </p>
+              </div>
             </div>
-
-            <h1 className="text-6xl md:text-8xl font-black mb-8 leading-[0.95] tracking-tighter">
-              {t('network.hero_title').split(' ').map((word, i) => (
-                <span key={i} className={i % 2 === 1 ? 'text-transparent bg-clip-text bg-gradient-to-b from-blue-400 to-blue-600' : ''}>
-                  {word}{' '}
-                </span>
-              ))}
-            </h1>
-
-            <p className="text-xl md:text-2xl leading-relaxed text-gray-400 max-w-2xl mx-auto font-medium">
-              {t('network.hero_desc')}
-            </p>
           </div>
         </div>
       </section>
 
-      {/* Infinite Marquee Section */}
-      <div className="-mt-12 relative z-20">
-        <LogoMarquee logos={allLogos} />
+      {/* Infinite Marquee - Floating Version */}
+      <div className="-mt-16 relative z-30">
+        <div className="max-w-[95vw] mx-auto rounded-[2rem] overflow-hidden bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_24px_80px_rgba(0,0,0,0.4)]">
+          <LogoMarquee logos={allLogos} />
+        </div>
       </div>
 
       {/* Main Content Area */}
-      <section className="py-32">
+      <section className="py-40">
         <div className="container mx-auto px-4">
-          {/* Spotlight Section */}
-          <PartnerSpotlight partners={spotlightPartners} />
+          {/* Spotlight Section - Wrapped in Reveal */}
+          <div className="reveal-view" style={{ animationDelay: '0.4s' }}>
+            <PartnerSpotlight partners={spotlightPartners} />
+          </div>
 
-          <div className="max-w-7xl mx-auto mt-20">
+          <div className="max-w-7xl mx-auto mt-40">
             {/* National Members */}
-            <PartnerSection
-              title={t('partners_page.national_title')}
-              icon={Users}
-              colorClass="bg-green-600"
-              data={nationalMembers}
-            />
+            <div className="reveal-view" style={{ animationDelay: '0.6s' }}>
+              <PartnerSection
+                title={t('partners_page.national_title')}
+                icon={Users}
+                colorClass="bg-green-600"
+                data={nationalMembers}
+              />
+            </div>
 
             {/* International Members */}
-            <PartnerSection
-              title={t('partners_page.international_title')}
-              icon={Globe}
-              colorClass="bg-blue-600"
-              data={internationalMembers}
-            />
+            <div className="reveal-view" style={{ animationDelay: '0.8s' }}>
+              <PartnerSection
+                title={t('partners_page.international_title')}
+                icon={Globe}
+                colorClass="bg-blue-600"
+                data={internationalMembers}
+              />
+            </div>
 
             {/* Institutional Partners */}
-            <PartnerSection
-              title={t('partners_page.institutional_title')}
-              icon={Building2}
-              colorClass="bg-purple-600"
-              data={institutionalPartners}
-            />
+            <div className="reveal-view" style={{ animationDelay: '1.0s' }}>
+              <PartnerSection
+                title={t('partners_page.institutional_title')}
+                icon={Building2}
+                colorClass="bg-purple-600"
+                data={institutionalPartners}
+              />
+            </div>
 
             {/* Technical & Financial Partners */}
-            <PartnerSection
-              title={t('partners_page.tech_fin_title')}
-              icon={ShieldCheck}
-              colorClass="bg-yellow-600"
-              data={techFinPartners}
-            />
+            <div className="reveal-view" style={{ animationDelay: '1.2s' }}>
+              <PartnerSection
+                title={t('partners_page.tech_fin_title')}
+                icon={ShieldCheck}
+                colorClass="bg-yellow-600"
+                data={techFinPartners}
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 bg-white border-t border-gray-100">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto">
-            <Handshake className="mx-auto mb-8 text-blue-600" size={70} />
-            <h2 className="text-4xl font-black text-gray-900 mb-6">
+      {/* CTA Section - Elite Version */}
+      <section className="py-40 bg-[#050810] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 blur-[100px] pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600 rounded-full"></div>
+        </div>
+
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="max-w-4xl mx-auto reveal-view">
+            <div className="mb-12 inline-block">
+              <div className="relative">
+                <div className="absolute inset-0 bg-blue-500 blur-2xl opacity-20 animate-pulse"></div>
+                <Handshake className="relative text-blue-500 opacity-80" size={100} />
+              </div>
+            </div>
+
+            <h2 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter">
               {t('home.view_all_members').split('...').join('')}
             </h2>
-            <p className="text-xl text-gray-600 mb-10">
+
+            <p className="text-2xl text-gray-400 mb-16 font-light max-w-2xl mx-auto leading-relaxed">
               {t('home.cta_subtitle')}
             </p>
+
             <button
               onClick={() => window.location.href = '/contact'}
-              className="bg-blue-600 text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-blue-700 transition-all shadow-xl hover:scale-105"
+              className="group relative bg-white text-black px-12 py-6 rounded-full font-black text-xl hover:bg-blue-500 hover:text-white transition-all duration-500 shadow-[0_20px_50px_rgba(255,255,255,0.1)] hover:shadow-[0_20px_50px_rgba(59,130,246,0.3)] hover:scale-105 overflow-hidden"
             >
-              {t('home.contact_us')}
+              <span className="relative z-10">{t('home.contact_us')}</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
             </button>
           </div>
         </div>
