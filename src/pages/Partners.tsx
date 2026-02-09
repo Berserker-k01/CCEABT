@@ -168,27 +168,35 @@ export default function Partners() {
     </div>
   );
 
-  const PartnerSection = ({ title, icon: Icon, colorClass, data }: any) => {
+  const PartnerSection = ({ title, icon: Icon, colorClass, data, isBento }: any) => {
     if (data.length === 0) return null;
 
     return (
-      <div className="mb-32">
+      <div className="mb-40">
         <div className="flex items-end justify-between mb-16 px-4">
           <div className="flex flex-col gap-4">
             <div className={`w-12 h-1.5 rounded-full ${colorClass}`}></div>
-            <h2 className="text-4xl font-black text-gray-900 tracking-tight flex items-center gap-4">
-              <Icon className="text-gray-300" size={32} />
+            <h2 className="text-4xl font-black text-white tracking-tight flex items-center gap-4">
+              <Icon className="text-gray-400" size={32} />
               {title}
             </h2>
           </div>
-          <div className="hidden md:block text-sm font-bold text-gray-400 uppercase tracking-widest">
-            {data.length} Total
+          <div className="hidden md:block text-sm font-bold text-gray-500 uppercase tracking-widest">
+            {data.length} {t('header.network')}
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className={isBento ? "grid grid-cols-1 md:grid-cols-4 gap-8 auto-rows-[400px]" : "grid md:grid-cols-2 lg:grid-cols-3 gap-10"}>
           {data.map((partner: any, index: number) => (
-            <PartnerCard key={index} partner={partner} />
+            <div
+              key={index}
+              className={isBento ? (
+                index % 5 === 0 ? "md:col-span-2 md:row-span-1" :
+                  index % 5 === 3 ? "md:col-span-2" : ""
+              ) : ""}
+            >
+              <PartnerCard partner={partner} />
+            </div>
           ))}
         </div>
       </div>
@@ -318,6 +326,7 @@ export default function Partners() {
                 icon={ShieldCheck}
                 colorClass="bg-yellow-600"
                 data={techFinPartners}
+                isBento={true}
               />
             </div>
           </div>
