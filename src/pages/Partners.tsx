@@ -237,8 +237,8 @@ export default function Partners() {
         }
       `}</style>
 
-      {/* Hero Section - Elite Cinematic Style */}
-      <section className="relative pt-48 pb-64 overflow-hidden border-b border-white/5">
+      {/* Hero Section - Elite Cinematic Style (RESTORED DARK) */}
+      <section className="relative pt-48 pb-64 overflow-hidden border-b border-white/5 bg-[#050810] text-white">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] bg-blue-600/10 rounded-full blur-[150px] animate-pulse"></div>
           <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-green-500/5 rounded-full blur-[120px]"></div>
