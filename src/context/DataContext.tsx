@@ -875,7 +875,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
     const [partners, setPartners] = useState<PartnerItem[]>(() => {
         try {
-            const savedPartners = localStorage.getItem('cceabt_partners_v15');
+            const savedPartners = localStorage.getItem('cceabt_partners_v16');
             return savedPartners ? JSON.parse(savedPartners) : initialPartners;
         } catch (error) {
             console.error('Error parsing partners from localStorage', error);
@@ -899,7 +899,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => { localStorage.setItem('cceabt_news', JSON.stringify(news)); }, [news]);
     useEffect(() => { localStorage.setItem('cceabt_resources', JSON.stringify(resources)); }, [resources]);
     useEffect(() => {
-        localStorage.setItem('cceabt_partners_v15', JSON.stringify(partners));
+        localStorage.setItem('cceabt_partners_v16', JSON.stringify(partners));
     }, [partners]);
     useEffect(() => { localStorage.setItem('cceabt_submissions', JSON.stringify(submissions)); }, [submissions]);
 
