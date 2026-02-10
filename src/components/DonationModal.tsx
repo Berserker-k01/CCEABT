@@ -123,5 +123,3 @@ export default function DonationModal({ onClose }: DonationModalProps) {
         </div>
     );
 }
-    );
-}

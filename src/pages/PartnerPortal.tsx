@@ -92,59 +92,7 @@ const DashboardOverview = () => (
     </div>
 );
 
-// 2. Agencies View
-const mockAgencies = [
-    { region: 'Région Maritime', city: 'Tsévié', contact: 'M. Koffi ADO', phone: '+228 90 00 00 01', email: 'maritime@cceabt.org' },
-    { region: 'Région des Plateaux', city: 'Atakpamé', contact: 'Mme. Afi YAWA', phone: '+228 90 00 00 02', email: 'plateaux@cceabt.org' },
-    { region: 'Région Centrale', city: 'Sokodé', contact: 'M. Jean TCHALA', phone: '+228 90 00 00 03', email: 'centrale@cceabt.org' },
-    { region: 'Région de la Kara', city: 'Kara', contact: 'Mme. Esso SIMA', phone: '+228 90 00 00 04', email: 'kara@cceabt.org' },
-    { region: 'Région des Savanes', city: 'Dapaong', contact: 'M. Ali ISSA', phone: '+228 90 00 00 05', email: 'savanes@cceabt.org' },
-];
-
-const AgenciesView = () => (
-    <div className="space-y-6 animate-fade-in">
-        <div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Agences Décentralisées</h2>
-            <p className="text-gray-500">Coordonnées de nos points focaux régionaux.</p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-6">
-            {mockAgencies.map((agency, idx) => (
-                <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-blue-200 transition-colors">
-                    <div className="flex items-start justify-between mb-4">
-                        <div>
-                            <h3 className="font-bold text-lg text-gray-900">{agency.region}</h3>
-                            <div className="flex items-center gap-2 text-gray-500 text-sm mt-1">
-                                <MapPin size={14} />
-                                <span>{agency.city}</span>
-                            </div>
-                        </div>
-                        <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
-                            <Building2 size={20} />
-                        </div>
-                    </div>
-
-                    <div className="space-y-3 pt-4 border-t border-gray-50">
-                        <div className="flex items-center gap-3 text-sm">
-                            <Users size={16} className="text-gray-400" />
-                            <span className="font-medium text-gray-700">{agency.contact}</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm">
-                            <Phone size={16} className="text-gray-400" />
-                            <span className="text-gray-600">{agency.phone}</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm">
-                            <Mail size={16} className="text-gray-400" />
-                            <a href={`mailto:${agency.email}`} className="text-blue-600 hover:underline">{agency.email}</a>
-                        </div>
-                    </div>
-                </div>
-            ))}
-        </div>
-    </div>
-);
-
-// 3. Stats View
+// 1. Overview View
 const StatsView = () => (
     <div className="space-y-8 animate-fade-in">
         <div>
@@ -275,7 +223,6 @@ export default function PartnerPortal() {
 
     const tabs = [
         { id: 'overview', label: 'Vue d\'ensemble', icon: LayoutDashboard },
-        { id: 'agencies', label: 'Agences', icon: MapPin },
         { id: 'stats', label: 'Statistiques', icon: BarChart3 },
         { id: 'collection', label: 'Espace Récolte', icon: FileInput },
     ];
@@ -283,7 +230,6 @@ export default function PartnerPortal() {
     const renderContent = () => {
         switch (activeTab) {
             case 'overview': return <DashboardOverview />;
-            case 'agencies': return <AgenciesView />;
             case 'stats': return <StatsView />;
             case 'collection': return <CollectionView />;
             default: return <DashboardOverview />;
