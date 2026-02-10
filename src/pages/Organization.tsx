@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Target, Briefcase, Share2, ArrowRight, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import TogoMap from '../components/TogoMap';
+import { useTranslation } from 'react-i18next';
 
 const OrgCard = ({ icon: Icon, title, role, color, description, customContent }: any) => (
     <motion.div
@@ -40,6 +41,7 @@ const OrgCard = ({ icon: Icon, title, role, color, description, customContent }:
 );
 
 export default function Organization() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('ag');
     const [hoveredPlatform, setHoveredPlatform] = useState<any>(null);
@@ -47,43 +49,43 @@ export default function Organization() {
     const tabs = [
         {
             id: 'ag',
-            label: "Assemblée Générale",
+            label: t('organization.ag_label'),
             icon: Users,
             color: 'text-blue-600',
             gradient: 'from-blue-500 to-blue-600',
             ring: 'ring-blue-200',
-            role: "Organe Suprême",
-            description: "Composée de tous les membres effectifs, elle définit la politique générale, adopte les statuts et élit les membres du Conseil d'Administration. C'est le cœur démocratique du réseau."
+            role: t('organization.ag_role'),
+            description: t('organization.ag_desc')
         },
         {
             id: 'ca',
-            label: "Conseil d'Administration",
+            label: t('organization.ca_label'),
             icon: Target,
             color: 'text-green-600',
             gradient: 'from-green-500 to-green-600',
             ring: 'ring-green-200',
-            role: "Pilotage Stratégique",
-            description: "Constitué de 7 membres élus, il veille à l'application des décisions de l'AG, approuve les programmes et budgets, et supervise le Secrétariat Exécutif."
+            role: t('organization.ca_role'),
+            description: t('organization.ca_desc')
         },
         {
             id: 'se',
-            label: "Secrétariat Exécutif",
+            label: t('organization.se_label'),
             icon: Briefcase,
             color: 'text-purple-600',
             gradient: 'from-purple-500 to-purple-600',
             ring: 'ring-purple-200',
-            role: "Coordination Opérationnelle",
-            description: "L'organe permanent chargé de la mise en œuvre quotidienne des activités, de la gestion des projets et de l'animation du réseau."
+            role: t('organization.se_role'),
+            description: t('organization.se_desc')
         },
         {
             id: 'platforms',
-            label: "Plateformes",
+            label: t('organization.plat_label'),
             icon: Share2,
             color: 'text-orange-600',
             gradient: 'from-orange-500 to-orange-600',
             ring: 'ring-orange-200',
-            role: "Ancrage Territorial",
-            description: "6 Plateformes Régionales et plus de 30 points focaux pour une action au plus près des populations.",
+            role: t('organization.plat_role'),
+            description: t('organization.plat_desc'),
         },
     ];
 
@@ -103,13 +105,13 @@ export default function Organization() {
                         transition={{ duration: 0.5 }}
                     >
                         <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-semibold mb-6 border border-white/20">
-                            Gouvernance Transparente
+                            {t('about.governance_subtitle')}
                         </span>
                         <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                            L'Architecture du <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">CCEABT</span>
+                            {t('organization.hero_title')}
                         </h1>
                         <p className="text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
-                            Une organisation pyramidale inversée, où la base décisionnelle est large et l'exécution ciblée, garantissant un impact réel sur le terrain.
+                            {t('organization.plat_desc')}
                         </p>
                     </motion.div>
                 </div>
@@ -160,13 +162,13 @@ export default function Organization() {
                                         <Share2 size={32} />
                                     </div>
                                     <div className="text-center md:text-left">
-                                        <h3 className="text-3xl font-bold text-gray-900">Plateformes Régionales</h3>
-                                        <p className="text-orange-600 font-bold uppercase text-xs tracking-wider mt-1">Ancrage Territorial</p>
+                                        <h3 className="text-3xl font-bold text-gray-900">{t('organization.plat_label')}</h3>
+                                        <p className="text-orange-600 font-bold uppercase text-xs tracking-wider mt-1">{t('organization.plat_role')}</p>
                                     </div>
                                 </div>
 
                                 <p className="text-gray-600 text-lg mb-10 leading-relaxed text-center md:text-left max-w-3xl mx-auto md:mx-0">
-                                    Le CCEABT est organisé en plateformes régionales autonomes qui coordonnent les activités des OSC membres dans leur zone respective. Sélectionnez une région sur la carte pour voir les détails.
+                                    {t('organization.plat_map_desc')}
                                 </p>
 
                                 <div className="grid lg:grid-cols-2 gap-12">
@@ -186,7 +188,7 @@ export default function Organization() {
                                                 >
                                                     <div className="space-y-4">
                                                         <h4 className="text-xs font-bold uppercase tracking-widest text-gray-500">
-                                                            PLATEFORME RÉGIONALE
+                                                            {t('togo_map.platform_reg')}
                                                         </h4>
                                                         <h3 className="text-4xl font-black text-gray-900 uppercase">
                                                             {hoveredPlatform.label}
@@ -212,9 +214,9 @@ export default function Organization() {
                                                                 <MapPin size={24} />
                                                             </div>
                                                             <div>
-                                                                <h4 className="font-bold text-xl text-blue-900 mb-2">Couverture Nationale</h4>
+                                                                <h4 className="font-bold text-xl text-blue-900 mb-2">{t('togo_map.nat_coverage_title')}</h4>
                                                                 <p className="text-blue-800/80 leading-relaxed">
-                                                                    Présence active dans les 5 régions économiques du Togo ainsi que le Grand Lomé.
+                                                                    {t('togo_map.nat_coverage_desc')}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -226,9 +228,9 @@ export default function Organization() {
                                                                 <Users size={24} />
                                                             </div>
                                                             <div>
-                                                                <h4 className="font-bold text-xl text-green-900 mb-2">Coordination Locale</h4>
+                                                                <h4 className="font-bold text-xl text-green-900 mb-2">{t('togo_map.loc_coord_title')}</h4>
                                                                 <p className="text-green-800/80 leading-relaxed">
-                                                                    Chaque plateforme dispose d'un bureau exécutif régional élu par les membres locaux.
+                                                                    {t('togo_map.loc_coord_desc')}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -251,12 +253,12 @@ export default function Organization() {
             {/* CTA Final */}
             <section className="py-24 mt-20 bg-slate-900 text-white text-center">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-4xl font-bold mb-8">Envie de rejoindre cette dynamique ?</h2>
+                    <h2 className="text-4xl font-bold mb-8">{t('organization.cta_rejoin')}</h2>
                     <button
                         onClick={() => navigate('/join')}
                         className="inline-flex items-center gap-2 bg-blue-600 px-10 py-4 rounded-full font-bold hover:bg-blue-500 transition-all hover:scale-105 shadow-lg shadow-blue-600/30"
                     >
-                        Devenir membre
+                        {t('organization.cta_btn')}
                         <ArrowRight size={20} />
                     </button>
                 </div>

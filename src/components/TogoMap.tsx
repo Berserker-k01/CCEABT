@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const LabelArea = ({ x, y, width, height, isActive, onMouseEnter, onMouseLeave }: any) => {
     return (
@@ -23,14 +24,15 @@ const LabelArea = ({ x, y, width, height, isActive, onMouseEnter, onMouseLeave }
 };
 
 export default function TogoMap({ onHover }: { onHover: (region: any) => void }) {
+    const { t } = useTranslation();
     const [activeRegion, setActiveRegion] = useState<string | null>(null);
 
     const regions = [
         {
             id: 'savanes',
-            label: 'SAVANES',
+            label: t('togo_map.label_savanes'),
             org: 'ONG CDD',
-            description: "Coordination régionale des activités dans les Savanes.",
+            description: t('togo_map.savanes_desc'),
             bgClass: 'bg-orange-50',
             borderClass: 'border-orange-100',
             accentClass: 'text-orange-600',
@@ -38,9 +40,9 @@ export default function TogoMap({ onHover }: { onHover: (region: any) => void })
         },
         {
             id: 'kara',
-            label: 'KARA',
+            label: t('togo_map.label_kara'),
             org: 'ONG AJT',
-            description: "L'ONG AJT assure la coordination dans la région de la Kara.",
+            description: t('togo_map.kara_desc'),
             bgClass: 'bg-blue-50',
             borderClass: 'border-blue-100',
             accentClass: 'text-blue-600',
@@ -48,9 +50,9 @@ export default function TogoMap({ onHover }: { onHover: (region: any) => void })
         },
         {
             id: 'centrale',
-            label: 'CENTRALE',
+            label: t('togo_map.label_centrale'),
             org: 'ONG ADESCO',
-            description: "Gestion des projets pour la région Centrale.",
+            description: t('togo_map.centrale_desc'),
             bgClass: 'bg-emerald-50',
             borderClass: 'border-emerald-100',
             accentClass: 'text-emerald-600',
@@ -58,9 +60,9 @@ export default function TogoMap({ onHover }: { onHover: (region: any) => void })
         },
         {
             id: 'plateaux',
-            label: 'PLATEAUX',
+            label: t('togo_map.label_plateaux'),
             org: 'ONG ODIAE',
-            description: "Supervision des initiatives dans les Plateaux.",
+            description: t('togo_map.plateaux_desc'),
             bgClass: 'bg-blue-50',
             borderClass: 'border-blue-100',
             accentClass: 'text-blue-600',
@@ -68,9 +70,9 @@ export default function TogoMap({ onHover }: { onHover: (region: any) => void })
         },
         {
             id: 'maritime',
-            label: 'MARITIME',
+            label: t('togo_map.label_maritime'),
             org: 'ONG FIADI',
-            description: "Action et suivi dans la région Maritime.",
+            description: t('togo_map.maritime_desc'),
             bgClass: 'bg-indigo-50',
             borderClass: 'border-indigo-100',
             accentClass: 'text-indigo-600',
@@ -78,15 +80,16 @@ export default function TogoMap({ onHover }: { onHover: (region: any) => void })
         },
         {
             id: 'lome',
-            label: 'Grand LOME',
+            label: t('togo_map.label_lome'),
             org: 'ONG La CDE',
-            description: "Développement urbain et social dans la zone du Grand Lomé.",
+            description: t('togo_map.lome_desc'),
             bgClass: 'bg-blue-50',
             borderClass: 'border-blue-100',
             accentClass: 'text-blue-600',
             x: 182, y: 360, width: 78, height: 35
         }
     ];
+
 
     const handleMouseEnter = (region: any) => {
         setActiveRegion(region.id);

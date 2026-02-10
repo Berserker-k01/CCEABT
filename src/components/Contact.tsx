@@ -1,7 +1,9 @@
 import { Mail, MapPin, Phone, Facebook, Linkedin, Send } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function Contact() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -11,7 +13,7 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.');
+    alert(t('forms.success_alert'));
     setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
@@ -26,15 +28,15 @@ export default function Contact() {
     <section id="contact" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-cceabt-blue mb-4">Contactez-nous</h2>
+          <h2 className="text-4xl font-bold text-cceabt-blue mb-4">{t('contact_page.hero_title')}</h2>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-            Une question, une suggestion ou un partenariat ? N'hésitez pas à nous contacter.
+            {t('contact_page.hero_desc')}
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
-            <h3 className="text-2xl font-bold text-cceabt-blue mb-6">Nos coordonnées</h3>
+            <h3 className="text-2xl font-bold text-cceabt-blue mb-6">{t('contact_page.contact_info')}</h3>
 
             <div className="space-y-6 mb-8">
               <div className="flex items-start space-x-4">
@@ -42,8 +44,8 @@ export default function Contact() {
                   <MapPin size={24} className="text-cceabt-blue" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-cceabt-blue mb-1">Adresse</h4>
-                  <p className="text-gray-600">Lomé, Togo</p>
+                  <h4 className="font-semibold text-cceabt-blue mb-1">{t('contact_page.address_label')}</h4>
+                  <p className="text-gray-600">{t('contact_page.address_short')}</p>
                 </div>
               </div>
 
@@ -52,7 +54,7 @@ export default function Contact() {
                   <Mail size={24} className="text-cceabt-blue" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-cceabt-blue mb-1">Email</h4>
+                  <h4 className="font-semibold text-cceabt-blue mb-1">{t('contact_page.email_label')}</h4>
                   <a href="mailto:contact@cceabt.tg" className="text-gray-600 hover:text-cceabt-blue">
                     contact@cceabt.tg
                   </a>
@@ -64,14 +66,14 @@ export default function Contact() {
                   <Phone size={24} className="text-cceabt-blue" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-cceabt-blue mb-1">Téléphone</h4>
-                  <p className="text-gray-600">+228 XX XX XX XX</p>
+                  <h4 className="font-semibold text-cceabt-blue mb-1">{t('contact_page.phone_label')}</h4>
+                  <p className="text-gray-600">+228 91 35 93 98</p>
                 </div>
               </div>
             </div>
 
             <div>
-              <h4 className="font-semibold text-cceabt-blue mb-4">Suivez-nous</h4>
+              <h4 className="font-semibold text-cceabt-blue mb-4">{t('contact_page.follow_us')}</h4>
               <div className="flex space-x-4">
                 <a
                   href="https://facebook.com"
@@ -102,7 +104,7 @@ export default function Contact() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Carte de Lomé"
+                  title={t('contact_page.map_title')}
                 ></iframe>
               </div>
             </div>
@@ -110,12 +112,12 @@ export default function Contact() {
 
           <div>
             <form onSubmit={handleSubmit} className="bg-gray-50 p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold text-cceabt-blue mb-6">Envoyez-nous un message</h3>
+              <h3 className="text-2xl font-bold text-cceabt-blue mb-6">{t('contact_page.send_message')}</h3>
 
               <div className="space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Nom complet
+                    {t('forms.full_name')}
                   </label>
                   <input
                     type="text"
@@ -125,13 +127,13 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-cceabt-blue focus:border-transparent outline-none transition-all duration-200"
-                    placeholder="Votre nom"
+                    placeholder={t('forms.full_name')}
                   />
                 </div>
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                    {t('forms.email')}
                   </label>
                   <input
                     type="email"
@@ -147,7 +149,7 @@ export default function Contact() {
 
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                    Sujet
+                    {t('forms.subject')}
                   </label>
                   <input
                     type="text"
@@ -157,13 +159,13 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-cceabt-blue focus:border-transparent outline-none transition-all duration-200"
-                    placeholder="Sujet de votre message"
+                    placeholder={t('forms.subject')}
                   />
                 </div>
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Message
+                    {t('forms.message')}
                   </label>
                   <textarea
                     id="message"
@@ -173,7 +175,7 @@ export default function Contact() {
                     required
                     rows={6}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-cceabt-blue focus:border-transparent outline-none transition-all duration-200 resize-none"
-                    placeholder="Votre message..."
+                    placeholder={t('forms.message_placeholder')}
                   ></textarea>
                 </div>
 
@@ -181,7 +183,7 @@ export default function Contact() {
                   type="submit"
                   className="w-full bg-cceabt-green hover:bg-cceabt-green/90 text-white font-semibold px-6 py-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
                 >
-                  <span>Envoyer le message</span>
+                  <span>{t('forms.submit_contact')}</span>
                   <Send size={20} />
                 </button>
               </div>
@@ -190,5 +192,7 @@ export default function Contact() {
         </div>
       </div>
     </section>
+  );
+}
   );
 }

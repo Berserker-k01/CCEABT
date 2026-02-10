@@ -188,7 +188,7 @@ export default function News() {
                   Immersion
                 </span>
                 <h3 className="text-3xl font-bold text-white mb-2 leading-tight">
-                  Retour en images sur nos actions terrain
+                  {t('news_page.gallery_hero_title') || "Retour en images sur nos actions terrain"}
                 </h3>
               </div>
             </div>
@@ -199,17 +199,17 @@ export default function News() {
 
               <Image className="text-blue-500 mb-6" size={48} />
               <h3 className="text-2xl font-bold text-white mb-4">
-                {t('news_page.gallery_title') || "Notre Médiathèque"}
+                {t('news_page.gallery_title')}
               </h3>
               <p className="text-slate-400 mb-8 leading-relaxed">
-                {t('news_page.gallery_subtitle') || "Découvrez l'ensemble de nos reportages photos, événements et conférences dans notre nouvelle galerie interactive."}
+                {t('news_page.gallery_subtitle')}
               </p>
 
               <button
                 onClick={() => navigate('/gallery')}
                 className="w-full bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-600/20 transition-all flex items-center justify-center gap-3 group"
               >
-                <span>Accéder à la galerie</span>
+                <span>{t('news_page.gallery_btn')}</span>
                 <div className="bg-white/20 p-1 rounded group-hover:bg-white/30 transition-colors">
                   <Image size={16} />
                 </div>

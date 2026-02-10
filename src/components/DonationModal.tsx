@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { X, Smartphone, CreditCard } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface DonationModalProps {
     onClose: () => void;
@@ -9,6 +10,7 @@ interface DonationModalProps {
 type PaymentMethod = 'mixx' | 'flooz';
 
 export default function DonationModal({ onClose }: DonationModalProps) {
+    const { t } = useTranslation();
     const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
 
     return (
@@ -39,9 +41,9 @@ export default function DonationModal({ onClose }: DonationModalProps) {
                         >
                             <X size={24} />
                         </button>
-                        <h2 className="text-2xl font-bold mb-2">Faire un don</h2>
+                        <h2 className="text-2xl font-bold mb-2">{t('donation_modal.title')}</h2>
                         <p className="text-blue-100 max-w-sm mx-auto text-sm">
-                            Choisissez votre mode de paiement sécurisé
+                            {t('donation_modal.subtitle')}
                         </p>
                     </div>
 
@@ -49,7 +51,7 @@ export default function DonationModal({ onClose }: DonationModalProps) {
                     <div className="p-8">
                         {/* Step 1: Select Payment Method */}
                         <div className="mb-8">
-                            <label className="block text-gray-700 font-bold mb-4 text-lg">Choisissez un moyen de paiement :</label>
+                            <label className="block text-gray-700 font-bold mb-4 text-lg">{t('donation_modal.choose_method')}</label>
                             <div className="grid grid-cols-2 gap-4">
                                 <button
                                     onClick={() => setSelectedMethod('mixx')}
@@ -84,7 +86,7 @@ export default function DonationModal({ onClose }: DonationModalProps) {
                             {!selectedMethod ? (
                                 <div className="text-center text-gray-500 py-4">
                                     <CreditCard className="mx-auto mb-3 opacity-30" size={48} />
-                                    <p>Veuillez sélectionner une option ci-dessus pour continuer.</p>
+                                    <p>{t('donation_modal.select_prompt')}</p>
                                 </div>
                             ) : (
                                 // FORMULAIRE MOBILE MONEY (Affichage des numéros)
@@ -102,15 +104,15 @@ export default function DonationModal({ onClose }: DonationModalProps) {
                                             </p>
                                         </div>
                                         <p className="text-sm text-gray-500 mt-6 leading-relaxed">
-                                            Veuillez effectuer votre transfert vers ce numéro. <br />
-                                            Merci pour votre générosité !
+                                            {t('donation_modal.instruction')} <br />
+                                            {t('donation_modal.thanks')}
                                         </p>
                                     </div>
                                     <button
                                         onClick={onClose}
                                         className="w-full py-4 rounded-xl font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors"
                                     >
-                                        Fermer
+                                        {t('donation_modal.close')}
                                     </button>
                                 </div>
                             )}
@@ -119,5 +121,7 @@ export default function DonationModal({ onClose }: DonationModalProps) {
                 </motion.div>
             </div>
         </div>
+    );
+}
     );
 }

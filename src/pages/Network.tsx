@@ -121,14 +121,14 @@ export default function Network() {
               <div className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-blue-50 border-2 border-blue-200">
                 <Award className="text-blue-600" size={24} />
                 <div>
-                  <div className="text-sm text-gray-600 font-medium">Membres du Conseil d'Administration</div>
+                  <div className="text-sm text-gray-600 font-medium">{t('network.ca_title')}</div>
                   <div className="text-2xl font-bold text-blue-700">{caCount}</div>
                 </div>
               </div>
               <div className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-yellow-50 border-2 border-yellow-200">
                 <TrendingUp className="text-yellow-600" size={24} />
                 <div>
-                  <div className="text-sm text-gray-600 font-medium">Partenaires Techniques et Financiers</div>
+                  <div className="text-sm text-gray-600 font-medium">{t('network.ptf_title')}</div>
                   <div className="text-2xl font-bold text-yellow-700">{ptfCount}</div>
                 </div>
               </div>
@@ -164,8 +164,8 @@ export default function Network() {
 
                     const statusData = groupedPartners[status];
                     const statusLabel = status === 'CA'
-                      ? "Membres du Conseil d'Administration"
-                      : "Partenaires Techniques et Financiers (PTF)";
+                      ? t('network.ca_title')
+                      : t('network.ptf_title');
                     const StatusIcon = status === 'CA' ? Award : TrendingUp;
                     const statusStyles = {
                       'CA': {
@@ -193,7 +193,7 @@ export default function Network() {
                           <div>
                             <h3 className={`text-2xl font-bold ${styles.title}`}>{statusLabel}</h3>
                             <p className="text-sm text-gray-500">
-                              {statusData.length} organisation{statusData.length > 1 ? 's' : ''}
+                              {statusData.length} {t('network.org_count')}{statusData.length > 1 ? 's' : ''}
                             </p>
                           </div>
                         </div>
@@ -292,7 +292,7 @@ export default function Network() {
                     onClick={() => navigate('/partners')}
                     className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-green-600 text-white px-10 py-4 rounded-full font-bold hover:from-blue-700 hover:to-green-700 transition-all duration-300 shadow-xl hover:scale-105"
                   >
-                    <span>Voir tous les partenaires</span>
+                    <span>{t('network.view_all')}</span>
                     <ExternalLink size={20} className="group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>
@@ -396,7 +396,7 @@ export default function Network() {
 
                     {selectedPartner.projects && (
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3 border-l-4 border-orange-500 pl-3">Projets Réalisés</h3>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 border-l-4 border-orange-500 pl-3">{t('network.projects_realized')}</h3>
                         <ul className="space-y-3">
                           {selectedPartner.projects.map((proj, i) => (
                             <li key={i} className="flex gap-3 text-gray-600 text-sm">

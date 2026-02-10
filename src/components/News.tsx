@@ -1,6 +1,8 @@
 import { Calendar, ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function News() {
+  const { t } = useTranslation();
   const articles = [
     {
       id: 1,
@@ -8,7 +10,7 @@ export default function News() {
       excerpt: 'Le CCEABT lance une initiative ambitieuse pour améliorer l\'accès à l\'eau potable dans 50 villages du Togo.',
       date: '15 Mars 2025',
       image: 'https://images.pexels.com/photos/1102915/pexels-photo-1102915.jpeg?auto=compress&cs=tinysrgb&w=800',
-      category: 'Projets',
+      category: t('home.news_cat_projets'),
     },
     {
       id: 2,
@@ -16,7 +18,7 @@ export default function News() {
       excerpt: 'Plus de 100 acteurs du secteur EHA réunis pour discuter des stratégies d\'assainissement durable.',
       date: '8 Mars 2025',
       image: 'https://images.pexels.com/photos/2041627/pexels-photo-2041627.jpeg?auto=compress&cs=tinysrgb&w=800',
-      category: 'Événements',
+      category: t('home.news_cat_evenements'),
     },
     {
       id: 3,
@@ -24,7 +26,7 @@ export default function News() {
       excerpt: 'Le CCEABT mobilise la société civile pour sensibiliser à l\'importance de préserver les ressources en eau.',
       date: '22 Février 2025',
       image: 'https://images.pexels.com/photos/1146708/pexels-photo-1146708.jpeg?auto=compress&cs=tinysrgb&w=800',
-      category: 'Actualités',
+      category: t('home.news_cat_actualites'),
     },
     {
       id: 4,
@@ -32,7 +34,7 @@ export default function News() {
       excerpt: 'Signature d\'un accord de financement pour renforcer les infrastructures d\'eau et d\'assainissement.',
       date: '10 Février 2025',
       image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800',
-      category: 'Partenariats',
+      category: t('home.news_cat_partenariats'),
     },
     {
       id: 5,
@@ -40,7 +42,7 @@ export default function News() {
       excerpt: 'Le CCEABT conclut avec succès un programme de renforcement des capacités dans cinq régions.',
       date: '28 Janvier 2025',
       image: 'https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=800',
-      category: 'Formations',
+      category: t('home.news_cat_formations'),
     },
     {
       id: 6,
@@ -48,7 +50,7 @@ export default function News() {
       excerpt: 'Découvrez les réalisations et impacts du réseau au cours de l\'année écoulée.',
       date: '15 Janvier 2025',
       image: 'https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=800',
-      category: 'Publications',
+      category: t('home.news_cat_publications'),
     },
   ];
 
@@ -56,9 +58,9 @@ export default function News() {
     <section id="news" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-cceabt-blue mb-4">Actualités</h2>
+          <h2 className="text-4xl font-bold text-cceabt-blue mb-4">{t('home.news_title')}</h2>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-            Restez informés de nos actions, événements et réalisations dans le secteur EHA.
+            {t('home.news_desc')}
           </p>
         </div>
 
@@ -92,7 +94,7 @@ export default function News() {
                   {article.excerpt}
                 </p>
                 <button className="flex items-center text-cceabt-blue font-semibold hover:text-cceabt-green transition-colors duration-200">
-                  Lire la suite
+                  {t('home.news_read_more')}
                   <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform duration-200" />
                 </button>
               </div>
@@ -102,7 +104,7 @@ export default function News() {
 
         <div className="text-center mt-12">
           <button className="bg-cceabt-blue hover:bg-cceabt-blue/90 text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-200">
-            Voir toutes les actualités
+            {t('home.news_view_all')}
           </button>
         </div>
       </div>

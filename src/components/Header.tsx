@@ -79,7 +79,7 @@ export default function Header() {
                 to="/about"
                 className="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm font-bold text-gray-500 transition-all duration-200 bg-gray-100 rounded-full hover:bg-gray-200 hover:text-gray-900 border border-gray-200"
               >
-                Quitter l'organigramme
+                {t('header.leave_org')}
               </Link>
             )}
 

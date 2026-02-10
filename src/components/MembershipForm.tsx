@@ -35,9 +35,9 @@ export default function MembershipForm({ onClose, isFullPage = false }: { onClos
     try {
       let typeLabel = '';
       switch (membershipType) {
-        case 'osc_national': typeLabel = 'OSC Nationale'; break;
-        case 'osc_international': typeLabel = 'OSC Internationale'; break;
-        case 'partner': typeLabel = 'Partenaire Institutionnel'; break;
+        case 'osc_national': typeLabel = t('forms.osc_national'); break;
+        case 'osc_international': typeLabel = t('forms.osc_international'); break;
+        case 'partner': typeLabel = t('forms.partner_institutional'); break;
       }
 
       const summary = `
