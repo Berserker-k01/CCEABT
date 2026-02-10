@@ -42,6 +42,7 @@ const OrgCard = ({ icon: Icon, title, role, color, description, customContent }:
 export default function Organization() {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('ag');
+    const [hoveredPlatform, setHoveredPlatform] = useState<any>(null);
 
     const tabs = [
         {
@@ -170,37 +171,71 @@ export default function Organization() {
 
                                 <div className="grid lg:grid-cols-2 gap-12">
                                     <div className="bg-slate-50 rounded-3xl p-6 border border-slate-100 shadow-inner">
-                                        <TogoMap />
+                                        <TogoMap onHover={setHoveredPlatform} />
                                     </div>
 
-                                    <div className="flex flex-col justify-center space-y-8">
-                                        <div className="bg-blue-50 p-8 rounded-3xl border border-blue-100 transition-all hover:shadow-md">
-                                            <div className="flex items-start gap-4">
-                                                <div className="bg-blue-100 p-3 rounded-xl text-blue-600">
-                                                    <MapPin size={24} />
-                                                </div>
-                                                <div>
-                                                    <h4 className="font-bold text-xl text-blue-900 mb-2">Couverture Nationale</h4>
-                                                    <p className="text-blue-800/80 leading-relaxed">
-                                                        Présence active dans les 5 régions économiques du Togo ainsi que le Grand Lomé.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div className="flex flex-col justify-center space-y-8 min-h-[400px]">
+                                        <AnimatePresence mode="wait">
+                                            {hoveredPlatform ? (
+                                                <motion.div
+                                                    key={hoveredPlatform.id}
+                                                    initial={{ opacity: 0, x: 20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    exit={{ opacity: 0, x: -20 }}
+                                                    className={`${hoveredPlatform.bgClass} p-8 rounded-3xl border ${hoveredPlatform.borderClass} shadow-sm`}
+                                                >
+                                                    <div className="space-y-4">
+                                                        <h4 className="text-xs font-bold uppercase tracking-widest text-gray-500">
+                                                            PLATEFORME RÉGIONALE
+                                                        </h4>
+                                                        <h3 className="text-4xl font-black text-gray-900 uppercase">
+                                                            {hoveredPlatform.label}
+                                                        </h3>
+                                                        <div className={`text-xl font-bold ${hoveredPlatform.accentClass}`}>
+                                                            {hoveredPlatform.org}
+                                                        </div>
+                                                        <p className="text-gray-600 leading-relaxed text-lg pt-4 border-t border-gray-200/50">
+                                                            {hoveredPlatform.description}
+                                                        </p>
+                                                    </div>
+                                                </motion.div>
+                                            ) : (
+                                                <motion.div
+                                                    key="default-cards"
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1 }}
+                                                    className="space-y-8"
+                                                >
+                                                    <div className="bg-blue-50 p-8 rounded-3xl border border-blue-100 transition-all hover:shadow-md">
+                                                        <div className="flex items-start gap-4">
+                                                            <div className="bg-blue-100 p-3 rounded-xl text-blue-600">
+                                                                <MapPin size={24} />
+                                                            </div>
+                                                            <div>
+                                                                <h4 className="font-bold text-xl text-blue-900 mb-2">Couverture Nationale</h4>
+                                                                <p className="text-blue-800/80 leading-relaxed">
+                                                                    Présence active dans les 5 régions économiques du Togo ainsi que le Grand Lomé.
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                        <div className="bg-green-50 p-8 rounded-3xl border border-green-100 transition-all hover:shadow-md">
-                                            <div className="flex items-start gap-4">
-                                                <div className="bg-green-100 p-3 rounded-xl text-green-600">
-                                                    <Users size={24} />
-                                                </div>
-                                                <div>
-                                                    <h4 className="font-bold text-xl text-green-900 mb-2">Coordination Locale</h4>
-                                                    <p className="text-green-800/80 leading-relaxed">
-                                                        Chaque plateforme dispose d'un bureau exécutif régional élu par les membres locaux.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                    <div className="bg-green-50 p-8 rounded-3xl border border-green-100 transition-all hover:shadow-md">
+                                                        <div className="flex items-start gap-4">
+                                                            <div className="bg-green-100 p-3 rounded-xl text-green-600">
+                                                                <Users size={24} />
+                                                            </div>
+                                                            <div>
+                                                                <h4 className="font-bold text-xl text-green-900 mb-2">Coordination Locale</h4>
+                                                                <p className="text-green-800/80 leading-relaxed">
+                                                                    Chaque plateforme dispose d'un bureau exécutif régional élu par les membres locaux.
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
                                     </div>
                                 </div>
                             </div>
