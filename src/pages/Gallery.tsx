@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Maximize2, X, ChevronRight, Share2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Type pour une image de galerie
 type GalleryItem = {
     id: number;
     src: string;
-    title: string;
+    titleKey: string;
     category: 'event' | 'field' | 'conference' | 'portrait';
     date: string;
     size: 'small' | 'medium' | 'large' | 'tall' | 'wide';
@@ -15,29 +16,30 @@ type GalleryItem = {
 };
 
 const galleryData: GalleryItem[] = [
-    { id: 1, src: '/images/1.jpg', title: 'Mission Savanes', category: 'field', date: 'Mars 2024', size: 'large', color: 'bg-blue-600' },
-    { id: 2, src: '/images/2.jpg', title: 'Conférence EHA', category: 'conference', date: 'Fév 2024', size: 'medium', color: 'bg-green-600' },
-    { id: 3, src: '/images/3.jpg', title: 'Formation', category: 'event', date: 'Jan 2024', size: 'small', color: 'bg-purple-600' },
-    { id: 4, src: '/images/4.jpg', title: 'Accès Eau', category: 'field', date: 'Déc 2023', size: 'wide', color: 'bg-orange-500' },
-    { id: 5, src: '/images/DSC08851.jpeg', title: 'Assemblée Générale', category: 'event', date: 'Nov 2023', size: 'tall', color: 'bg-red-500' },
-    { id: 6, src: '/images/back cceabt.jpeg', title: 'Equipe CCEABT', category: 'portrait', date: 'Oct 2023', size: 'medium', color: 'bg-teal-600' },
-    { id: 7, src: '/images/cceabt_cover.jpg', title: 'Partenariat', category: 'conference', date: 'Sept 2023', size: 'small', color: 'bg-indigo-600' },
-    { id: 8, src: '/images/eau.jpeg', title: 'Source Potable', category: 'field', date: 'Août 2023', size: 'large', color: 'bg-cyan-600' },
-    { id: 9, src: '/images/1.jpg', title: 'Sensibilisation', category: 'field', date: 'Juil 2023', size: 'tall', color: 'bg-pink-600' },
-    { id: 10, src: '/images/2.jpg', title: 'Rencontre', category: 'event', date: 'Juin 2023', size: 'medium', color: 'bg-lime-600' },
-];
-
-const categories = [
-    { id: 'all', label: 'Tout voir' },
-    { id: 'field', label: 'Terrain' },
-    { id: 'event', label: 'Événements' },
-    { id: 'conference', label: 'Conférences' },
+    { id: 1, src: '/images/1.jpg', titleKey: 'gallery_page.item_mission_savanes', category: 'field', date: 'Mars 2024', size: 'large', color: 'bg-blue-600' },
+    { id: 2, src: '/images/2.jpg', titleKey: 'gallery_page.item_conf_eha', category: 'conference', date: 'Fév 2024', size: 'medium', color: 'bg-green-600' },
+    { id: 3, src: '/images/3.jpg', titleKey: 'gallery_page.item_formation', category: 'event', date: 'Jan 2024', size: 'small', color: 'bg-purple-600' },
+    { id: 4, src: '/images/4.jpg', titleKey: 'gallery_page.item_acces_eau', category: 'field', date: 'Déc 2023', size: 'wide', color: 'bg-orange-500' },
+    { id: 5, src: '/images/DSC08851.jpeg', titleKey: 'gallery_page.item_ag', category: 'event', date: 'Nov 2023', size: 'tall', color: 'bg-red-500' },
+    { id: 6, src: '/images/back cceabt.jpeg', titleKey: 'gallery_page.item_equipe', category: 'portrait', date: 'Oct 2023', size: 'medium', color: 'bg-teal-600' },
+    { id: 7, src: '/images/cceabt_cover.jpg', titleKey: 'gallery_page.item_partenariat', category: 'conference', date: 'Sept 2023', size: 'small', color: 'bg-indigo-600' },
+    { id: 8, src: '/images/eau.jpeg', titleKey: 'gallery_page.item_source_potable', category: 'field', date: 'Août 2023', size: 'large', color: 'bg-cyan-600' },
+    { id: 9, src: '/images/1.jpg', titleKey: 'gallery_page.item_sensibilisation', category: 'field', date: 'Juil 2023', size: 'tall', color: 'bg-pink-600' },
+    { id: 10, src: '/images/2.jpg', titleKey: 'gallery_page.item_rencontre', category: 'event', date: 'Juin 2023', size: 'medium', color: 'bg-lime-600' },
 ];
 
 export default function Gallery() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [filter, setFilter] = useState('all');
     const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+
+    const categories = [
+        { id: 'all', label: t('gallery_page.cat_all') },
+        { id: 'field', label: t('gallery_page.cat_field') },
+        { id: 'event', label: t('gallery_page.cat_event') },
+        { id: 'conference', label: t('gallery_page.cat_conference') },
+    ];
 
     const filteredData = filter === 'all'
         ? galleryData
@@ -63,10 +65,10 @@ export default function Gallery() {
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
                         <button onClick={() => navigate(-1)} className="text-slate-400 hover:text-white mb-2 flex items-center gap-2 transition-colors">
-                            <ChevronRight className="rotate-180" size={20} /> Retour
+                            <ChevronRight className="rotate-180" size={20} /> {t('gallery_page.back_btn')}
                         </button>
                         <h1 className="text-5xl md:text-6xl font-light tracking-tight">
-                            Médiathèque <span className="font-bold text-blue-500">CCEABT</span>
+                            {t('gallery_page.hero_title')} <span className="font-bold text-blue-500">{t('gallery_page.hero_subtitle')}</span>
                         </h1>
                     </div>
 
@@ -107,7 +109,7 @@ export default function Gallery() {
                         >
                             <img
                                 src={item.src}
-                                alt={item.title}
+                                alt={t(item.titleKey)}
                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 loading="lazy"
                             />
@@ -116,9 +118,9 @@ export default function Gallery() {
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
                                 <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                                     <span className="inline-block px-2 py-1 bg-white/20 backdrop-blur-md text-xs font-bold uppercase tracking-wider mb-1">
-                                        {item.category}
+                                        {t(`gallery_page.cat_${item.category}`)}
                                     </span>
-                                    <h3 className="font-semibold text-lg leading-tight">{item.title}</h3>
+                                    <h3 className="font-semibold text-lg leading-tight">{t(item.titleKey)}</h3>
                                     <p className="text-slate-300 text-xs mt-1">{item.date}</p>
                                 </div>
                             </div>
@@ -135,7 +137,7 @@ export default function Gallery() {
                     {/* Tuile "Dossier Complet" Statique */}
                     <div className="col-span-1 row-span-1 bg-blue-600 p-4 flex flex-col justify-center items-center text-center cursor-pointer hover:bg-blue-500 transition-colors">
                         <Share2 size={32} className="mb-2" />
-                        <span className="font-bold text-sm">Voir le Drive</span>
+                        <span className="font-bold text-sm">{t('gallery_page.drive_btn')}</span>
                     </div>
 
                 </motion.div>
@@ -167,13 +169,13 @@ export default function Gallery() {
                         >
                             <img
                                 src={selectedImage.src}
-                                alt={selectedImage.title}
+                                alt={t(selectedImage.titleKey)}
                                 className="max-w-full max-h-[85vh] object-contain shadow-2xl border-4 border-slate-800"
                             />
                             <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-md p-6 text-white translate-y-full md:translate-y-0">
-                                <h2 className="text-2xl font-bold">{selectedImage.title}</h2>
+                                <h2 className="text-2xl font-bold">{t(selectedImage.titleKey)}</h2>
                                 <div className="flex items-center gap-4 text-sm text-slate-300 mt-1">
-                                    <span className="uppercase tracking-wider font-semibold text-blue-400">{selectedImage.category}</span>
+                                    <span className="uppercase tracking-wider font-semibold text-blue-400">{t(`gallery_page.cat_${selectedImage.category}`)}</span>
                                     <span>•</span>
                                     <span>{selectedImage.date}</span>
                                 </div>

@@ -73,9 +73,9 @@ export default function Actions() {
     <section id="actions" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-cceabt-blue mb-4">Nos Actions</h2>
+          <h2 className="text-4xl font-bold text-cceabt-blue mb-4">{t('home.actions_comp_title')}</h2>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-            Découvrez nos projets et initiatives pour améliorer l'accès à l'eau, l'hygiène et l'assainissement au Togo.
+            {t('home.actions_comp_desc')}
           </p>
         </div>
 
@@ -85,8 +85,8 @@ export default function Actions() {
               key={category.id}
               onClick={() => setActiveFilter(category.id)}
               className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all duration-200 ${activeFilter === category.id
-                  ? 'bg-cceabt-blue text-white shadow-lg'
-                  : 'bg-white text-cceabt-blue hover:bg-gray-100'
+                ? 'bg-cceabt-blue text-white shadow-lg'
+                : 'bg-white text-cceabt-blue hover:bg-gray-100'
                 }`}
             >
               {category.icon && <category.icon size={20} />}

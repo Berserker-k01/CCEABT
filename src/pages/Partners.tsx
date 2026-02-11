@@ -2,7 +2,7 @@ import { ExternalLink, Handshake, Globe, Users, Building2, ShieldCheck } from 'l
 import { useTranslation } from 'react-i18next';
 import { useData } from '../context/DataContext';
 import { getPartnerStatus } from '../utils/partnerStatus';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function Partners() {
   const { t } = useTranslation();
@@ -12,15 +12,14 @@ export default function Partners() {
   const isPTF = (name: string) => getPartnerStatus(name) === 'PTF';
 
   const internationalMembers = partners
-    .filter(p => p.type === 'International' && !isPTF(p.name));
+    .filter(p => p.type === 'International');
   const nationalMembers = partners
-    .filter(p => p.type === 'National' && !isPTF(p.name))
-    .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
+    .filter(p => p.type === 'National');
   const institutionalPartners = partners
-    .filter(p => p.type === 'Institutionnel' && !isPTF(p.name));
-  // Filtrer uniquement les 13 PTF de la liste définitive
+    .filter(p => p.type === 'Institutionnel');
+  // Filtrer les PTF, mais EXCLURE ceux qui sont déjà dans International pour éviter les doublons demandés
   const techFinPartners = partners
-    .filter(p => isPTF(p.name));
+    .filter(p => isPTF(p.name) && p.type !== 'International');
 
   const getTranslatedType = (type: string) => {
     switch (type) {
@@ -35,90 +34,7 @@ export default function Partners() {
 
   // --- Premium Components ---
 
-  // 1. Infinite Moving Marquee (Social Proof)
-  const LogoMarquee = ({ logos }: { logos: string[] }) => {
-    // Duplicate logos to ensure seamless loop
-    const displayLogos = [...logos, ...logos, ...logos, ...logos];
 
-    return (
-      <div className="relative w-full overflow-hidden bg-white/50 backdrop-blur-sm border-y border-gray-100 py-10 z-20">
-        <div className="flex animate-marquee whitespace-nowrap items-center">
-          {displayLogos.map((logo, i) => (
-            <div key={i} className="inline-block mx-12 grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100">
-              <img src={logo} alt="Partner" className="h-12 w-auto object-contain pointer-events-none" />
-            </div>
-          ))}
-        </div>
-        {/* Gradients for fading edges */}
-        <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-gray-50 to-transparent z-10"></div>
-        <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-gray-50 to-transparent z-10"></div>
-      </div>
-    );
-  };
-
-  // 2. Partner Spotlight (Immersive Focus)
-  const PartnerSpotlight = ({ partners }: { partners: any[] }) => {
-    const [index, setIndex] = useState(0);
-    const partner = partners[index % partners.length];
-
-    useEffect(() => {
-      if (partners.length === 0) return;
-      const timer = setInterval(() => setIndex(i => i + 1), 6000);
-      return () => clearInterval(timer);
-    }, [partners.length]);
-
-    if (!partner) return null;
-
-    return (
-      <div className="relative w-full max-w-6xl mx-auto mb-32 group">
-        {/* Dynamic Atmospheric Background */}
-        <div className="absolute -inset-4 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-green-600/20 rounded-[3rem] blur-3xl opacity-50 transition-all duration-1000 group-hover:opacity-75"></div>
-
-        <div className="relative overflow-hidden bg-white/80 backdrop-blur-2xl rounded-[2.5rem] border border-white shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] flex flex-col lg:flex-row min-h-[500px]">
-          {/* Visual Showcase Side */}
-          <div className="relative w-full lg:w-1/2 bg-gray-50/50 flex items-center justify-center p-12 overflow-hidden">
-            <div className="absolute inset-0 opacity-10 blur-2xl scale-150 transition-all duration-1000">
-              <img src={partner.logo} alt="" className="w-full h-full object-contain" />
-            </div>
-            <div className="relative z-10 transform transition-all duration-700 group-hover:scale-110">
-              <img src={partner.logo} alt={partner.name} className="max-w-[280px] max-h-[160px] object-contain drop-shadow-2xl" />
-            </div>
-          </div>
-
-          {/* Content Side */}
-          <div className="w-full lg:w-1/2 p-12 lg:p-16 flex flex-col justify-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-6">
-              <div className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-ping"></div>
-              {t('network.hero_title')}
-            </div>
-
-            <h2 className="text-4xl lg:text-5xl font-black text-gray-900 mb-6 leading-tight transition-all duration-500">
-              {partner.name}
-            </h2>
-
-            <p className="text-xl text-gray-600 leading-relaxed mb-8 flex-grow">
-              {partner.description || t('partners_page.committed_desc')}
-            </p>
-
-            <div className="flex items-center gap-6 pt-8 border-t border-gray-100 mt-auto">
-              <div className="flex gap-2">
-                {[...Array(Math.min(partners.length, 5))].map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setIndex(i)}
-                    className={`h-2 rounded-full transition-all duration-500 ${i === index % partners.length ? 'w-10 bg-blue-600' : 'w-2 bg-gray-300 hover:bg-gray-400'}`}
-                  />
-                ))}
-              </div>
-              <span className="text-sm font-medium text-gray-400">
-                {String((index % partners.length) + 1).padStart(2, '0')} / {String(partners.length).padStart(2, '0')}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   const PartnerCard = ({ partner }: { partner: any }) => (
     <div className="group relative bg-white rounded-[2.5rem] p-8 border border-gray-100 hover:border-blue-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(59,130,246,0.1)] transition-all duration-700 h-full flex flex-col overflow-hidden">
@@ -181,7 +97,7 @@ export default function Partners() {
             </h2>
           </div>
           <div className="hidden md:block text-sm font-bold text-gray-400 uppercase tracking-widest">
-            {data.length} {t('header.network')}
+            {data.length} {t('partners_page.partners_found')}
           </div>
         </div>
 
@@ -202,8 +118,6 @@ export default function Partners() {
     );
   };
 
-  const allLogos = partners.filter(p => p.logo).map(p => p.logo as string);
-  const spotlightPartners = partners.filter(p => getPartnerStatus(p.name) === 'PTF').slice(0, 5);
 
   return (
     <div className="relative bg-white text-gray-900 min-h-screen selection:bg-blue-500/30">
@@ -277,10 +191,6 @@ export default function Partners() {
       {/* Main Content Area */}
       <section className="py-40">
         <div className="container mx-auto px-4">
-          {/* Spotlight Section - Wrapped in Reveal */}
-          <div className="reveal-view" style={{ animationDelay: '0.4s' }}>
-            <PartnerSpotlight partners={spotlightPartners} />
-          </div>
 
           <div className="max-w-7xl mx-auto mt-40">
             {/* National Members */}
@@ -320,7 +230,7 @@ export default function Partners() {
                 icon={ShieldCheck}
                 colorClass="bg-yellow-600"
                 data={techFinPartners}
-                isBento={true}
+                isBento={false}
               />
             </div>
           </div>

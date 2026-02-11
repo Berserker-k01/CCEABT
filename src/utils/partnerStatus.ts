@@ -36,7 +36,9 @@ export const PTF_MEMBERS = [
   'Agence de l\'eau Seine-Normandie',
   'Service Public de l\'eau',
   'Région Maritime',
-  'République Française'
+  'République Française',
+  'AHEAD-Africa',
+  'Croix-Rouge Togolaise'
 ];
 
 /**

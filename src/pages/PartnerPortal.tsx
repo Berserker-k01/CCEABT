@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
     LayoutDashboard,
-    MapPin,
     BarChart3,
     FileInput,
     Menu,
@@ -11,8 +10,6 @@ import {
     Globe,
     Send,
     Download,
-    Phone,
-    Mail,
     ChevronRight,
     Building2
 } from 'lucide-react';
@@ -21,197 +18,206 @@ import { useTranslation } from 'react-i18next';
 // --- Sub-components for Views ---
 
 // 1. Overview View
-const DashboardOverview = () => (
-    <div className="space-y-8 animate-fade-in">
-        <div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Vue d'ensemble</h2>
-            <p className="text-gray-500">Bienvenue sur le portail de pilotage du CCEABT.</p>
-        </div>
-
-        {/* KPI Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
-                <div className="p-3 bg-blue-100 text-blue-600 rounded-xl">
-                    <Users size={24} />
-                </div>
-                <div>
-                    <h3 className="text-sm font-medium text-gray-500">Membres Actifs</h3>
-                    <p className="text-2xl font-bold text-gray-900">60+</p>
-                </div>
-            </div>
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
-                <div className="p-3 bg-green-100 text-green-600 rounded-xl">
-                    <TrendingUp size={24} />
-                </div>
-                <div>
-                    <h3 className="text-sm font-medium text-gray-500">Taux Desserte Eau</h3>
-                    <p className="text-2xl font-bold text-gray-900">70.8%</p>
-                </div>
-            </div>
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
-                <div className="p-3 bg-purple-100 text-purple-600 rounded-xl">
-                    <Globe size={24} />
-                </div>
-                <div>
-                    <h3 className="text-sm font-medium text-gray-500">Régions Couvertes</h3>
-                    <p className="text-2xl font-bold text-gray-900">5/5</p>
-                </div>
-            </div>
-        </div>
-
-        {/* Recent Activity / Info */}
-        <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h3 className="font-bold text-gray-800 mb-4">Derniers Rapports Disponibles</h3>
-                <ul className="space-y-3">
-                    <li className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer group">
-                        <div className="flex items-center gap-3">
-                            <FileInput size={18} className="text-gray-400 group-hover:text-blue-500" />
-                            <span className="text-sm font-medium text-gray-700">Rapport Annuel 2023</span>
-                        </div>
-                        <Download size={16} className="text-gray-400 group-hover:text-blue-500" />
-                    </li>
-                    <li className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer group">
-                        <div className="flex items-center gap-3">
-                            <FileInput size={18} className="text-gray-400 group-hover:text-blue-500" />
-                            <span className="text-sm font-medium text-gray-700">Audit WASH T1 2024</span>
-                        </div>
-                        <Download size={16} className="text-gray-400 group-hover:text-blue-500" />
-                    </li>
-                </ul>
+const DashboardOverview = () => {
+    const { t } = useTranslation();
+    return (
+        <div className="space-y-8 animate-fade-in">
+            <div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">{t('portal.welcome_title')}</h2>
+                <p className="text-gray-500">{t('portal.welcome_subtitle')}</p>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-6 rounded-2xl text-white shadow-lg">
-                <h3 className="font-bold mb-2">Campagne de Collecte 2024</h3>
-                <p className="text-blue-100 text-sm mb-6">La campagne annuelle de remontée des indicateurs est ouverte jusqu'au 30 Juin.</p>
-                <button className="bg-white text-blue-700 px-4 py-2 rounded-lg text-sm font-bold shadow hover:bg-blue-50 transition-colors w-full">
-                    Soumettre mes données
-                </button>
+            {/* KPI Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
+                    <div className="p-3 bg-blue-100 text-blue-600 rounded-xl">
+                        <Users size={24} />
+                    </div>
+                    <div>
+                        <h3 className="text-sm font-medium text-gray-500">{t('portal.kpi_active_members')}</h3>
+                        <p className="text-2xl font-bold text-gray-900">60+</p>
+                    </div>
+                </div>
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
+                    <div className="p-3 bg-green-100 text-green-600 rounded-xl">
+                        <TrendingUp size={24} />
+                    </div>
+                    <div>
+                        <h3 className="text-sm font-medium text-gray-500">{t('portal.kpi_water_rate')}</h3>
+                        <p className="text-2xl font-bold text-gray-900">70.8%</p>
+                    </div>
+                </div>
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
+                    <div className="p-3 bg-purple-100 text-purple-600 rounded-xl">
+                        <Globe size={24} />
+                    </div>
+                    <div>
+                        <h3 className="text-sm font-medium text-gray-500">{t('portal.kpi_regions')}</h3>
+                        <p className="text-2xl font-bold text-gray-900">5/5</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Recent Activity / Info */}
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 className="font-bold text-gray-800 mb-4">{t('portal.latest_reports')}</h3>
+                    <ul className="space-y-3">
+                        <li className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer group">
+                            <div className="flex items-center gap-3">
+                                <FileInput size={18} className="text-gray-400 group-hover:text-blue-500" />
+                                <span className="text-sm font-medium text-gray-700">{t('portal.report_annual_2023')}</span>
+                            </div>
+                            <Download size={16} className="text-gray-400 group-hover:text-blue-500" />
+                        </li>
+                        <li className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer group">
+                            <div className="flex items-center gap-3">
+                                <FileInput size={18} className="text-gray-400 group-hover:text-blue-500" />
+                                <span className="text-sm font-medium text-gray-700">{t('portal.report_audit_2024')}</span>
+                            </div>
+                            <Download size={16} className="text-gray-400 group-hover:text-blue-500" />
+                        </li>
+                    </ul>
+                </div>
+
+                <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-6 rounded-2xl text-white shadow-lg">
+                    <h3 className="font-bold mb-2">{t('portal.campaign_2024_title')}</h3>
+                    <p className="text-blue-100 text-sm mb-6">{t('portal.campaign_2024_desc')}</p>
+                    <button className="bg-white text-blue-700 px-4 py-2 rounded-lg text-sm font-bold shadow hover:bg-blue-50 transition-colors w-full">
+                        {t('portal.submit_data')}
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 // 1. Overview View
-const StatsView = () => (
-    <div className="space-y-8 animate-fade-in">
-        <div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Statistiques Nationales</h2>
-            <p className="text-gray-500">État des lieux des indicateurs WASH par région.</p>
-        </div>
+const StatsView = () => {
+    const { t } = useTranslation();
+    return (
+        <div className="space-y-8 animate-fade-in">
+            <div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">{t('portal.stats_title')}</h2>
+                <p className="text-gray-500">{t('portal.stats_subtitle')}</p>
+            </div>
 
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-            <h3 className="font-bold text-gray-800 mb-6">Taux de Desserte en Eau Potable</h3>
-            <div className="space-y-6">
-                {[
-                    { label: 'Région Maritime', val: 65, color: 'bg-blue-500' },
-                    { label: 'Région des Plateaux', val: 58, color: 'bg-green-500' },
-                    { label: 'Région Centrale', val: 72, color: 'bg-purple-500' },
-                    { label: 'Région de la Kara', val: 80, color: 'bg-orange-500' },
-                    { label: 'Région des Savanes', val: 62, color: 'bg-red-500' },
-                ].map((item, idx) => (
-                    <div key={idx}>
-                        <div className="flex justify-between text-sm font-medium mb-2">
-                            <span className="text-gray-700">{item.label}</span>
-                            <span className="text-gray-900">{item.val}%</span>
+            <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <h3 className="font-bold text-gray-800 mb-6">{t('portal.water_desserte_title')}</h3>
+                <div className="space-y-6">
+                    {[
+                        { label: t('portal.region_maritime'), val: 65, color: 'bg-blue-500' },
+                        { label: t('portal.region_plateaux'), val: 58, color: 'bg-green-500' },
+                        { label: t('portal.region_centrale'), val: 72, color: 'bg-purple-500' },
+                        { label: t('portal.region_kara'), val: 80, color: 'bg-orange-500' },
+                        { label: t('portal.region_savanes'), val: 62, color: 'bg-red-500' },
+                    ].map((item, idx) => (
+                        <div key={idx}>
+                            <div className="flex justify-between text-sm font-medium mb-2">
+                                <span className="text-gray-700">{item.label}</span>
+                                <span className="text-gray-900">{item.val}%</span>
+                            </div>
+                            <div className="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
+                                <div
+                                    style={{ width: `${item.val}%` }}
+                                    className={`h-full ${item.color} transition-all duration-1000 ease-out`}
+                                />
+                            </div>
                         </div>
-                        <div className="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
-                            <div
-                                style={{ width: `${item.val}%` }}
-                                className={`h-full ${item.color} transition-all duration-1000 ease-out`}
-                            />
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
+                <p className="text-xs text-gray-400 mt-6 text-center italic">{t('portal.stats_source')}</p>
             </div>
-            <p className="text-xs text-gray-400 mt-6 text-center italic">Source : Données consolidées CCEABT & Ministères - 2024</p>
-        </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h3 className="font-bold text-gray-800 mb-4">Infrastructures Réalisées</h3>
-                <div className="flex items-center justify-center p-8">
-                    <div className="w-32 h-32 rounded-full border-8 border-blue-100 border-t-blue-600 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-gray-800">1,240</span>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 className="font-bold text-gray-800 mb-4">{t('portal.infra_realised')}</h3>
+                    <div className="flex items-center justify-center p-8">
+                        <div className="w-32 h-32 rounded-full border-8 border-blue-100 border-t-blue-600 flex items-center justify-center">
+                            <span className="text-2xl font-bold text-gray-800">1,240</span>
+                        </div>
                     </div>
+                    <p className="text-center text-sm text-gray-500">{t('portal.infra_desc')}</p>
                 </div>
-                <p className="text-center text-sm text-gray-500">Forages & Postes d'eau autonomes</p>
-            </div>
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h3 className="font-bold text-gray-800 mb-4">Populations Touchées</h3>
-                <div className="flex items-center justify-center p-8">
-                    <div className="w-32 h-32 rounded-full border-8 border-green-100 border-t-green-600 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-gray-800">2.5M</span>
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 className="font-bold text-gray-800 mb-4">{t('portal.pop_affected')}</h3>
+                    <div className="flex items-center justify-center p-8">
+                        <div className="w-32 h-32 rounded-full border-8 border-green-100 border-t-green-600 flex items-center justify-center">
+                            <span className="text-2xl font-bold text-gray-800">2.5M</span>
+                        </div>
                     </div>
+                    <p className="text-center text-sm text-gray-500">{t('portal.pop_desc')}</p>
                 </div>
-                <p className="text-center text-sm text-gray-500">Bénéficiaires directs</p>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 // 4. Collection View
-const CollectionView = () => (
-    <div className="space-y-6 animate-fade-in">
-        <div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Espace de Collecte</h2>
-            <p className="text-gray-500">Outils de remontée d'informations pour les membres.</p>
-        </div>
+const CollectionView = () => {
+    const { t } = useTranslation();
+    return (
+        <div className="space-y-6 animate-fade-in">
+            <div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">{t('portal.collection_title')}</h2>
+                <p className="text-gray-500">{t('portal.collection_subtitle')}</p>
+            </div>
 
-        <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-8">
-            <div className="flex-1">
-                <h3 className="text-xl font-bold text-blue-900 mb-3">Enquête Annuelle 2024</h3>
-                <p className="text-blue-800/80 mb-6 leading-relaxed">
-                    Afin de mettre à jour la base de données nationale et préparer le rapport annuel, nous vous invitons à renseigner vos activités de l'année écoulée.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                    <a
-                        href="https://forms.gle/u6kUQypDoLYRaUP27"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20"
-                    >
-                        Accéder au Formulaire <Send size={18} />
-                    </a>
+            <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-8">
+                <div className="flex-1">
+                    <h3 className="text-xl font-bold text-blue-900 mb-3">{t('portal.campaign_2024_title')}</h3>
+                    <p className="text-blue-800/80 mb-6 leading-relaxed">
+                        {t('portal.campaign_2024_desc')}
+                    </p>
+                    <div className="flex flex-wrap gap-4">
+                        <a
+                            href="https://forms.gle/u6kUQypDoLYRaUP27"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20"
+                        >
+                            {t('portal.submit_data')} <Send size={18} />
+                        </a>
+                    </div>
+                </div>
+                <div className="w-full md:w-1/3 bg-white p-6 rounded-xl shadow-sm">
+                    <h4 className="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide">Documents Utiles</h4>
+                    <ul className="space-y-3">
+                        <li className="flex items-start gap-3 text-sm text-gray-600">
+                            <Download size={16} className="mt-1 text-blue-500" />
+                            Guide de remplissage
+                        </li>
+                        <li className="flex items-start gap-3 text-sm text-gray-600">
+                            <Download size={16} className="mt-1 text-blue-500" />
+                            Modèle Excel (Offline)
+                        </li>
+                        <li className="flex items-start gap-3 text-sm text-gray-600">
+                            <Download size={16} className="mt-1 text-blue-500" />
+                            Indicateurs de référence
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <div className="w-full md:w-1/3 bg-white p-6 rounded-xl shadow-sm">
-                <h4 className="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide">Documents Utiles</h4>
-                <ul className="space-y-3">
-                    <li className="flex items-start gap-3 text-sm text-gray-600">
-                        <Download size={16} className="mt-1 text-blue-500" />
-                        Guide de remplissage
-                    </li>
-                    <li className="flex items-start gap-3 text-sm text-gray-600">
-                        <Download size={16} className="mt-1 text-blue-500" />
-                        Modèle Excel (Offline)
-                    </li>
-                    <li className="flex items-start gap-3 text-sm text-gray-600">
-                        <Download size={16} className="mt-1 text-blue-500" />
-                        Indicateurs de référence
-                    </li>
-                </ul>
-            </div>
-        </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-6 border border-gray-200 rounded-2xl hover:border-blue-300 transition-colors cursor-pointer group">
-                <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <FileInput size={24} />
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="p-6 border border-gray-200 rounded-2xl hover:border-blue-300 transition-colors cursor-pointer group">
+                    <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <FileInput size={24} />
+                    </div>
+                    <h3 className="font-bold text-gray-800 mb-2">Signalement Incident</h3>
+                    <p className="text-gray-500 text-sm">Remonter un dysfonctionnement sur un ouvrage ou une urgence sanitaire.</p>
                 </div>
-                <h3 className="font-bold text-gray-800 mb-2">Signalement Incident</h3>
-                <p className="text-gray-500 text-sm">Remonter un dysfonctionnement sur un ouvrage ou une urgence sanitaire.</p>
-            </div>
-            <div className="p-6 border border-gray-200 rounded-2xl hover:border-blue-300 transition-colors cursor-pointer group">
-                <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Users size={24} />
+                <div className="p-6 border border-gray-200 rounded-2xl hover:border-blue-300 transition-colors cursor-pointer group">
+                    <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <Users size={24} />
+                    </div>
+                    <h3 className="font-bold text-gray-800 mb-2">{t('portal.member_update_title')}</h3>
+                    <p className="text-gray-500 text-sm">{t('portal.member_update_desc')}</p>
                 </div>
-                <h3 className="font-bold text-gray-800 mb-2">Mise à jour Membre</h3>
-                <p className="text-gray-500 text-sm">Modifier les informations de contact ou le statut de votre organisation.</p>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 
 // --- Main Dashboard Layout ---
@@ -222,9 +228,9 @@ export default function PartnerPortal() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const tabs = [
-        { id: 'overview', label: 'Vue d\'ensemble', icon: LayoutDashboard },
-        { id: 'stats', label: 'Statistiques', icon: BarChart3 },
-        { id: 'collection', label: 'Espace Récolte', icon: FileInput },
+        { id: 'overview', label: t('portal.nav_overview'), icon: LayoutDashboard },
+        { id: 'stats', label: t('portal.nav_stats'), icon: BarChart3 },
+        { id: 'collection', label: t('portal.nav_collection'), icon: FileInput },
     ];
 
     const renderContent = () => {
@@ -246,7 +252,7 @@ export default function PartnerPortal() {
                         <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
                             <Building2 size={18} />
                         </div>
-                        Espace Membre
+                        {t('portal.member_space')}
                     </div>
                 </div>
                 <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
@@ -268,9 +274,9 @@ export default function PartnerPortal() {
                 <div className="p-4 border-t border-gray-100">
                     <div className="bg-slate-900 rounded-xl p-4 text-white">
                         <p className="text-xs text-slate-400 font-bold uppercase mb-1">Support</p>
-                        <p className="text-sm font-medium mb-3">Besoin d'aide ?</p>
+                        <p className="text-sm font-medium mb-3">{t('portal.need_help')}</p>
                         <a href="mailto:support@cceabt.org" className="text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded-lg block text-center transition-colors">
-                            Contacter l'admin
+                            {t('portal.contact_admin')}
                         </a>
                     </div>
                 </div>
@@ -284,7 +290,7 @@ export default function PartnerPortal() {
             <aside className={`fixed top-20 left-0 w-64 h-[calc(100vh-5rem)] bg-white z-50 transform transition-transform duration-300 lg:hidden border-r border-gray-200 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
                 }`}>
                 <div className="p-6 flex items-center justify-between border-b border-gray-100">
-                    <span className="font-bold text-gray-900">Menu</span>
+                    <span className="font-bold text-gray-900">{t('portal.menu')}</span>
                     <button onClick={() => setIsMobileMenuOpen(false)}><X size={24} /></button>
                 </div>
                 <nav className="p-4 space-y-2">
@@ -314,7 +320,7 @@ export default function PartnerPortal() {
                     >
                         <Menu size={24} className="text-gray-700" />
                     </button>
-                    <h1 className="text-xl font-bold text-gray-900">Tableau de Bord</h1>
+                    <h1 className="text-xl font-bold text-gray-900">{t('portal.dashboard_title')}</h1>
                 </div>
 
                 <div className="max-w-6xl mx-auto">
