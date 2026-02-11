@@ -2,7 +2,7 @@ import { ExternalLink, Handshake, Globe, Users, Building2, ShieldCheck } from 'l
 import { useTranslation } from 'react-i18next';
 import { useData } from '../context/DataContext';
 import { getPartnerStatus } from '../utils/partnerStatus';
-import { useState } from 'react';
+
 
 export default function Partners() {
   const { t } = useTranslation();
@@ -11,7 +11,6 @@ export default function Partners() {
   // Grouping partners and sorting alphabetically
   const isPTF = (name: string) => getPartnerStatus(name) === 'PTF';
 
-<<<<<<< HEAD
   // Force uniqueness by name to prevent any display duplicates (Data hygiene safety)
   const uniquePartners = Array.from(
     new Map(partners.map(p => [p.name.trim().toLowerCase(), p])).values()
@@ -30,17 +29,6 @@ export default function Partners() {
   const techFinPartners = uniquePartners
     .filter(p => isPTF(p.name))
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
-=======
-  const internationalMembers = partners
-    .filter(p => p.type === 'International');
-  const nationalMembers = partners
-    .filter(p => p.type === 'National');
-  const institutionalPartners = partners
-    .filter(p => p.type === 'Institutionnel');
-  // Filtrer les PTF, mais EXCLURE ceux qui sont déjà dans International pour éviter les doublons demandés
-  const techFinPartners = partners
-    .filter(p => isPTF(p.name) && p.type !== 'International');
->>>>>>> 0af3982825246a751e16b438b4adf1e7b21ff7a5
 
   const getTranslatedType = (type: string) => {
     switch (type) {
@@ -243,10 +231,7 @@ export default function Partners() {
                 icon={ShieldCheck}
                 colorClass="bg-yellow-600"
                 data={techFinPartners}
-<<<<<<< HEAD
-=======
-                isBento={false}
->>>>>>> 0af3982825246a751e16b438b4adf1e7b21ff7a5
+
               />
             </div>
           </div>

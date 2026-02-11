@@ -867,11 +867,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
     const [partners, setPartners] = useState<PartnerItem[]>(() => {
         try {
-<<<<<<< HEAD
-            const savedPartners = localStorage.getItem('cceabt_partners_v16');
-=======
             const savedPartners = localStorage.getItem('cceabt_partners_v24');
->>>>>>> 0af3982825246a751e16b438b4adf1e7b21ff7a5
             return savedPartners ? JSON.parse(savedPartners) : initialPartners;
         } catch (error) {
             console.error('Error parsing partners from localStorage', error);
@@ -895,11 +891,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => { localStorage.setItem('cceabt_news', JSON.stringify(news)); }, [news]);
     useEffect(() => { localStorage.setItem('cceabt_resources', JSON.stringify(resources)); }, [resources]);
     useEffect(() => {
-<<<<<<< HEAD
-        localStorage.setItem('cceabt_partners_v16', JSON.stringify(partners));
-=======
         localStorage.setItem('cceabt_partners_v24', JSON.stringify(partners));
->>>>>>> 0af3982825246a751e16b438b4adf1e7b21ff7a5
     }, [partners]);
     useEffect(() => { localStorage.setItem('cceabt_submissions', JSON.stringify(submissions)); }, [submissions]);
 
@@ -908,7 +900,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         const handleStorageChange = (e: StorageEvent) => {
             if (e.key === 'cceabt_drive_url' && e.newValue) setDriveUrl(e.newValue);
             try {
-                if (e.key === 'cceabt_partners_v10' && e.newValue) setPartners(JSON.parse(e.newValue));
+                if (e.key === 'cceabt_partners_v24' && e.newValue) setPartners(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_news' && e.newValue) setNews(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_resources' && e.newValue) setResources(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_submissions' && e.newValue) setSubmissions(JSON.parse(e.newValue));
