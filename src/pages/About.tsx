@@ -417,13 +417,13 @@ export default function About() {
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12 max-w-6xl mx-auto">
             <div className="lg:w-1/2">
               <span className="inline-block px-4 py-2 bg-blue-500/20 text-blue-300 rounded-full text-sm font-semibold mb-6 border border-blue-500/30">
-                Structure & Organisation
+                {t('about.gov_badge')}
               </span>
               <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                Comment sommes-nous <span className="text-blue-400">organisés</span> ?
+                {t('about.gov_title')}
               </h2>
               <p className="text-lg text-slate-300 mb-8 leading-relaxed">
-                Le CCEABT repose sur une gouvernance démocratique et transparente, structurée autour de plusieurs organes clés garantissant notre efficacité et notre ancrage local sur toute l'étendue du territoire.
+                {t('about.gov_desc')}
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -431,7 +431,7 @@ export default function About() {
                   onClick={() => navigate('/organization')}
                   className="group bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-500 transition-all shadow-lg hover:shadow-blue-500/25 flex items-center gap-3"
                 >
-                  Découvrir notre organigramme
+                  {t('about.gov_btn')}
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
@@ -441,23 +441,23 @@ export default function About() {
               <div className="relative z-10 grid grid-cols-2 gap-4">
                 <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default">
                   <Users className="text-blue-400 mb-3" size={32} />
-                  <h4 className="font-bold text-lg">Assemblée Générale</h4>
-                  <p className="text-xs text-slate-400">Organe suprême</p>
+                  <h4 className="font-bold text-lg">{t('about.gov_ag')}</h4>
+                  <p className="text-xs text-slate-400">{t('about.gov_ag_sub')}</p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default translate-y-8">
+                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default translate-y-0">
                   <Target className="text-green-400 mb-3" size={32} />
-                  <h4 className="font-bold text-lg">Conseil d'Admin</h4>
-                  <p className="text-xs text-slate-400">Pilotage stratégique</p>
+                  <h4 className="font-bold text-lg">{t('about.gov_ca')}</h4>
+                  <p className="text-xs text-slate-400">{t('about.gov_ca_sub')}</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default">
                   <Briefcase className="text-purple-400 mb-3" size={32} />
-                  <h4 className="font-bold text-lg">Secrétariat Exécutif</h4>
-                  <p className="text-xs text-slate-400">Coordination</p>
+                  <h4 className="font-bold text-lg">{t('about.gov_se')}</h4>
+                  <p className="text-xs text-slate-400">{t('about.gov_se_sub')}</p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default translate-y-8">
+                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 transition-all cursor-default translate-y-0">
                   <Share2 className="text-orange-400 mb-3" size={32} />
-                  <h4 className="font-bold text-lg">Plateformes</h4>
-                  <p className="text-xs text-slate-400">Ancrage local</p>
+                  <h4 className="font-bold text-lg">{t('about.gov_plat')}</h4>
+                  <p className="text-xs text-slate-400">{t('about.gov_plat_sub')}</p>
                 </div>
               </div>
 

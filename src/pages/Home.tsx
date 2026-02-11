@@ -58,7 +58,7 @@ export default function Home() {
                 onClick={() => navigate('/join?type=partner')}
                 className="bg-white text-blue-900 px-8 py-4 rounded-full font-bold hover:shadow-2xl transition-all duration-300 shadow-lg flex items-center gap-2 hover:scale-105"
               >
-                Devenir Partenaire
+                {t('home.partner_btn')}
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <button
@@ -254,7 +254,7 @@ export default function Home() {
             {/* Organisations membres du Conseil d'administration */}
             <PartnerScrollBand
               partners={['PADI', 'Chaine de l\'espoir', 'FIADI', 'ODIAE', 'ADESCO', 'AJT', 'CDD']}
-              title="Organisations membres du Conseil d'administration"
+              title={t('home.partners_ca_title')}
               icon={<Users className="text-blue-600" size={28} />}
               gradientFrom="from-blue-50"
               gradientTo="to-green-50"
@@ -267,7 +267,7 @@ export default function Home() {
             {/* Partenaires Techniques et Financiers (PTF) */}
             <PartnerScrollBand
               partners={['AESEN', 'AFD', 'UE', 'PSEAU', 'Coalition Eau', 'SWA', 'AAFEA', 'ENDWATERPOVERTY', 'Ambassade de France au Togo', 'GENDA Water Alliance', 'Plan International Togo', 'SEVES', 'CAWST']}
-              title="Partenaires Techniques et Financiers (PTF)"
+              title={t('home.partners_ptf_title')}
               icon={<TrendingUp className="text-yellow-600" size={28} />}
               gradientFrom="from-yellow-50"
               gradientTo="to-orange-50"

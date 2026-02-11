@@ -1,6 +1,8 @@
 import { Users, Building2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Members() {
+  const { t } = useTranslation();
   const members = [
     'Association pour le Développement Rural',
     'ONG Eau Vive Togo',
@@ -28,10 +30,10 @@ export default function Members() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-cceabt-blue mb-4">
-            Membres & Partenaires
+            {t('home.members_title')}
           </h2>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-            Le CCEABT rassemble un réseau dynamique d'organisations et collabore avec des partenaires stratégiques.
+            {t('home.members_desc')}
           </p>
         </div>
 
@@ -43,7 +45,7 @@ export default function Members() {
                   <Users size={32} className="text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-cceabt-blue">
-                  Organisations Membres
+                  {t('home.members_org_title')}
                 </h3>
               </div>
             </div>
@@ -67,7 +69,7 @@ export default function Members() {
                   <Building2 size={32} className="text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-cceabt-blue">
-                  Partenaires Stratégiques
+                  {t('home.members_partners_title')}
                 </h3>
               </div>
             </div>

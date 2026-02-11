@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CreditCard, ShieldCheck, ArrowLeft, Heart, CheckCircle2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Checkout() {
+    const { t } = useTranslation();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const amount = searchParams.get('amount') || '0';
@@ -41,15 +43,15 @@ export default function Checkout() {
                     <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg shadow-green-100">
                         <CheckCircle2 size={64} />
                     </div>
-                    <h1 className="text-4xl font-black text-gray-900 mb-4">Merci !</h1>
+                    <h1 className="text-4xl font-black text-gray-900 mb-4">{t('checkout.success_thanks')}</h1>
                     <p className="text-xl text-gray-600 mb-12">
-                        Votre don de <span className="font-bold text-blue-600">{amount} FCFA</span> a été reçu avec succès. Un reçu vous a été envoyé par email.
+                        {t('checkout.success_msg', { amount })}
                     </p>
                     <button
                         onClick={() => navigate('/')}
                         className="bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-xl hover:shadow-blue-200"
                     >
-                        Retour à l'accueil
+                        {t('checkout.back_home')}
                     </button>
                 </motion.div>
             </div>
@@ -64,7 +66,7 @@ export default function Checkout() {
                         onClick={() => navigate(-1)}
                         className="flex items-center gap-2 text-gray-500 hover:text-blue-600 mb-8 transition-colors font-bold"
                     >
-                        <ArrowLeft size={20} /> Retour
+                        <ArrowLeft size={20} /> {t('checkout.back')}
                     </button>
 
                     <div className="grid lg:grid-cols-5 gap-12">
@@ -80,15 +82,15 @@ export default function Checkout() {
                                         <CreditCard size={32} />
                                     </div>
                                     <div>
-                                        <h1 className="text-3xl font-black text-gray-900">Paiement Sécurisé</h1>
-                                        <p className="text-gray-500 font-medium">SSL Encrypted Transaction</p>
+                                        <h1 className="text-3xl font-black text-gray-900">{t('checkout.secure_payment')}</h1>
+                                        <p className="text-gray-500 font-medium">{t('checkout.ssl_msg')}</p>
                                     </div>
                                 </div>
 
                                 <form onSubmit={handleSubmit} className="space-y-6">
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div className="md:col-span-2">
-                                            <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wider">Email pour le reçu</label>
+                                            <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wider">{t('checkout.email_label')}</label>
                                             <input
                                                 required
                                                 type="email"
@@ -99,7 +101,7 @@ export default function Checkout() {
                                             />
                                         </div>
                                         <div className="md:col-span-2">
-                                            <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wider">Nom sur la carte</label>
+                                            <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wider">{t('checkout.card_name')}</label>
                                             <input
                                                 required
                                                 type="text"
@@ -111,7 +113,7 @@ export default function Checkout() {
                                             />
                                         </div>
                                         <div className="md:col-span-2">
-                                            <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wider">Numéro de Carte</label>
+                                            <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wider">{t('checkout.card_number')}</label>
                                             <div className="relative">
                                                 <input
                                                     required
@@ -132,7 +134,7 @@ export default function Checkout() {
                                             </div>
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wider">Expiration</label>
+                                            <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wider">{t('checkout.expiration')}</label>
                                             <input
                                                 required
                                                 type="text"
@@ -148,7 +150,7 @@ export default function Checkout() {
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wider">CVC / CVV</label>
+                                            <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wider">{t('checkout.cvc')}</label>
                                             <input
                                                 required
                                                 type="text"
@@ -175,7 +177,7 @@ export default function Checkout() {
                                                     className="flex items-center justify-center gap-3"
                                                 >
                                                     <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-                                                    Traitement en cours...
+                                                    {t('checkout.processing')}
                                                 </motion.div>
                                             ) : (
                                                 <motion.span
@@ -184,7 +186,7 @@ export default function Checkout() {
                                                     animate={{ opacity: 1 }}
                                                     exit={{ opacity: 0 }}
                                                 >
-                                                    Payer {amount} FCFA
+                                                    {t('checkout.pay_btn', { amount })}
                                                 </motion.span>
                                             )}
                                         </AnimatePresence>
@@ -192,7 +194,7 @@ export default function Checkout() {
 
                                     <div className="flex items-center justify-center gap-2 text-green-600 font-bold text-sm">
                                         <ShieldCheck size={18} />
-                                        Paiement 100% sécurisé
+                                        {t('checkout.secure_100')}
                                     </div>
                                 </form>
                             </motion.div>
@@ -206,28 +208,28 @@ export default function Checkout() {
                                 className="bg-blue-900 rounded-[2.5rem] p-10 text-white shadow-2xl sticky top-32"
                             >
                                 <Heart className="text-red-400 mb-6" size={48} />
-                                <h3 className="text-2xl font-bold mb-2">Récapitulatif</h3>
-                                <p className="text-blue-100 mb-8 font-medium">Votre soutien aide le CCEABT à faciliter l'accès à l'eau potable au Togo.</p>
+                                <h3 className="text-2xl font-bold mb-2">{t('checkout.summary_title')}</h3>
+                                <p className="text-blue-100 mb-8 font-medium">{t('checkout.summary_desc')}</p>
 
                                 <div className="space-y-4 mb-10 pb-8 border-b border-white/10">
                                     <div className="flex justify-between items-center">
-                                        <span className="text-blue-200">Donation</span>
+                                        <span className="text-blue-200">{t('checkout.donation')}</span>
                                         <span className="text-xl font-bold">{amount} FCFA</span>
                                     </div>
                                     <div className="flex justify-between items-center">
-                                        <span className="text-blue-200">Frais de transaction</span>
+                                        <span className="text-blue-200">{t('checkout.fees')}</span>
                                         <span className="text-xl font-bold">0 FCFA</span>
                                     </div>
                                 </div>
 
                                 <div className="flex justify-between items-center mb-10">
-                                    <span className="text-lg font-bold">Total à payer</span>
+                                    <span className="text-lg font-bold">{t('checkout.total')}</span>
                                     <span className="text-4xl font-black text-green-400">{amount} FCFA</span>
                                 </div>
 
                                 <div className="bg-white/10 rounded-2xl p-6 border border-white/5">
                                     <p className="text-sm font-medium leading-relaxed italic opacity-80">
-                                        "Chaque goutte compte. Merci de contribuer à transformer durablement le secteur WASH au Togo."
+                                        {t('checkout.quote')}
                                     </p>
                                 </div>
                             </motion.div>

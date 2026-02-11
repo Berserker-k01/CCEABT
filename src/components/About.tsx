@@ -6,23 +6,23 @@ export default function About() {
   const values = [
     {
       icon: Heart,
-      title: 'Citoyenneté',
-      description: 'Promouvoir la participation citoyenne pour un accès équitable aux services essentiels.',
+      title: t('home.values_cit_t'),
+      description: t('home.values_cit_d'),
     },
     {
       icon: Eye,
-      title: 'Durabilité',
-      description: 'Garantir des solutions pérennes respectueuses de l\'environnement.',
+      title: t('home.values_dur_t'),
+      description: t('home.values_dur_d'),
     },
     {
       icon: Target,
-      title: 'Engagement',
-      description: 'Œuvrer sans relâche pour l\'atteinte des objectifs de développement durable.',
+      title: t('home.values_eng_t'),
+      description: t('home.values_eng_d'),
     },
     {
       icon: Handshake,
-      title: 'Concertation',
-      description: 'Favoriser le dialogue et la collaboration entre tous les acteurs.',
+      title: t('home.values_con_t'),
+      description: t('home.values_con_d'),
     },
   ];
 
@@ -30,9 +30,9 @@ export default function About() {
     <section id="about" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-4xl font-bold text-cceabt-blue mb-6">À propos du CCEABT</h2>
+          <h2 className="text-4xl font-bold text-cceabt-blue mb-6">{t('home.about_comp_title')}</h2>
           <p className="text-lg text-gray-700 leading-relaxed">
-            Le Conseil de Concertation pour l'Eau et l'Assainissement de Base au Togo (CCEABT) est le réseau national des organisations de la société civile œuvrant dans le secteur Eau, Hygiène et Assainissement (EHA) au Togo.
+            {t('home.about_comp_desc')}
           </p>
         </div>
 
@@ -57,7 +57,7 @@ export default function About() {
         </div>
 
         <div>
-          <h3 className="text-3xl font-bold text-cceabt-blue text-center mb-12">Nos Valeurs</h3>
+          <h3 className="text-3xl font-bold text-cceabt-blue text-center mb-12">{t('home.about_values_title')}</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
               <div

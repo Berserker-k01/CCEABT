@@ -35,8 +35,8 @@ export default function NewsReader() {
 
                 <div className="flex items-center gap-4">
                     <div className="hidden md:flex flex-col items-end">
-                        <span className="text-white font-bold text-sm tracking-widest uppercase">CCEABT Digital Journal</span>
-                        <span className="text-blue-400 text-xs font-medium uppercase tracking-tighter">Edition {new Date().getFullYear()}</span>
+                        <span className="text-white font-bold text-sm tracking-widest uppercase">{t('news_reader.digital_journal')}</span>
+                        <span className="text-blue-400 text-xs font-medium uppercase tracking-tighter">{t('news_reader.edition', { year: new Date().getFullYear() })}</span>
                     </div>
                     <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
                         <Globe className="text-white" size={20} />
@@ -93,7 +93,7 @@ export default function NewsReader() {
                                     </div>
                                     <div className="flex items-center gap-2 px-3 py-1.5 bg-white/90 backdrop-blur shadow-sm rounded-lg text-slate-600">
                                         <Clock size={14} className="text-blue-600" />
-                                        <span className="text-xs font-bold">5 min read</span>
+                                        <span className="text-xs font-bold">{t('news_reader.read_time', { minutes: 5 })}</span>
                                     </div>
                                 </div>
                             </div>
@@ -125,8 +125,8 @@ export default function NewsReader() {
                                             C
                                         </div>
                                         <div>
-                                            <p className="text-xs font-bold text-slate-900 uppercase">Rédaction CCEABT</p>
-                                            <p className="text-[10px] text-slate-500 font-medium">Division Communication</p>
+                                            <p className="text-xs font-bold text-slate-900 uppercase">{t('news_reader.author_label')}</p>
+                                            <p className="text-[10px] text-slate-500 font-medium">{t('news_reader.division_label')}</p>
                                         </div>
                                     </div>
 
@@ -139,7 +139,7 @@ export default function NewsReader() {
 
                         {/* Pagination hint */}
                         <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-white/30 text-xs font-bold uppercase tracking-[0.3em]">
-                            Sheet {index + 1} / {sortedNews.length}
+                            {t('news_reader.sheet', { current: index + 1, total: sortedNews.length })}
                         </div>
                     </motion.article>
                 ))}
@@ -160,8 +160,8 @@ export default function NewsReader() {
                         <div
                             key={i}
                             className={`h-1.5 rounded-full transition-all duration-300 ${Math.floor((containerRef.current?.scrollLeft || 0) / window.innerWidth) === i
-                                    ? 'w-8 bg-blue-500'
-                                    : 'w-1.5 bg-white/20'
+                                ? 'w-8 bg-blue-500'
+                                : 'w-1.5 bg-white/20'
                                 }`}
                         />
                     ))}

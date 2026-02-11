@@ -124,13 +124,13 @@ const initialPartners: PartnerItem[] = [
 
     {
         "id": "crt____154",
-        "name": "CRT - Croix-Rouge Togolaise",
-        "type": "National",
-        "description": "Membre du réseau CCEABT",
+        "name": "Croix-Rouge Togolaise",
+        "type": "Technique",
+        "description": "Partenaire Technique et Financier",
         "email": "contact@cceabt.tg",
         "phone": "",
         "website": "",
-        "logo": "/partners/image2.jpeg",
+        "logo": "/partners/croix_rouge.png",
         "password": "password123"
     },
     {
@@ -398,13 +398,13 @@ const initialPartners: PartnerItem[] = [
     },
     {
         "id": "ahead____747",
-        "name": "AHEAD - Afrique Humanité Environnement Action Développement",
-        "type": "National",
-        "description": "Membre du réseau CCEABT",
+        "name": "AHEAD-Africa",
+        "type": "Technique",
+        "description": "Partenaire Technique et Financier",
         "email": "contact@cceabt.tg",
         "phone": "",
         "website": "",
-        "logo": "",
+        "logo": "/partners/ahead_africa.png",
         "password": "password123"
     },
     {
@@ -661,6 +661,17 @@ const initialPartners: PartnerItem[] = [
         "password": "password123"
     },
     {
+        "id": "plan_international_togo_988",
+        "name": "Plan International Togo",
+        "type": "International",
+        "description": "Membre du réseau CCEABT",
+        "email": "contact@cceabt.tg",
+        "phone": "",
+        "website": "https://plan-international.org/togo/",
+        "logo": "/partners/image32.png",
+        "password": "password123"
+    },
+    {
         "id": "la_cde_399",
         "name": "La CDE - La Chaîne de l'Espoir",
         "type": "International",
@@ -679,16 +690,7 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "aesen@cceabt.org",
         password: "password123",
-        logo: ""
-    },
-    {
-        id: "tf1",
-        name: "AFD (Agence Française de Développement)",
-        type: "Technique",
-        description: "Partenaire Technique et Financier",
-        email: "afd@cceabt.org",
-        password: "password123",
-        logo: ""
+        logo: "/partners/aesen.png"
     },
     {
         id: "tf2",
@@ -697,7 +699,8 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "ue@cceabt.org",
         password: "password123",
-        logo: "/partners/eu.png"
+        logo: "/partners/ue.png",
+        acronym: "UE"
     },
     {
         id: "ptf_pseau",
@@ -706,7 +709,7 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "pseau@cceabt.org",
         password: "password123",
-        logo: ""
+        logo: "/partners/pseau.png"
     },
     {
         id: "ptf_coalition_eau",
@@ -715,7 +718,7 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "coalitioneau@cceabt.org",
         password: "password123",
-        logo: ""
+        logo: "/partners/coalition-eau.png"
     },
     {
         id: "ptf_swa",
@@ -724,7 +727,7 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "swa@cceabt.org",
         password: "password123",
-        logo: ""
+        logo: "/partners/swa.jpg"
     },
     {
         id: "ptf_aafea",
@@ -733,7 +736,7 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "aafea@cceabt.org",
         password: "password123",
-        logo: ""
+        logo: "/partners/aafea.png"
     },
     {
         id: "ptf_endwaterpoverty",
@@ -742,7 +745,7 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "endwaterpoverty@cceabt.org",
         password: "password123",
-        logo: ""
+        logo: "/partners/endwaterpoverty.png"
     },
     {
         id: "ptf_ambassade_france",
@@ -751,7 +754,7 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "ambassadefrance@cceabt.org",
         password: "password123",
-        logo: ""
+        logo: "/partners/ambassade_france.png"
     },
     {
         id: "ptf_genda",
@@ -761,17 +764,6 @@ const initialPartners: PartnerItem[] = [
         email: "genda@cceabt.org",
         password: "password123",
         logo: ""
-    },
-    {
-        "id": "plan_international_togo_988",
-        "name": "Plan International Togo",
-        "type": "Technique",
-        "description": "Partenaire Technique et Financier",
-        "email": "contact@cceabt.tg",
-        "phone": "",
-        "website": "https://plan-international.org/togo/",
-        "logo": "/partners/image32.png",
-        "password": "password123"
     },
     {
         id: "seves___economiquement_187",
@@ -791,7 +783,7 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "cawst@cceabt.org",
         password: "password123",
-        logo: ""
+        logo: "/partners/cawst.png"
     },
     {
         id: "ptf_sedif",
@@ -800,7 +792,7 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "sedif@cceabt.org",
         password: "password123",
-        logo: ""
+        logo: "/partners/sedif.png"
     },
     {
         id: "ptf_commune_lacs1",
@@ -809,7 +801,7 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "commune.lacs1@cceabt.org",
         password: "password123",
-        logo: ""
+        logo: "/partners/image34.jpeg"
     },
     {
         id: "padie____743",
@@ -875,7 +867,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
     const [partners, setPartners] = useState<PartnerItem[]>(() => {
         try {
+<<<<<<< HEAD
             const savedPartners = localStorage.getItem('cceabt_partners_v16');
+=======
+            const savedPartners = localStorage.getItem('cceabt_partners_v24');
+>>>>>>> 0af3982825246a751e16b438b4adf1e7b21ff7a5
             return savedPartners ? JSON.parse(savedPartners) : initialPartners;
         } catch (error) {
             console.error('Error parsing partners from localStorage', error);
@@ -899,7 +895,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => { localStorage.setItem('cceabt_news', JSON.stringify(news)); }, [news]);
     useEffect(() => { localStorage.setItem('cceabt_resources', JSON.stringify(resources)); }, [resources]);
     useEffect(() => {
+<<<<<<< HEAD
         localStorage.setItem('cceabt_partners_v16', JSON.stringify(partners));
+=======
+        localStorage.setItem('cceabt_partners_v24', JSON.stringify(partners));
+>>>>>>> 0af3982825246a751e16b438b4adf1e7b21ff7a5
     }, [partners]);
     useEffect(() => { localStorage.setItem('cceabt_submissions', JSON.stringify(submissions)); }, [submissions]);
 

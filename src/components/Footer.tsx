@@ -63,7 +63,7 @@ export default function Footer() {
                 <MapPin size={20} className="mt-1 flex-shrink-0" />
                 <div className="text-sm text-gray-200">
                   <p>{t('footer.address')}</p>
-                  <p className="mt-1 font-semibold italic">260 BP 478 Kpalimé - Togo</p>
+                  <p className="mt-1 font-semibold italic">{t('footer.po_box')}</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">

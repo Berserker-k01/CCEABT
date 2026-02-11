@@ -1,26 +1,28 @@
 import { Droplet, Users, Building2, Target } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Stats() {
+  const { t } = useTranslation();
   const stats = [
     {
       icon: Users,
       value: '50+',
-      label: 'Organisations membres',
+      label: t('home.stats_members'),
     },
     {
       icon: Droplet,
       value: '100+',
-      label: 'Projets réalisés',
+      label: t('home.stats_projects'),
     },
     {
       icon: Building2,
       value: '15+',
-      label: 'Partenaires actifs',
+      label: t('home.stats_partners'),
     },
     {
       icon: Target,
       value: '1M+',
-      label: 'Bénéficiaires touchés',
+      label: t('home.stats_beneficiaries'),
     },
   ];
 

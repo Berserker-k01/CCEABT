@@ -1,65 +1,67 @@
 import { useState } from 'react';
 import { Droplet, Sparkles, Building, Megaphone } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Actions() {
+  const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState('all');
 
   const categories = [
-    { id: 'all', name: 'Tous', icon: null },
-    { id: 'water', name: 'Eau potable', icon: Droplet },
-    { id: 'hygiene', name: 'Hygiène', icon: Sparkles },
-    { id: 'sanitation', name: 'Assainissement', icon: Building },
-    { id: 'advocacy', name: 'Plaidoyer', icon: Megaphone },
+    { id: 'all', name: t('home.cat_all'), icon: null },
+    { id: 'water', name: t('home.cat_water'), icon: Droplet },
+    { id: 'hygiene', name: t('home.cat_hygiene'), icon: Sparkles },
+    { id: 'sanitation', name: t('home.cat_sanitation'), icon: Building },
+    { id: 'advocacy', name: t('home.cat_advocacy'), icon: Megaphone },
   ];
 
   const projects = [
     {
       id: 1,
-      title: 'Construction de puits communautaires',
+      title: t('home.proj_1_t'),
       category: 'water',
       image: 'https://images.pexels.com/photos/1029870/pexels-photo-1029870.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: 'Installation de points d\'eau potable dans les zones rurales pour améliorer l\'accès à l\'eau.',
-      beneficiaries: '10,000 personnes',
+      description: t('home.proj_1_d'),
+      beneficiaries: t('home.proj_1_b'),
     },
     {
       id: 2,
-      title: 'Campagne de lavage des mains',
+      title: t('home.proj_2_t'),
       category: 'hygiene',
       image: 'https://images.pexels.com/photos/4149051/pexels-photo-4149051.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: 'Sensibilisation aux bonnes pratiques d\'hygiène dans les écoles et communautés.',
-      beneficiaries: '50,000 enfants',
+      description: t('home.proj_2_d'),
+      beneficiaries: t('home.proj_2_b'),
     },
     {
       id: 3,
-      title: 'Latrines publiques écologiques',
+      title: t('home.proj_3_t'),
       category: 'sanitation',
       image: 'https://images.pexels.com/photos/2990644/pexels-photo-2990644.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: 'Construction de latrines durables et respectueuses de l\'environnement.',
-      beneficiaries: '5,000 familles',
+      description: t('home.proj_3_d'),
+      beneficiaries: t('home.proj_3_b'),
     },
     {
       id: 4,
-      title: 'Plaidoyer politique EHA',
+      title: t('home.proj_4_t'),
       category: 'advocacy',
       image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: 'Influence des politiques publiques pour un meilleur accès aux services EHA.',
-      beneficiaries: 'National',
+      description: t('home.proj_4_d'),
+      beneficiaries: t('home.proj_4_b'),
     },
     {
       id: 5,
-      title: 'Systèmes d\'adduction d\'eau villageois',
+      title: t('home.proj_5_t'),
       category: 'water',
       image: 'https://images.pexels.com/photos/1145434/pexels-photo-1145434.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: 'Mise en place de réseaux d\'eau potable dans les villages isolés.',
-      beneficiaries: '25,000 personnes',
+      description: t('home.proj_5_d'),
+      beneficiaries: t('home.proj_5_b'),
     },
     {
       id: 6,
-      title: 'Formation en gestion de l\'eau',
+      title: t('home.proj_6_t'),
       category: 'advocacy',
       image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: 'Renforcement des capacités des comités de gestion de l\'eau.',
-      beneficiaries: '200 gestionnaires',
+      description: t('home.proj_6_d'),
+      beneficiaries: t('home.proj_6_b'),
     },
   ];
 
@@ -71,9 +73,9 @@ export default function Actions() {
     <section id="actions" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-cceabt-blue mb-4">Nos Actions</h2>
+          <h2 className="text-4xl font-bold text-cceabt-blue mb-4">{t('home.actions_comp_title')}</h2>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-            Découvrez nos projets et initiatives pour améliorer l'accès à l'eau, l'hygiène et l'assainissement au Togo.
+            {t('home.actions_comp_desc')}
           </p>
         </div>
 
@@ -82,11 +84,10 @@ export default function Actions() {
             <button
               key={category.id}
               onClick={() => setActiveFilter(category.id)}
-              className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all duration-200 ${
-                activeFilter === category.id
-                  ? 'bg-cceabt-blue text-white shadow-lg'
-                  : 'bg-white text-cceabt-blue hover:bg-gray-100'
-              }`}
+              className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all duration-200 ${activeFilter === category.id
+                ? 'bg-cceabt-blue text-white shadow-lg'
+                : 'bg-white text-cceabt-blue hover:bg-gray-100'
+                }`}
             >
               {category.icon && <category.icon size={20} />}
               <span>{category.name}</span>

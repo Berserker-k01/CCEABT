@@ -4,9 +4,9 @@ export const partnerNameMapping: Record<string, string[]> = {
   // Conseil d'administration
   'PADI': ['padi', 'padie', 'p-a-d-i', 'padi-togo', 'padi-tg'],
   'Chaine de l\'espoir': [
-    'chaine-de-lespoir', 
-    'chaine-espoir', 
-    'chainedelespoir', 
+    'chaine-de-lespoir',
+    'chaine-espoir',
+    'chainedelespoir',
     'chaine-de-l-espoir',
     'chaine-espoir-togo',
     'chainedelespoir-togo'
@@ -17,22 +17,22 @@ export const partnerNameMapping: Record<string, string[]> = {
   'AJT': ['ajt', 'a-j-t', 'ajt-togo', 'ajt-tg'],
   'CDD': ['cdd', 'c-d-d', 'cdd-togo', 'cdd-tg', 'communication-developpement-durable'],
   'CCDD': ['ccdd', 'c-c-d-d', 'ccdd-togo', 'ccdd-tg', 'collectif-citoyens-developpement-durable'],
-  
+
   // PTF
   'AESEN': ['aesen', 'a-e-s-e-n', 'aesen-togo', 'aesen-tg'],
   'AFD': [
-    'afd', 
-    'a-f-d', 
+    'afd',
+    'a-f-d',
     'agence-francaise-developpement',
     'afd-togo',
     'afd-france',
     'agence-francaise-developpement-togo'
   ],
   'UE': [
-    'ue', 
-    'u-e', 
-    'union-europeenne', 
-    'european-union', 
+    'ue',
+    'u-e',
+    'union-europeenne',
+    'european-union',
     'eu',
     'ue-togo',
     'union-europeenne-togo',
@@ -40,46 +40,46 @@ export const partnerNameMapping: Record<string, string[]> = {
   ],
   'PSEAU': ['pseau', 'p-s-e-a-u', 'pseau-togo', 'pseau-tg'],
   'Coalition Eau': [
-    'coalition-eau', 
-    'coalitioneau', 
+    'coalition-eau',
+    'coalitioneau',
     'coalition-eau-france',
     'coalition-eau-togo',
     'coalitioneau-france'
   ],
   'SWA': [
-    'swa', 
-    's-w-a', 
+    'swa',
+    's-w-a',
     'sanitation-water-alliance',
     'swa-alliance',
     'sanitation-water-for-all'
   ],
   'AAFEA': ['aafea', 'a-a-f-e-a', 'aafea-togo', 'aafea-tg'],
   'ENDWATERPOVERTY': [
-    'endwaterpoverty', 
-    'end-water-poverty', 
+    'endwaterpoverty',
+    'end-water-poverty',
     'ewp',
     'end-water-poverty-togo',
     'ewp-togo'
   ],
   'Ambassade de France au Togo': [
-    'ambassade-france-togo', 
-    'ambassade-france', 
-    'france-togo', 
+    'ambassade-france-togo',
+    'ambassade-france',
+    'france-togo',
     'ambassade-fr-togo',
     'ambassade-france-lome',
     'ambassade-france-au-togo',
     'french-embassy-togo'
   ],
   'GENDA Water Alliance': [
-    'genda-water-alliance', 
-    'genda', 
+    'genda-water-alliance',
+    'genda',
     'genda-alliance',
     'genda-water',
     'genda-alliance-togo'
   ],
   'Plan International Togo': [
-    'plan-international-togo', 
-    'plan-togo', 
+    'plan-international-togo',
+    'plan-togo',
     'plan-international',
     'plan-international-tg',
     'plan-togo-country'
@@ -101,16 +101,22 @@ export const partnerNameMapping: Record<string, string[]> = {
 // - AFD: Logo avec cercle dégradé bleu-rouge et texte "AFD"
 export const partnerLogoUrls: Record<string, string> = {
   // Conseil d'administration
-  'CDD': '', // Logo CDD - Triangle jaune avec "CDD" en vert - Cherche dans /public/images/partners/cdd.png
-  
+  'CDD': '/partners/image26.jpeg',
+
   // PTF
-  'Coalition Eau': 'https://coalition-eau.org/wp-content/themes/coalition-eau/assets/images/logo.png',
+  'AESEN': '/partners/aesn.png',
+  'Coalition Eau': '/partners/coalition-eau.png',
   'AFD': 'https://www.afd.fr/sites/afd/files/logo_0.png',
-  'UE': 'https://europa.eu/european-union/sites/default/files/logo/logo-eu-1500x844.png',
-  'AAFEA': 'https://alliance-aafea.org/wp-content/uploads/2025/04/Nouveau-logo-AAFEA-format-horizontal-08-01-2025.png',
-  'ENDWATERPOVERTY': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPm6p9ICZW4lqgjCivVeD5vdDLqUpsx2iALQ&s',
-  'Plan International Togo': 'https://yop.l-frii.com/wp-content/uploads/2024/09/PLAN-INTERNATIONAL-recrute-pour-ce-poste-30-Septembre-2024.jpg',
-  'SEVES': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIyZb_0lQoUifxOQ0KnrZA1K27cumupDcR6A&s'
+  'UE': '/partners/ue.png',
+  'PSEAU': '/partners/pseau.png',
+  'SWA': '/partners/swa.jpg',
+  'AAFEA': '/partners/aafea.png',
+  'ENDWATERPOVERTY': '/partners/end.png',
+  'Ambassade de France au Togo': '/partners/ambassade-france.png',
+  'GENDA Water Alliance': 'https://genderandwater.org/header.png',
+  'Plan International Togo': '/partners/plan-international.png',
+  'SEVES': '/partners/seves.png',
+  'CAWST': '/partners/cawst.png'
 };
 
 // Extensions d'images à essayer
@@ -120,9 +126,9 @@ const imageExtensions = ['.png', '.jpg', '.jpeg', '.webp', '.svg'];
  * Génère toutes les variations possibles d'un nom de fichier pour un partenaire
  */
 export function generateImagePaths(partnerName: string): string[] {
-  const basePaths = ['/images/partners/', '/images/'];
+  const basePaths = ['/partners/', '/images/partners/', '/images/'];
   const variations = partnerNameMapping[partnerName] || [];
-  
+
   // Ajouter la variation standard (nom normalisé)
   const standardVariation = partnerName
     .toLowerCase()
@@ -131,12 +137,12 @@ export function generateImagePaths(partnerName: string): string[] {
     .replace(/\s+/g, '-')
     .replace(/'/g, '')
     .replace(/[^a-z0-9-]/g, '');
-  
+
   const allVariations = [standardVariation, ...variations];
-  
+
   // Générer tous les chemins possibles avec toutes les extensions et tous les dossiers
   const paths: string[] = [];
-  
+
   basePaths.forEach(basePath => {
     allVariations.forEach(variation => {
       imageExtensions.forEach(ext => {
@@ -147,7 +153,7 @@ export function generateImagePaths(partnerName: string): string[] {
       });
     });
   });
-  
+
   // Supprimer les doublons tout en préservant l'ordre
   return Array.from(new Set(paths));
 }
@@ -162,7 +168,7 @@ export function findPartnerImage(partnerName: string): string | null {
   if (directUrl && directUrl.trim() !== '') {
     return directUrl;
   }
-  
+
   // Sinon, chercher dans les fichiers locaux
   const paths = generateImagePaths(partnerName);
   // On retourne le premier chemin (le plus probable)
