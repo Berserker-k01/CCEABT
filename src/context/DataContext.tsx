@@ -900,7 +900,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         const handleStorageChange = (e: StorageEvent) => {
             if (e.key === 'cceabt_drive_url' && e.newValue) setDriveUrl(e.newValue);
             try {
-                if (e.key === 'cceabt_partners_v10' && e.newValue) setPartners(JSON.parse(e.newValue));
+                if (e.key === 'cceabt_partners_v24' && e.newValue) setPartners(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_news' && e.newValue) setNews(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_resources' && e.newValue) setResources(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_submissions' && e.newValue) setSubmissions(JSON.parse(e.newValue));

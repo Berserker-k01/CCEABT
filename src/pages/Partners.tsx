@@ -2,7 +2,7 @@ import { ExternalLink, Handshake, Globe, Users, Building2, ShieldCheck } from 'l
 import { useTranslation } from 'react-i18next';
 import { useData } from '../context/DataContext';
 import { getPartnerStatus } from '../utils/partnerStatus';
-import { useState } from 'react';
+
 
 export default function Partners() {
   const { t } = useTranslation();
@@ -11,15 +11,24 @@ export default function Partners() {
   // Grouping partners and sorting alphabetically
   const isPTF = (name: string) => getPartnerStatus(name) === 'PTF';
 
-  const internationalMembers = partners
-    .filter(p => p.type === 'International');
-  const nationalMembers = partners
-    .filter(p => p.type === 'National');
-  const institutionalPartners = partners
-    .filter(p => p.type === 'Institutionnel');
-  // Filtrer les PTF, mais EXCLURE ceux qui sont déjà dans International pour éviter les doublons demandés
-  const techFinPartners = partners
-    .filter(p => isPTF(p.name) && p.type !== 'International');
+  // Force uniqueness by name to prevent any display duplicates (Data hygiene safety)
+  const uniquePartners = Array.from(
+    new Map(partners.map(p => [p.name.trim().toLowerCase(), p])).values()
+  );
+
+  const internationalMembers = uniquePartners
+    .filter(p => p.type === 'International' && !isPTF(p.name))
+    .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
+  const nationalMembers = uniquePartners
+    .filter(p => p.type === 'National' && !isPTF(p.name))
+    .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
+  const institutionalPartners = uniquePartners
+    .filter(p => p.type === 'Institutionnel' && !isPTF(p.name))
+    .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
+  // Filtrer uniquement les 13 PTF de la liste définitive
+  const techFinPartners = uniquePartners
+    .filter(p => isPTF(p.name))
+    .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
 
   const getTranslatedType = (type: string) => {
     switch (type) {
@@ -43,11 +52,11 @@ export default function Partners() {
 
       <div className="relative z-10 flex flex-col h-full">
         <div className="flex items-start justify-between mb-8">
-          <div className="h-16 w-32 flex items-center justify-start group-hover:scale-105 transition-transform duration-500 origin-left">
+          <div className="h-16 w-full flex items-center justify-start group-hover:scale-105 transition-transform duration-500 origin-left">
             {partner.logo ? (
-              <img src={partner.logo} alt={partner.name} className="max-h-full max-w-full object-contain" />
+              <img src={partner.logo} alt={partner.name} className="max-h-full max-w-[140px] object-contain" />
             ) : (
-              <div className="h-full w-full bg-gray-50 rounded-xl flex items-center justify-center">
+              <div className="h-12 w-12 bg-gray-50 rounded-xl flex items-center justify-center">
                 <Users className="text-gray-300" />
               </div>
             )}
@@ -83,7 +92,7 @@ export default function Partners() {
     </div>
   );
 
-  const PartnerSection = ({ title, icon: Icon, colorClass, data, isBento }: any) => {
+  const PartnerSection = ({ title, icon: Icon, colorClass, data }: any) => {
     if (data.length === 0) return null;
 
     return (
@@ -101,17 +110,9 @@ export default function Partners() {
           </div>
         </div>
 
-        <div className={isBento ? "grid grid-cols-1 md:grid-cols-4 gap-8 auto-rows-[400px]" : "grid md:grid-cols-2 lg:grid-cols-3 gap-10"}>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
           {data.map((partner: any, index: number) => (
-            <div
-              key={index}
-              className={isBento ? (
-                index % 5 === 0 ? "md:col-span-2 md:row-span-1" :
-                  index % 5 === 3 ? "md:col-span-2" : ""
-              ) : ""}
-            >
-              <PartnerCard partner={partner} />
-            </div>
+            <PartnerCard key={index} partner={partner} />
           ))}
         </div>
       </div>
@@ -230,7 +231,7 @@ export default function Partners() {
                 icon={ShieldCheck}
                 colorClass="bg-yellow-600"
                 data={techFinPartners}
-                isBento={false}
+
               />
             </div>
           </div>
