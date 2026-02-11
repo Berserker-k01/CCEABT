@@ -699,7 +699,8 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "ue@cceabt.org",
         password: "password123",
-        logo: "/partners/eu_flag.png"
+        logo: "/partners/ue.png",
+        acronym: "UE"
     },
     {
         id: "ptf_pseau",
@@ -717,7 +718,7 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "coalitioneau@cceabt.org",
         password: "password123",
-        logo: "/partners/coalition_eau.png"
+        logo: "/partners/coalition-eau.png"
     },
     {
         id: "ptf_swa",
@@ -866,7 +867,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
     const [partners, setPartners] = useState<PartnerItem[]>(() => {
         try {
-            const savedPartners = localStorage.getItem('cceabt_partners_v23');
+            const savedPartners = localStorage.getItem('cceabt_partners_v24');
             return savedPartners ? JSON.parse(savedPartners) : initialPartners;
         } catch (error) {
             console.error('Error parsing partners from localStorage', error);
@@ -890,7 +891,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => { localStorage.setItem('cceabt_news', JSON.stringify(news)); }, [news]);
     useEffect(() => { localStorage.setItem('cceabt_resources', JSON.stringify(resources)); }, [resources]);
     useEffect(() => {
-        localStorage.setItem('cceabt_partners_v23', JSON.stringify(partners));
+        localStorage.setItem('cceabt_partners_v24', JSON.stringify(partners));
     }, [partners]);
     useEffect(() => { localStorage.setItem('cceabt_submissions', JSON.stringify(submissions)); }, [submissions]);
 
