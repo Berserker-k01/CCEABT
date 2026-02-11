@@ -266,7 +266,7 @@ export default function Home() {
 
             {/* Partenaires Techniques et Financiers (PTF) */}
             <PartnerScrollBand
-              partners={['aesn', 'AFD', 'Union Européenne', 'pS-Eau', 'Coalition Eau', 'SWA', 'AAFEA', 'ENDWATERPOVERTY', 'Ambassade de France au Togo', 'GENDA Water Alliance', 'Plan International Togo', 'SEVES', 'CAWST']}
+              partners={['AESEN', 'AFD', 'UE', 'PSEAU', 'Coalition Eau', 'SWA', 'AAFEA', 'ENDWATERPOVERTY', 'Ambassade de France au Togo', 'GENDA Water Alliance', 'Plan International Togo', 'SEVES', 'CAWST']}
               title={t('home.partners_ptf_title')}
               icon={<TrendingUp className="text-yellow-600" size={28} />}
               gradientFrom="from-yellow-50"

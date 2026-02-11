@@ -104,13 +104,19 @@ export const partnerLogoUrls: Record<string, string> = {
   'CDD': '/partners/image26.jpeg',
 
   // PTF
+  'AESEN': '/partners/aesn.png',
   'Coalition Eau': '/partners/coalition-eau.png',
   'AFD': 'https://www.afd.fr/sites/afd/files/logo_0.png',
   'UE': '/partners/ue.png',
+  'PSEAU': '/partners/pseau.png',
+  'SWA': '/partners/swa.jpg',
   'AAFEA': '/partners/aafea.png',
   'ENDWATERPOVERTY': '/partners/end.png',
-  'Plan International Togo': 'https://yop.l-frii.com/wp-content/uploads/2024/09/PLAN-INTERNATIONAL-recrute-pour-ce-poste-30-Septembre-2024.jpg',
-  'SEVES': '/partners/image33.png'
+  'Ambassade de France au Togo': '/partners/ambassade-france.png',
+  'GENDA Water Alliance': 'https://genderandwater.org/header.png',
+  'Plan International Togo': '/partners/plan-international.png',
+  'SEVES': '/partners/seves.png',
+  'CAWST': '/partners/cawst.png'
 };
 
 // Extensions d'images à essayer
