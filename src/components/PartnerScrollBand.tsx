@@ -27,23 +27,53 @@ export default function PartnerScrollBand({
 }: PartnerScrollBandProps) {
   const { partners: allPartners } = useData();
   const [imageStates, setImageStates] = useState<Record<string, PartnerImageState>>({});
-  const [currentPage, setCurrentPage] = useState(0);
+  const [displayIndex, setDisplayIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const [itemsPerPage, setItemsPerPage] = useState(4);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Group partners into pages
   const totalPages = Math.ceil(partners.length / itemsPerPage);
-  const pages = Array.from({ length: totalPages }, (_, i) =>
+
+  // Triple the pages for infinite loop effect
+  const basePages = Array.from({ length: totalPages }, (_, i) =>
     partners.slice(i * itemsPerPage, (i + 1) * itemsPerPage)
   );
+  // We use 3 sets to ensure we can always slide forward
+  const displayPages = [...basePages, ...basePages, ...basePages];
+  const centerOffset = totalPages;
+
+  // Initial set centerOffset
+  useEffect(() => {
+    if (totalPages > 0) {
+      setIsTransitioning(false);
+      setDisplayIndex(centerOffset);
+    }
+  }, [totalPages, centerOffset]);
 
   // Auto-pagination logic
   useEffect(() => {
+    if (totalPages <= 1) return;
     const timer = setInterval(() => {
-      setCurrentPage((prev) => (prev + 1) % totalPages);
-    }, 6500); // 6.5 seconds pause per page (slower)
+      setIsTransitioning(true);
+      setDisplayIndex((prev: number) => prev + 1);
+    }, 6500);
     return () => clearInterval(timer);
   }, [totalPages]);
+
+  // Handle jump-back for infinite loop
+  const handleAnimationComplete = () => {
+    if (displayIndex >= 2 * totalPages) {
+      // Jump back to the equivalent page in the middle set
+      setIsTransitioning(false);
+      setDisplayIndex(centerOffset);
+    } else if (displayIndex < totalPages) {
+      setIsTransitioning(false);
+      setDisplayIndex(displayIndex + totalPages);
+    }
+  };
+
+  // ... (findPartnerByName and image logic remains same)
 
   // Handle responsive items per page
   useEffect(() => {
@@ -207,14 +237,15 @@ export default function PartnerScrollBand({
       <div className="relative max-w-7xl mx-auto px-4 overflow-hidden" ref={containerRef}>
         <div className="flex items-center h-64 overflow-hidden">
           <motion.div
-            animate={{ x: `-${currentPage * 100}%` }}
+            animate={{ x: `-${displayIndex * 100}%` }}
             transition={{
-              duration: 2.0, // Slower sliding movement
-              ease: [0.16, 1, 0.3, 1] // Custom ease-out cubic for smooth "slide and stop"
+              duration: isTransitioning ? 2.0 : 0,
+              ease: isTransitioning ? [0.16, 1, 0.3, 1] : "linear"
             }}
+            onAnimationComplete={handleAnimationComplete}
             className="flex w-full"
           >
-            {pages.map((page, pageIdx) => (
+            {displayPages.map((page, pageIdx) => (
               <div
                 key={pageIdx}
                 className="flex-shrink-0 w-full grid gap-6"
@@ -232,18 +263,7 @@ export default function PartnerScrollBand({
           </motion.div>
         </div>
 
-        {/* Page Indicators */}
-        <div className="flex justify-center gap-3 mt-8">
-          {pages.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentPage(i)}
-              className={`h-1.5 rounded-full transition-all duration-500 ${i === currentPage ? 'w-12 bg-blue-600' : 'w-3 bg-blue-100 hover:bg-blue-200'
-                }`}
-              aria-label={`Go to page ${i + 1}`}
-            />
-          ))}
-        </div>
+        {/* Page Indicators removed for infinite unidirectional loop to feel more professional */}
       </div>
     </div>
   );
