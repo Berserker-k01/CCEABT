@@ -11,6 +11,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function Partners() {
   const { t } = useTranslation();
   const { partners } = useData();
+  console.log('All Partners:', partners);
+  console.log('Institutional Partners Raw:', partners.filter(p => p.type === 'Institutionnel'));
 
   // Grouping partners and sorting alphabetically
   const isPTF = (name: string) => getPartnerStatus(name) === 'PTF';
@@ -358,7 +360,6 @@ export default function Partners() {
                 icon={ShieldCheck}
                 colorClass="bg-yellow-600"
                 data={techFinPartners}
-
               />
             </div>
           </div>

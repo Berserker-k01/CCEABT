@@ -804,6 +804,62 @@ const initialPartners: PartnerItem[] = [
         password: "password123",
         logo: "/partners/sedif.png"
     },
+    // --- Partenaires Institutionnels (Ministères) ---
+    {
+        id: "inst_eau",
+        name: "Ministère délégué chargé de l'eau et de l'assainissement",
+        type: "Institutionnel",
+        description: "Partenaire Institutionnel",
+        email: "eau@gouv.tg",
+        password: "password123",
+        logo: "/partners/min_eau.png"
+    },
+    {
+        id: "inst_sante",
+        name: "Ministère de la Santé, de l'Hygiène Publique et de la Couverture Sanitaire Universelle",
+        type: "Institutionnel",
+        description: "Partenaire Institutionnel",
+        email: "sante@gouv.tg",
+        password: "password123",
+        logo: "/partners/min_sante.png"
+    },
+    {
+        id: "inst_env",
+        name: "Ministère de l'Environnement, des Ressources Forestières, de la Protection Côtière et du Changement Climatique",
+        type: "Institutionnel",
+        description: "Partenaire Institutionnel",
+        email: "environnement@gouv.tg",
+        password: "password123",
+        logo: "/partners/min_env.png"
+    },
+    {
+        id: "inst_admin_terr",
+        name: "Ministère de l'Administration Territoriale, de la Gouvernance Locale et des Affaires Coutumières",
+        type: "Institutionnel",
+        description: "Partenaire Institutionnel",
+        email: "admin_terr@gouv.tg",
+        password: "password123",
+        logo: "/partners/min_admin_terr.png"
+    },
+    {
+        id: "inst_arse",
+        name: "Autorité de régulation du secteur de l'électricité",
+        type: "Institutionnel",
+        description: "Partenaire Institutionnel",
+        email: "arse@gouv.tg",
+        password: "password123",
+        logo: "/partners/arse.png"
+    },
+    {
+        id: "inst_arrec",
+        name: "ARREC",
+        type: "Institutionnel",
+        description: "Partenaire Institutionnel",
+        email: "arrec@gouv.tg",
+        password: "password123",
+        logo: "/partners/arrec.png"
+    },
+
     {
         id: "ptf_commune_lacs1",
         name: "Commune des Lacs 1",
@@ -877,7 +933,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
     const [partners, setPartners] = useState<PartnerItem[]>(() => {
         try {
-            const savedPartners = localStorage.getItem('cceabt_partners_v24');
+            const savedPartners = localStorage.getItem('cceabt_partners_v27');
             return savedPartners ? JSON.parse(savedPartners) : initialPartners;
         } catch (error) {
             console.error('Error parsing partners from localStorage', error);
@@ -901,7 +957,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => { localStorage.setItem('cceabt_news', JSON.stringify(news)); }, [news]);
     useEffect(() => { localStorage.setItem('cceabt_resources', JSON.stringify(resources)); }, [resources]);
     useEffect(() => {
-        localStorage.setItem('cceabt_partners_v24', JSON.stringify(partners));
+        localStorage.setItem('cceabt_partners_v27', JSON.stringify(partners));
     }, [partners]);
     useEffect(() => { localStorage.setItem('cceabt_submissions', JSON.stringify(submissions)); }, [submissions]);
 
@@ -910,7 +966,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         const handleStorageChange = (e: StorageEvent) => {
             if (e.key === 'cceabt_drive_url' && e.newValue) setDriveUrl(e.newValue);
             try {
-                if (e.key === 'cceabt_partners_v24' && e.newValue) setPartners(JSON.parse(e.newValue));
+                if (e.key === 'cceabt_partners_v27' && e.newValue) setPartners(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_news' && e.newValue) setNews(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_resources' && e.newValue) setResources(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_submissions' && e.newValue) setSubmissions(JSON.parse(e.newValue));

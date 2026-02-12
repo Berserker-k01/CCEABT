@@ -138,7 +138,7 @@ export const partnerLogoUrls: Record<string, string> = {
   'AAFEA': '/partners/aafea.png',
   'ENDWATERPOVERTY': '/partners/endwaterpoverty.png',
   'Ambassade de France au Togo': '/partners/ambassade-france.png',
-  'GENDA Water Alliance': '',
+  'GENDA Water Alliance': '/partners/genda.jpg',
   'Plan International Togo': '/partners/plan-international.png',
   'SEVES': '/partners/seves.png',
   'SEVES - Systèmes Economiquement Viables pour l\'Eau aux Suds': '/partners/seves.png',
