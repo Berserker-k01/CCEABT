@@ -898,7 +898,55 @@ const initialPartners: PartnerItem[] = [
             "Projet FSPI composante 2 « accompagnement des communes togolaises dans le développement de leurs services publics locaux essentiels de gestion des déchets »"
         ]
     },
+<<<<<<< Updated upstream
 
+=======
+    {
+        id: "inst_eau_assainissement",
+        name: "Ministère délégué chargé de l'eau et de l'assainissement",
+        type: "Institutionnel",
+        description: "Partenaire Institutionnel",
+        email: "contact@cceabt.tg",
+        password: "password123",
+        logo: "/partners/ministere_eau.png"
+    },
+    {
+        id: "inst_sante_hygiene",
+        name: "Ministère de la Santé, de l'Hygiène Publique et de la Couverture Sanitaire Universelle",
+        type: "Institutionnel",
+        description: "Partenaire Institutionnel",
+        email: "contact@cceabt.tg",
+        password: "password123",
+        logo: "/partners/ministere_sante.png"
+    },
+    {
+        id: "inst_environnement",
+        name: "Ministère de l'Environnement, des Ressources Forestières, de la Protection Côtière et du Changement Climatique",
+        type: "Institutionnel",
+        description: "Partenaire Institutionnel",
+        email: "contact@cceabt.tg",
+        password: "password123",
+        logo: "/partners/ministere_environnement.png"
+    },
+    {
+        id: "inst_administration",
+        name: "Ministère de l'Administration Territoriale, de la Gouvernance Locale et des Affaires Coutumières",
+        type: "Institutionnel",
+        description: "Partenaire Institutionnel",
+        email: "contact@cceabt.tg",
+        password: "password123",
+        logo: "/partners/ministere_administration.png"
+    },
+    {
+        id: "inst_autorite_elec",
+        name: "Autorité de régulation du secteur de l'électricité",
+        type: "Institutionnel",
+        description: "Partenaire Institutionnel",
+        email: "contact@cceabt.tg",
+        password: "password123",
+        logo: "/partners/autorite_electricite.png"
+    }
+>>>>>>> Stashed changes
 ];
 
 
@@ -934,7 +982,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
     const [partners, setPartners] = useState<PartnerItem[]>(() => {
         try {
+<<<<<<< Updated upstream
             const savedPartners = localStorage.getItem('cceabt_partners_v28');
+=======
+            const savedPartners = localStorage.getItem('cceabt_partners_v26');
+>>>>>>> Stashed changes
             return savedPartners ? JSON.parse(savedPartners) : initialPartners;
         } catch (error) {
             console.error('Error parsing partners from localStorage', error);
@@ -958,7 +1010,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => { localStorage.setItem('cceabt_news', JSON.stringify(news)); }, [news]);
     useEffect(() => { localStorage.setItem('cceabt_resources', JSON.stringify(resources)); }, [resources]);
     useEffect(() => {
+<<<<<<< Updated upstream
         localStorage.setItem('cceabt_partners_v28', JSON.stringify(partners));
+=======
+        localStorage.setItem('cceabt_partners_v26', JSON.stringify(partners));
+>>>>>>> Stashed changes
     }, [partners]);
     useEffect(() => { localStorage.setItem('cceabt_submissions', JSON.stringify(submissions)); }, [submissions]);
 
@@ -967,7 +1023,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         const handleStorageChange = (e: StorageEvent) => {
             if (e.key === 'cceabt_drive_url' && e.newValue) setDriveUrl(e.newValue);
             try {
+<<<<<<< Updated upstream
                 if (e.key === 'cceabt_partners_v28' && e.newValue) setPartners(JSON.parse(e.newValue));
+=======
+                if (e.key === 'cceabt_partners_v26' && e.newValue) setPartners(JSON.parse(e.newValue));
+>>>>>>> Stashed changes
                 if (e.key === 'cceabt_news' && e.newValue) setNews(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_resources' && e.newValue) setResources(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_submissions' && e.newValue) setSubmissions(JSON.parse(e.newValue));
