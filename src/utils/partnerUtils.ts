@@ -74,12 +74,14 @@ export const partnerNameMapping: Record<string, string[]> = {
     'ambassade-france-au-togo',
     'french-embassy-togo'
   ],
-  'GENDA Water Alliance': [
+  'Gender and Water Alliance': [
     'genda-water-alliance',
     'genda',
     'genda-alliance',
     'genda-water',
-    'genda-alliance-togo'
+    'genda-alliance-togo',
+    'gender-and-water-alliance',
+    'gender-water-alliance'
   ],
   'Plan International Togo': [
     'plan-international-togo',
@@ -121,8 +123,8 @@ export const partnerLogoUrls: Record<string, string> = {
   'ADESCO - Appui au Développement Social et Communautaire': '/partners/image17.jpg',
   'AJT': '/partners/image23.png',
   'AJT - Action Jeune Togo': '/partners/image23.png',
-  'CDD': '/partners/image26.jpeg',
-  'CDD - Communication pour un Développement Durable': '/partners/image26.jpeg',
+  'CDD': '/partners/cdd.jpeg',
+  'CDD - Communication pour un Développement Durable': '/partners/cdd.jpeg',
 
   // PTF
   'AESEN': '/partners/aesn.png',
@@ -138,7 +140,11 @@ export const partnerLogoUrls: Record<string, string> = {
   'AAFEA': '/partners/aafea.png',
   'ENDWATERPOVERTY': '/partners/endwaterpoverty.png',
   'Ambassade de France au Togo': '/partners/ambassade-france.png',
+<<<<<<< Updated upstream
   'GENDA Water Alliance': '/partners/genda.jpg',
+=======
+  'Gender and Water Alliance': '/partners/gwa.jpeg',
+>>>>>>> Stashed changes
   'Plan International Togo': '/partners/plan-international.png',
   'SEVES': '/partners/seves.png',
   'SEVES - Systèmes Economiquement Viables pour l\'Eau aux Suds': '/partners/seves.png',
@@ -162,7 +168,7 @@ export const partnerLogoUrls: Record<string, string> = {
   'ONG ATAPE - Association Togolaise pour l\'Assainissement et la Protection de l\'Environnement': '',
   'OVAD-AP - Organisation des Volontaires Acteurs de Développement - Action Plus': '',
   'GIRCAFEM - Groupe International pour le Renforcement des Capacités Féminines': '',
-  'GIRCAFEM - Groupe International pour le Renforcement des Capacités Féminines': '',
+
   'CCDD - Collectif des citoyens pour le développement durable': '',
   'COLOMBE': ''
 };

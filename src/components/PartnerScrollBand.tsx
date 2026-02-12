@@ -9,6 +9,10 @@ interface PartnerScrollBandProps {
   title: string;
   icon: React.ReactNode;
   gradientFrom: string;
+  gradientTo?: string;
+  borderColor?: string;
+  hoverColor?: string;
+  animationDuration?: string;
   partnerType?: 'CA' | 'PTF';
 }
 
@@ -115,7 +119,7 @@ export default function PartnerScrollBand({
       'aafea': ['aafea'],
       'endwaterpoverty': ['endwaterpoverty', 'end water poverty', 'ewp'],
       'ambassade de france au togo': ['ambassade france', 'france togo', 'french embassy'],
-      'genda water alliance': ['genda', 'genda water', 'genda alliance'],
+      'gender and water alliance': ['genda', 'genda water', 'genda alliance', 'gwa', 'gender water', 'gender and water alliance'],
       'plan international togo': ['plan international', 'plan togo'],
       'seves': ['seves'],
       'cawst': ['cawst']

@@ -26,7 +26,7 @@ export const PTF_MEMBERS = [
   'AAFEA',
   'ENDWATERPOVERTY',
   'Ambassade de France au Togo',
-  'GENDA Water Alliance',
+  'Gender and Water Alliance',
   'Plan International Togo',
   'SEVES',
   'CAWST',
@@ -139,7 +139,7 @@ export function getPartnerStatus(partnerName: string): 'CA' | 'PTF' | 'Other' {
     if (ptf === 'Ambassade de France au Togo' && normalizedName.includes('ambassade') && normalizedName.includes('france') && normalizedName.includes('togo')) {
       return 'PTF';
     }
-    if (ptf === 'GENDA Water Alliance' && normalizedName.includes('genda') && normalizedName.includes('water')) {
+    if (ptf === 'Gender and Water Alliance' && (normalizedName.includes('genda') || (normalizedName.includes('gender') && normalizedName.includes('water')))) {
       return 'PTF';
     }
     if (ptf === 'UE' && (normalizedName === 'ue' || normalizedName.includes('union europeenne'))) {
@@ -151,12 +151,7 @@ export function getPartnerStatus(partnerName: string): 'CA' | 'PTF' | 'Other' {
     if (ptf === 'AAFEA' && (normalizedName.includes('aafea') || normalizedName.includes('alliance africaine'))) {
       return 'PTF';
     }
-    if (ptf === 'ENDWATERPOVERTY' && (normalizedName.includes('endwaterpoverty') || normalizedName.includes('end water poverty'))) {
-      return 'PTF';
-    }
-    if (ptf === 'GENDA Water Alliance' && (normalizedName.includes('genda') || normalizedName.includes('gender water'))) {
-      return 'PTF';
-    }
+
     if (ptf === 'Plan International Togo' && normalizedName.includes('plan international')) {
       return 'PTF';
     }

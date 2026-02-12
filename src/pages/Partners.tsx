@@ -14,8 +14,6 @@ export default function Partners() {
   console.log('All Partners:', partners);
   console.log('Institutional Partners Raw:', partners.filter(p => p.type === 'Institutionnel'));
 
-  // Grouping partners and sorting alphabetically
-  const isPTF = (name: string) => getPartnerStatus(name) === 'PTF';
 
   // Force uniqueness by name to prevent any display duplicates (Data hygiene safety)
   const uniquePartners = Array.from(
@@ -23,18 +21,17 @@ export default function Partners() {
   );
 
   const internationalMembers = uniquePartners
-    .filter(p => p.type === 'International')
+    .filter(p => p.type === 'International' && getPartnerStatus(p.name) === 'Other')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const nationalMembers = uniquePartners
-    .filter(p => p.type === 'National')
+    .filter(p => p.type === 'National' && getPartnerStatus(p.name) === 'Other')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const institutionalPartners = uniquePartners
     .filter(p => p.type === 'Institutionnel')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
-  // Filtrer uniquement les PTF qui ne sont pas déjà dans les autres catégories de membres
+  // PTF category: all PTF members regardless of type
   const techFinPartners = uniquePartners
-    .filter(p => isPTF(p.name))
-    .filter(p => p.type !== 'International' && p.type !== 'National' && p.type !== 'Institutionnel')
+    .filter(p => getPartnerStatus(p.name) === 'PTF')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
 
   const getTranslatedType = (type: string) => {
@@ -102,8 +99,8 @@ export default function Partners() {
               {imageState.path && !imageState.error ? (
                 <img
                   src={imageState.path}
-                  alt={partner.name}
-                  className="max-h-full max-w-[140px] object-contain"
+                  alt=""
+                  className="max-h-full max-w-[140px] object-contain indent-[-9999px]"
                   onError={handleImageError}
                 />
               ) : (
