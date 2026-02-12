@@ -141,7 +141,7 @@ const initialPartners: PartnerItem[] = [
         "email": "contact@cceabt.tg",
         "phone": "",
         "website": "",
-        "logo": "",
+        "logo": "/partners/image8.png",
         "password": "password123"
     },
     {
@@ -218,7 +218,7 @@ const initialPartners: PartnerItem[] = [
         "email": "contact@cceabt.tg",
         "phone": "",
         "website": "",
-        "logo": "",
+        "logo": "/partners/image2.jpeg",
         "password": "password123"
     },
     {
@@ -668,7 +668,7 @@ const initialPartners: PartnerItem[] = [
         "email": "contact@cceabt.tg",
         "phone": "",
         "website": "https://plan-international.org/togo/",
-        "logo": "/partners/image32.png",
+        "logo": "/partners/plan-international.png",
         "password": "password123"
     },
     {
@@ -683,6 +683,16 @@ const initialPartners: PartnerItem[] = [
         "password": "password123"
     },
 
+    {
+        id: "ptf_afd",
+        name: "AFD - Agence Française de Développement",
+        type: "Financier",
+        description: "Partenaire Technique et Financier",
+        email: "afd@cceabt.org",
+        password: "password123",
+        logo: "https://www.afd.fr/sites/afd/files/logo_0.png",
+        acronym: "AFD"
+    },
     {
         id: "ptf_aesen",
         name: "AESEN (Agence de l'eau Seine-Normandie)",
@@ -773,7 +783,7 @@ const initialPartners: PartnerItem[] = [
         email: "contact@cceabt.tg",
         phone: "",
         website: "http://asso-seves.org/",
-        logo: "/partners/image33.png",
+        logo: "/partners/seves.png",
         password: "password123"
     },
     {

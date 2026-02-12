@@ -15,8 +15,12 @@ export const partnerNameMapping: Record<string, string[]> = {
   'ODIAE': ['odiae', 'o-d-i-a-e', 'odiae-togo', 'odiae-tg'],
   'ADESCO': ['adesco', 'a-d-e-s-c-o', 'adesco-togo', 'adesco-tg'],
   'AJT': ['ajt', 'a-j-t', 'ajt-togo', 'ajt-tg'],
-  'CDD': ['cdd', 'c-d-d', 'cdd-togo', 'cdd-tg', 'communication-developpement-durable'],
-  'CCDD': ['ccdd', 'c-c-d-d', 'ccdd-togo', 'ccdd-tg', 'collectif-citoyens-developpement-durable'],
+  'CDD': ['cdd', 'c-d-d', 'collectif-citoyens-developpement-durable', 'communication-developpement-durable'],
+  'OCDI': ['ocdi', 'caritas', 'ocdi-caritas', 'ocdi-lom'],
+  'EAA': ['eaa', 'eau-assainissement-afrique'],
+  'COLOMBE': ['colombe'],
+  'ATAPE': ['atape', 'ong-atape'],
+  'PADIE': ['padie', 'p-a-d-i-e', 'pionniers-en-action'],
 
   // PTF
   'AESEN': ['aesen', 'a-e-s-e-n', 'aesen-togo', 'aesen-tg'],
@@ -101,22 +105,66 @@ export const partnerNameMapping: Record<string, string[]> = {
 // - AFD: Logo avec cercle dégradé bleu-rouge et texte "AFD"
 export const partnerLogoUrls: Record<string, string> = {
   // Conseil d'administration
+  'PADI': '/partners/image1.png',
+  'PADIE': '/partners/image1.png',
+  'PADIE - Pionniers en Action pour le Développempent Intégré à l’Environnement': '/partners/image1.png',
+  'Chaine de l\'espoir': '/partners/image31.jpeg',
+  'Chaîne de l\'Espoir': '/partners/image31.jpeg',
+  'La Chaîne de l\'Espoir': '/partners/image31.jpeg',
+  'La CDE - La Chaîne de l\'Espoir': '/partners/image31.jpeg',
+  'FIADI': '/partners/image10.png',
+  'ONG FIADI': '/partners/image10.png',
+  'ONG FIADI - Femmes Initiatives et Actions pour un Développement Intégral': '/partners/image10.png',
+  'ODIAE': '/partners/image12.jpg',
+  'ODIAE - Organisation pour le Développement et l\'Incitation à l\'Auto-Emploi': '/partners/image12.jpg',
+  'ADESCO': '/partners/image17.jpg',
+  'ADESCO - Appui au Développement Social et Communautaire': '/partners/image17.jpg',
+  'AJT': '/partners/image23.png',
+  'AJT - Action Jeune Togo': '/partners/image23.png',
   'CDD': '/partners/image26.jpeg',
+  'CDD - Communication pour un Développement Durable': '/partners/image26.jpeg',
 
   // PTF
   'AESEN': '/partners/aesn.png',
-  'Coalition Eau': '/partners/coalition-eau.png',
   'AFD': 'https://www.afd.fr/sites/afd/files/logo_0.png',
+  'AFD - Agence Française de Développement': 'https://www.afd.fr/sites/afd/files/logo_0.png',
   'UE': '/partners/ue.png',
+  'Union Européenne': '/partners/ue.png',
   'PSEAU': '/partners/pseau.png',
+  'pS-Eau': '/partners/pseau.png',
+  'Coalition Eau': '/partners/coalition-eau.png',
   'SWA': '/partners/swa.jpg',
+  'SWA - Sanitation and Water for All': '/partners/swa.jpg',
   'AAFEA': '/partners/aafea.png',
-  'ENDWATERPOVERTY': '/partners/end.png',
+  'ENDWATERPOVERTY': '/partners/endwaterpoverty.png',
   'Ambassade de France au Togo': '/partners/ambassade-france.png',
-  'GENDA Water Alliance': 'https://genderandwater.org/header.png',
+  'GENDA Water Alliance': '',
   'Plan International Togo': '/partners/plan-international.png',
   'SEVES': '/partners/seves.png',
-  'CAWST': '/partners/cawst.png'
+  'SEVES - Systèmes Economiquement Viables pour l\'Eau aux Suds': '/partners/seves.png',
+  'CAWST': '/partners/cawst.png',
+  'OCDI': '/partners/image2.jpeg',
+  'OCDI/CARITAS Lomé': '/partners/image2.jpeg',
+  'EAA': '/partners/image8.png',
+  'EAA - Eau Assainissement pour l\'Afrique': '/partners/image8.png',
+
+  // National members without logos (display premium icon)
+  'APSS - Association Promotion de la Salubrité Pour la Santé': '',
+  'CARD - Comité d\'Action pour la Recherche et le Developpement': '',
+  'CRT-RC - Croix-Rouge Togolaise / Région Centrale': '',
+  'E-D - Environnement et Développement': '',
+  'RAID - Recherche et Appuis aux Initiatives de Développement': '',
+  'RP/RC - Réseau Phast Région Centrale': '',
+  'CAP-EJR - Complexe Agro-pastoral Echo des Jeunes Ruraux': '',
+  'CEAPIC - Centre d\'Etudes et d\'Action pour la Promotion des Initiatives': '',
+  'JARC - Jeunesse Agricole Rurale Catholique': '',
+  'ONG JVS - ONG Le Jourdain-Vie et Santé': '',
+  'ONG ATAPE - Association Togolaise pour l\'Assainissement et la Protection de l\'Environnement': '',
+  'OVAD-AP - Organisation des Volontaires Acteurs de Développement - Action Plus': '',
+  'GIRCAFEM - Groupe International pour le Renforcement des Capacités Féminines': '',
+  'GIRCAFEM - Groupe International pour le Renforcement des Capacités Féminines': '',
+  'CCDD - Collectif des citoyens pour le développement durable': '',
+  'COLOMBE': ''
 };
 
 // Extensions d'images à essayer
@@ -165,6 +213,7 @@ export function generateImagePaths(partnerName: string): string[] {
 export function findPartnerImage(partnerName: string): string | null {
   // D'abord vérifier si on a une URL directe (et qu'elle n'est pas vide)
   const directUrl = partnerLogoUrls[partnerName];
+  if (directUrl === '') return null; // Explicitly marked as no logo
   if (directUrl && directUrl.trim() !== '') {
     return directUrl;
   }

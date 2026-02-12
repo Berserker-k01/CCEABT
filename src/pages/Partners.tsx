@@ -1,7 +1,11 @@
 import { ExternalLink, Handshake, Globe, Users, Building2, ShieldCheck } from 'lucide-react';
+
 import { useTranslation } from 'react-i18next';
 import { useData } from '../context/DataContext';
 import { getPartnerStatus } from '../utils/partnerStatus';
+import { findPartnerImage, generateImagePaths } from '../utils/partnerUtils';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 
 export default function Partners() {
@@ -17,17 +21,18 @@ export default function Partners() {
   );
 
   const internationalMembers = uniquePartners
-    .filter(p => p.type === 'International' && !isPTF(p.name))
+    .filter(p => p.type === 'International')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const nationalMembers = uniquePartners
-    .filter(p => p.type === 'National' && !isPTF(p.name))
+    .filter(p => p.type === 'National')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const institutionalPartners = uniquePartners
-    .filter(p => p.type === 'Institutionnel' && !isPTF(p.name))
+    .filter(p => p.type === 'Institutionnel')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
-  // Filtrer uniquement les 13 PTF de la liste définitive
+  // Filtrer uniquement les PTF qui ne sont pas déjà dans les autres catégories de membres
   const techFinPartners = uniquePartners
     .filter(p => isPTF(p.name))
+    .filter(p => p.type !== 'International' && p.type !== 'National' && p.type !== 'Institutionnel')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
 
   const getTranslatedType = (type: string) => {
@@ -41,56 +46,103 @@ export default function Partners() {
     }
   };
 
+  // Carousel Logic (Moved to Top Level)
+  const carouselPartners = [
+    'PADI', 'Chaine de l\'espoir', 'FIADI', 'ODIAE', 'ADESCO', 'AJT', 'CDD',
+    'AESEN', 'AFD', 'UE', 'PSEAU', 'Coalition Eau', 'SWA', 'AAFEA', 'ENDWATERPOVERTY',
+    'Ambassade de France au Togo', 'GENDA Water Alliance', 'Plan International Togo', 'SEVES', 'CAWST'
+  ];
+  const [carouselIndex, setCarouselIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % carouselPartners.length);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, []);
+
+  const currentPartnerName = carouselPartners[carouselIndex];
+
   // --- Premium Components ---
 
 
 
-  const PartnerCard = ({ partner }: { partner: any }) => (
-    <div className="group relative bg-white rounded-[2.5rem] p-8 border border-gray-100 hover:border-blue-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(59,130,246,0.1)] transition-all duration-700 h-full flex flex-col overflow-hidden">
-      {/* Subtle Gradient Glow */}
-      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-blue-500/20 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></div>
+  const PartnerCard = ({ partner }: { partner: any }) => {
+    const [imageState, setImageState] = useState({
+      path: (partner.logo && partner.logo.trim() !== "") ? partner.logo : findPartnerImage(partner.name),
+      error: false,
+      triedPaths: [] as string[]
+    });
 
-      <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-start justify-between mb-8">
-          <div className="h-16 w-full flex items-center justify-start group-hover:scale-105 transition-transform duration-500 origin-left">
-            {partner.logo ? (
-              <img src={partner.logo} alt={partner.name} className="max-h-full max-w-[140px] object-contain" />
-            ) : (
-              <div className="h-12 w-12 bg-gray-50 rounded-xl flex items-center justify-center">
-                <Users className="text-gray-300" />
-              </div>
+    const handleImageError = () => {
+      const allPaths = [partner.logo, findPartnerImage(partner.name), ...generateImagePaths(partner.name)].filter(Boolean) as string[];
+      const currentIndex = allPaths.indexOf(imageState.path || '');
+
+      if (currentIndex < allPaths.length - 1) {
+        setImageState(prev => ({
+          ...prev,
+          path: allPaths[currentIndex + 1],
+          triedPaths: [...prev.triedPaths, prev.path || '']
+        }));
+      } else {
+        setImageState(prev => ({ ...prev, error: true }));
+      }
+    };
+
+    return (
+      <div className="group relative bg-white rounded-[2.5rem] p-8 border border-gray-100 hover:border-blue-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(59,130,246,0.1)] transition-all duration-700 h-full flex flex-col overflow-hidden">
+        {/* Subtle Gradient Glow */}
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-blue-500/20 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></div>
+
+        <div className="relative z-10 flex flex-col h-full">
+          <div className="flex items-start justify-between mb-8">
+            <div className="h-16 w-full flex items-center justify-start group-hover:scale-105 transition-transform duration-500 origin-left">
+              {imageState.path && !imageState.error ? (
+                <img
+                  src={imageState.path}
+                  alt={partner.name}
+                  className="max-h-full max-w-[140px] object-contain"
+                  onError={handleImageError}
+                />
+              ) : (
+                <div className="h-16 w-16 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl flex items-center justify-center border border-blue-100 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                  {partner.type === 'International' ? <Globe className="text-blue-400" size={32} /> :
+                    partner.type === 'Institutionnel' ? <Building2 className="text-indigo-400" size={32} /> :
+                      <Users className="text-blue-400" size={32} />}
+                </div>
+              )}
+            </div>
+            {partner.website && (
+              <a
+                href={partner.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-2xl bg-gray-50 text-gray-400 hover:bg-blue-600 hover:text-white transition-all duration-300 transform group-hover:-translate-y-1"
+              >
+                <ExternalLink size={18} />
+              </a>
             )}
           </div>
-          {partner.website && (
-            <a
-              href={partner.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-2xl bg-gray-50 text-gray-400 hover:bg-blue-600 hover:text-white transition-all duration-300 transform group-hover:-translate-y-1"
-            >
-              <ExternalLink size={18} />
-            </a>
-          )}
-        </div>
 
-        <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-4 line-clamp-2">
-          {partner.name}
-        </h3>
+          <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-4 line-clamp-2">
+            {partner.name}
+          </h3>
 
-        <p className="text-gray-500 text-sm leading-relaxed mb-8 flex-grow line-clamp-3">
-          {partner.description || t('partners_page.committed_desc')}
-        </p>
+          <p className="text-gray-500 text-sm leading-relaxed mb-8 flex-grow line-clamp-3">
+            {partner.description || t('partners_page.committed_desc')}
+          </p>
 
-        <div className="pt-6 border-t border-gray-50">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600/60 py-1.5 px-3 bg-blue-50 rounded-full group-hover:bg-blue-100 transition-colors">
-              {getTranslatedType(partner.type)}
-            </span>
+          <div className="pt-6 border-t border-gray-50">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600/60 py-1.5 px-3 bg-blue-50 rounded-full group-hover:bg-blue-100 transition-colors">
+                {getTranslatedType(partner.type)}
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const PartnerSection = ({ title, icon: Icon, colorClass, data }: any) => {
     if (data.length === 0) return null;
@@ -194,6 +246,81 @@ export default function Partners() {
         <div className="container mx-auto px-4">
 
           <div className="max-w-7xl mx-auto mt-40">
+            {/* Single-Logo Infinite Carousel - Elite Box Design */}
+            {/* Landscape Partner Card - Elite Compact Design */}
+            <div className="reveal-view mb-40" style={{ animationDelay: '0.4s' }}>
+              <div className="max-w-3xl mx-auto">
+                <div className="bg-white rounded-[2rem] shadow-2xl border border-gray-100 overflow-hidden relative transform hover:-translate-y-1 transition-transform duration-500 min-h-[220px] flex flex-col md:flex-row">
+                  {/* Decorative background element */}
+                  <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-blue-50 to-transparent rounded-full -mr-10 -mt-10 opacity-70 pointer-events-none blur-2xl"></div>
+                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-green-50 to-transparent rounded-full -ml-10 -mb-10 opacity-70 pointer-events-none blur-2xl"></div>
+
+                  {/* Left Side: Logo Carousel */}
+                  <div className="relative z-10 w-full md:w-5/12 border-b md:border-b-0 md:border-r border-gray-100 bg-white/50 backdrop-blur-sm p-6 flex items-center justify-center">
+                    <div className="w-full h-full flex items-center justify-center relative min-h-[160px]">
+                      <div className="w-full h-full flex items-center justify-center relative min-h-[160px]">
+                        {/* Carousel Display */}
+                        <div className="w-full h-full relative overflow-hidden flex items-center justify-center">
+                          <AnimatePresence mode="popLayout">
+                            <motion.div
+                              key={carouselIndex}
+                              initial={{ opacity: 0, x: 100 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              exit={{ opacity: 0, x: -100 }}
+                              transition={{ duration: 0.5, ease: "easeInOut" }}
+                              className="absolute inset-0 flex items-center justify-center w-full h-full"
+                            >
+                              {(() => {
+                                const name = currentPartnerName;
+                                const imageUrl = findPartnerImage(name);
+                                const isUrl = imageUrl && (imageUrl.startsWith('http') || imageUrl.startsWith('/'));
+
+                                return (
+                                  <div className="w-full h-full flex items-center justify-center">
+                                    {isUrl ? (
+                                      <img
+                                        src={imageUrl}
+                                        alt={name}
+                                        className="max-h-32 max-w-[90%] object-contain drop-shadow-sm"
+                                      />
+                                    ) : (
+                                      <div className="flex flex-col items-center">
+                                        <div className="bg-blue-50 p-5 rounded-2xl mb-3">
+                                          <Users className="text-blue-500" size={40} />
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })()}
+                            </motion.div>
+                          </AnimatePresence>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Side: Text Content */}
+                  <div className="relative z-10 w-full md:w-7/12 p-6 md:p-10 flex flex-col justify-center text-left">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="inline-flex items-center justify-center p-2 rounded-xl bg-blue-50 text-blue-600 shadow-sm border border-blue-100">
+                        <Handshake size={20} />
+                      </div>
+                      <h2 className="text-xl md:text-2xl font-black text-gray-800 tracking-tight">
+                        {t('home.partners_ptf_title')} <span className="text-blue-600">&</span> {t('home.partners_ca_title')}
+                      </h2>
+                    </div>
+
+                    <div className="h-1 w-20 bg-gradient-to-r from-blue-500 to-green-500 rounded-full mb-4"></div>
+
+                    <p className="text-base text-gray-500 leading-relaxed font-medium">
+                      Nous sommes fiers de collaborer avec ces organisations qui partagent notre vision pour un meilleur accès à l'eau et à l'assainissement au Togo.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* National Members */}
             <div className="reveal-view" style={{ animationDelay: '0.6s' }}>
               <PartnerSection

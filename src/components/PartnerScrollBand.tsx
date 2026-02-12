@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { generateImagePaths, findPartnerImage } from '../utils/partnerUtils';
 import { useData } from '../context/DataContext';
-import { Globe, Users, Building2, Briefcase, Handshake, TrendingUp } from 'lucide-react';
+import { Globe, Users, Building2 } from 'lucide-react';
 
 interface PartnerScrollBandProps {
   partners: string[];
@@ -22,8 +22,7 @@ export default function PartnerScrollBand({
   partners,
   title,
   icon,
-  gradientFrom,
-  partnerType = 'CA'
+  gradientFrom
 }: PartnerScrollBandProps) {
   const { partners: allPartners } = useData();
   const [imageStates, setImageStates] = useState<Record<string, PartnerImageState>>({});
@@ -139,6 +138,10 @@ export default function PartnerScrollBand({
     const initialStates: Record<string, PartnerImageState> = {};
     partners.forEach(name => {
       const directUrl = findPartnerImage(name);
+      if (directUrl === null) {
+        initialStates[name] = { currentPath: null, error: true, triedPaths: [] };
+        return;
+      }
       if (directUrl && directUrl.startsWith('http')) {
         initialStates[name] = { currentPath: directUrl, error: false, triedPaths: [] };
         return;
@@ -179,42 +182,34 @@ export default function PartnerScrollBand({
     });
   };
 
-  const getPartnerIcon = (name: string) => {
-    const partnerData = findPartnerByName(name);
-    if (partnerData?.type) {
-      switch (partnerData.type) {
-        case 'Institutionnel': return <Building2 size={32} className="text-gray-400" />;
-        case 'International': return <Globe size={32} className="text-gray-400" />;
-        case 'National': return <Users size={32} className="text-gray-400" />;
-        case 'Technique':
-        case 'Financier': return <Briefcase size={32} className="text-gray-400" />;
-        default: return <Handshake size={32} className="text-gray-400" />;
-      }
-    }
-    return partnerType === 'PTF' ? <TrendingUp size={32} className="text-gray-400" /> : <Users size={32} className="text-gray-400" />;
-  };
 
   const PartnerCard = ({ name }: { name: string }) => {
     const state = imageStates[name];
     const hasImage = state?.currentPath && !state?.error;
+    const partnerData = findPartnerByName(name);
 
     return (
-      <div className="flex flex-col items-center justify-center p-4 h-56 transition-transform hover:scale-105">
-        <div className="w-full h-full flex items-center justify-center relative bg-white/50 backdrop-blur-sm rounded-[2rem] border border-gray-100 shadow-sm p-8 group overflow-hidden">
+      <div className="flex flex-col items-center justify-center p-3 h-80 transition-transform hover:scale-105">
+        <div className="w-full h-full flex items-center justify-center relative bg-white/80 backdrop-blur-sm rounded-[2.5rem] border border-gray-100 shadow-md p-4 group overflow-hidden">
+          {/* Subtle Gradient Glow */}
+          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-blue-500/10 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700"></div>
+
           {hasImage ? (
             <img
               src={state.currentPath!}
               alt={name}
-              className="max-w-full max-h-full object-contain filter brightness-100 group-hover:brightness-105 transition-all duration-500"
+              className="max-w-full max-h-full object-contain filter group-hover:scale-110 transition-all duration-700"
               onError={() => handleImageError(name)}
             />
           ) : (
             <div className="flex flex-col items-center justify-center">
-              <div className={`w-16 h-16 rounded-2xl ${gradientFrom} flex items-center justify-center mb-3`}>
-                {getPartnerIcon(name)}
+              <div className="h-16 w-16 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl flex items-center justify-center border border-blue-100 shadow-inner group-hover:scale-110 transition-transform duration-500 mb-3">
+                {partnerData?.type === 'International' ? <Globe className="text-blue-400" size={32} /> :
+                  partnerData?.type === 'Institutionnel' ? <Building2 className="text-indigo-400" size={32} /> :
+                    <Users className="text-blue-400" size={32} />}
               </div>
-              <span className={`text-[10px] font-black uppercase tracking-widest text-gray-500 text-center px-2 line-clamp-2`}>
-                {name}
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-center px-2 line-clamp-1">
+                {partnerData?.acronym || name}
               </span>
             </div>
           )}
@@ -235,7 +230,7 @@ export default function PartnerScrollBand({
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 overflow-hidden" ref={containerRef}>
-        <div className="flex items-center h-64 overflow-hidden">
+        <div className="flex items-center h-80 overflow-hidden">
           <motion.div
             animate={{ x: `-${displayIndex * 100}%` }}
             transition={{
@@ -248,7 +243,7 @@ export default function PartnerScrollBand({
             {displayPages.map((page, pageIdx) => (
               <div
                 key={pageIdx}
-                className="flex-shrink-0 w-full grid gap-6"
+                className="flex-shrink-0 w-full grid gap-4"
                 style={{
                   gridTemplateColumns: `repeat(${itemsPerPage}, minmax(0, 1fr))`
                 }}
