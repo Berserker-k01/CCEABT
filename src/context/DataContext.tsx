@@ -979,7 +979,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     const [partners, setPartners] = useState<PartnerItem[]>(() => {
         try {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             const savedPartners = localStorage.getItem('cceabt_partners_v27');
+=======
+            const savedPartners = localStorage.getItem('cceabt_partners_v26');
+>>>>>>> Stashed changes
 =======
             const savedPartners = localStorage.getItem('cceabt_partners_v26');
 >>>>>>> Stashed changes
@@ -1007,7 +1011,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => { localStorage.setItem('cceabt_resources', JSON.stringify(resources)); }, [resources]);
     useEffect(() => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         localStorage.setItem('cceabt_partners_v27', JSON.stringify(partners));
+=======
+        localStorage.setItem('cceabt_partners_v26', JSON.stringify(partners));
+>>>>>>> Stashed changes
 =======
         localStorage.setItem('cceabt_partners_v26', JSON.stringify(partners));
 >>>>>>> Stashed changes
@@ -1020,7 +1028,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
             if (e.key === 'cceabt_drive_url' && e.newValue) setDriveUrl(e.newValue);
             try {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 if (e.key === 'cceabt_partners_v27' && e.newValue) setPartners(JSON.parse(e.newValue));
+=======
+                if (e.key === 'cceabt_partners_v26' && e.newValue) setPartners(JSON.parse(e.newValue));
+>>>>>>> Stashed changes
 =======
                 if (e.key === 'cceabt_partners_v26' && e.newValue) setPartners(JSON.parse(e.newValue));
 >>>>>>> Stashed changes

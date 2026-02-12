@@ -141,7 +141,11 @@ export const partnerLogoUrls: Record<string, string> = {
   'ENDWATERPOVERTY': '/partners/endwaterpoverty.png',
   'Ambassade de France au Togo': '/partners/ambassade-france.png',
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   'GENDA Water Alliance': '/partners/genda.jpg',
+=======
+  'Gender and Water Alliance': '/partners/gwa.jpeg',
+>>>>>>> Stashed changes
 =======
   'Gender and Water Alliance': '/partners/gwa.jpeg',
 >>>>>>> Stashed changes
