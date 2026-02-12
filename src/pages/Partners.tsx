@@ -99,8 +99,8 @@ export default function Partners() {
               {imageState.path && !imageState.error ? (
                 <img
                   src={imageState.path}
-                  alt=""
-                  className="max-h-full max-w-[140px] object-contain indent-[-9999px]"
+                  alt={partner.name}
+                  className="max-h-full max-w-[140px] object-contain"
                   onError={handleImageError}
                 />
               ) : (

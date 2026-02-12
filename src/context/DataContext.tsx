@@ -898,9 +898,7 @@ const initialPartners: PartnerItem[] = [
             "Projet FSPI composante 2 « accompagnement des communes togolaises dans le développement de leurs services publics locaux essentiels de gestion des déchets »"
         ]
     },
-<<<<<<< Updated upstream
 
-=======
     {
         id: "inst_eau_assainissement",
         name: "Ministère délégué chargé de l'eau et de l'assainissement",
@@ -946,7 +944,6 @@ const initialPartners: PartnerItem[] = [
         password: "password123",
         logo: "/partners/autorite_electricite.png"
     }
->>>>>>> Stashed changes
 ];
 
 
@@ -982,11 +979,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
     const [partners, setPartners] = useState<PartnerItem[]>(() => {
         try {
-<<<<<<< Updated upstream
-            const savedPartners = localStorage.getItem('cceabt_partners_v28');
-=======
-            const savedPartners = localStorage.getItem('cceabt_partners_v26');
->>>>>>> Stashed changes
+            const savedPartners = localStorage.getItem('cceabt_partners_v29');
             return savedPartners ? JSON.parse(savedPartners) : initialPartners;
         } catch (error) {
             console.error('Error parsing partners from localStorage', error);
@@ -1010,11 +1003,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => { localStorage.setItem('cceabt_news', JSON.stringify(news)); }, [news]);
     useEffect(() => { localStorage.setItem('cceabt_resources', JSON.stringify(resources)); }, [resources]);
     useEffect(() => {
-<<<<<<< Updated upstream
-        localStorage.setItem('cceabt_partners_v28', JSON.stringify(partners));
-=======
-        localStorage.setItem('cceabt_partners_v26', JSON.stringify(partners));
->>>>>>> Stashed changes
+        localStorage.setItem('cceabt_partners_v29', JSON.stringify(partners));
     }, [partners]);
     useEffect(() => { localStorage.setItem('cceabt_submissions', JSON.stringify(submissions)); }, [submissions]);
 
@@ -1023,11 +1012,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         const handleStorageChange = (e: StorageEvent) => {
             if (e.key === 'cceabt_drive_url' && e.newValue) setDriveUrl(e.newValue);
             try {
-<<<<<<< Updated upstream
-                if (e.key === 'cceabt_partners_v28' && e.newValue) setPartners(JSON.parse(e.newValue));
-=======
-                if (e.key === 'cceabt_partners_v26' && e.newValue) setPartners(JSON.parse(e.newValue));
->>>>>>> Stashed changes
+                if (e.key === 'cceabt_partners_v29' && e.newValue) setPartners(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_news' && e.newValue) setNews(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_resources' && e.newValue) setResources(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_submissions' && e.newValue) setSubmissions(JSON.parse(e.newValue));

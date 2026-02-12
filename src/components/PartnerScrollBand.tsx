@@ -146,7 +146,7 @@ export default function PartnerScrollBand({
         initialStates[name] = { currentPath: null, error: true, triedPaths: [] };
         return;
       }
-      if (directUrl && directUrl.startsWith('http')) {
+      if (directUrl && directUrl.trim() !== '') {
         initialStates[name] = { currentPath: directUrl, error: false, triedPaths: [] };
         return;
       }
