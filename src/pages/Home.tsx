@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative text-white py-24 overflow-hidden">
+      <section className="relative text-white py-16 md:py-24 overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div
@@ -39,7 +39,7 @@ export default function Home() {
               <span className="text-base font-bold text-white">{t('home.slogan')}</span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-12 leading-tight animate-slide-up">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 md:mb-12 leading-tight animate-slide-up">
               <span className="bg-gradient-to-r from-blue-200 to-green-200 bg-clip-text text-transparent">
                 {t('home.hero_title')}
               </span>
@@ -73,7 +73,7 @@ export default function Home() {
       </section>
 
       {/* Qui sommes-nous */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-12 md:py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
@@ -118,7 +118,7 @@ export default function Home() {
       </section>
 
       {/* Nos axes d'action */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-12 md:py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">{t('home.action_axes')}</h2>
@@ -176,7 +176,7 @@ export default function Home() {
       </section>
 
       {/* Actualités récentes */}
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">{t('home.recent_news')}</h2>
@@ -230,7 +230,7 @@ export default function Home() {
       </section>
 
       {/* Nos partenaires */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
         {/* Décoration de fond */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-20 left-10 w-96 h-96 bg-blue-400 rounded-full blur-3xl"></div>
@@ -292,7 +292,7 @@ export default function Home() {
       </section>
 
       {/* Appel à l'action final */}
-      <section className="relative py-24 bg-gradient-to-br from-blue-600 via-blue-700 to-green-600 text-white overflow-hidden">
+      <section className="relative py-16 md:py-24 bg-gradient-to-br from-blue-600 via-blue-700 to-green-600 text-white overflow-hidden">
         {/* Animated background */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse"></div>

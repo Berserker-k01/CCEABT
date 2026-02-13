@@ -111,6 +111,32 @@ const PartnerSection = ({ title, icon, partners, t, getTranslatedType }: any) =>
   );
 };
 
+const CarouselItem = ({ name }: { name: string }) => {
+  const [error, setError] = useState(false);
+  const imageUrl = findPartnerImage(name);
+  const hasImage = imageUrl && (imageUrl.startsWith('http') || imageUrl.startsWith('/')) && !error;
+
+  return (
+    <div className="w-full h-full flex items-center justify-center">
+      {hasImage ? (
+        <img
+          src={imageUrl}
+          alt={name}
+          className="max-h-32 max-w-[90%] object-contain drop-shadow-sm"
+          onError={() => setError(true)}
+        />
+      ) : (
+        <div className="flex flex-col items-center animate-fade-in">
+          <div className="bg-blue-50 p-5 rounded-2xl mb-3 shadow-sm">
+            <Users className="text-blue-500" size={40} />
+          </div>
+          <span className="text-sm font-bold text-gray-400 uppercase tracking-widest text-center max-w-[200px]">{name}</span>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function Partners() {
   const { t } = useTranslation();
   const { partners } = useData();
@@ -200,7 +226,7 @@ export default function Partners() {
       `}</style>
 
       {/* Hero Section */}
-      <section className="relative pt-48 pb-64 overflow-hidden border-b border-white/5 bg-[#050810] text-white">
+      <section className="relative pt-32 pb-40 md:pt-48 md:pb-64 overflow-hidden border-b border-white/5 bg-[#050810] text-white">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] bg-blue-600/10 rounded-full blur-[150px] animate-pulse"></div>
           <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-green-500/5 rounded-full blur-[120px]"></div>
@@ -215,7 +241,7 @@ export default function Partners() {
                 <span className="text-[10px] font-black tracking-[0.3em] uppercase opacity-60">{t('home.partners_subtitle')}</span>
               </div>
 
-              <h1 className="text-7xl md:text-[10rem] font-black mb-10 leading-[0.85] tracking-[-0.04em]">
+              <h1 className="text-5xl md:text-[10rem] font-black mb-10 leading-[0.85] tracking-[-0.04em]">
                 {t('network.hero_title').split(' ').map((word, i) => (
                   <span key={i} className={`inline-block ${i % 2 === 1 ? 'text-transparent bg-clip-text bg-[linear-gradient(135deg,#60A5FA_0%,#3B82F6_50%,#2563EB_100%)]' : 'text-white'}`}>
                     {word}{' '}
@@ -235,18 +261,18 @@ export default function Partners() {
       </section>
 
       {/* Main Content Area */}
-      <section className="py-40">
+      <section className="py-20 md:py-40">
         <div className="container mx-auto px-4">
-          <div className="max-w-7xl mx-auto mt-40">
+          <div className="max-w-7xl mx-auto mt-20 md:mt-40">
             {/* Landscape Partner Card */}
-            <div className="reveal-view mb-40" style={{ animationDelay: '0.4s' }}>
+            <div className="reveal-view mb-20 md:mb-40" style={{ animationDelay: '0.4s' }}>
               <div className="max-w-3xl mx-auto">
-                <div className="bg-white rounded-[2rem] shadow-2xl border border-gray-100 overflow-hidden relative transform hover:-translate-y-1 transition-transform duration-500 min-h-[220px] flex flex-col md:flex-row">
+                <div className="bg-white rounded-[2rem] shadow-2xl border border-gray-100 overflow-hidden relative transform hover:-translate-y-1 transition-transform duration-500 min-h-[350px] md:min-h-[220px] flex flex-col md:flex-row">
                   <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-blue-50 to-transparent rounded-full -mr-10 -mt-10 opacity-70 pointer-events-none blur-2xl"></div>
                   <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-green-50 to-transparent rounded-full -ml-10 -mb-10 opacity-70 pointer-events-none blur-2xl"></div>
 
                   <div className="relative z-10 w-full md:w-5/12 border-b md:border-b-0 md:border-r border-gray-100 bg-white/50 backdrop-blur-sm p-6 flex items-center justify-center">
-                    <div className="w-full h-full flex items-center justify-center relative min-h-[160px]">
+                    <div className="w-full h-full flex items-center justify-center relative min-h-[200px] md:min-h-[160px]">
                       <div className="w-full h-full relative overflow-hidden flex items-center justify-center">
                         <AnimatePresence mode="popLayout">
                           <motion.div
@@ -258,27 +284,7 @@ export default function Partners() {
                             className="absolute inset-0 flex items-center justify-center w-full h-full"
                           >
                             {(() => {
-                              const name = currentPartnerName;
-                              const imageUrl = findPartnerImage(name);
-                              const isUrl = imageUrl && (imageUrl.startsWith('http') || imageUrl.startsWith('/'));
-
-                              return (
-                                <div className="w-full h-full flex items-center justify-center">
-                                  {isUrl ? (
-                                    <img
-                                      src={imageUrl}
-                                      alt={name}
-                                      className="max-h-32 max-w-[90%] object-contain drop-shadow-sm"
-                                    />
-                                  ) : (
-                                    <div className="flex flex-col items-center">
-                                      <div className="bg-blue-50 p-5 rounded-2xl mb-3">
-                                        <Users className="text-blue-500" size={40} />
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              );
+                              return <CarouselItem name={currentPartnerName} />;
                             })()}
                           </motion.div>
                         </AnimatePresence>
@@ -349,7 +355,7 @@ export default function Partners() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-40 bg-gray-50 relative overflow-hidden">
+      <section className="py-20 md:py-40 bg-gray-50 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600 rounded-full blur-[120px]"></div>
         </div>
