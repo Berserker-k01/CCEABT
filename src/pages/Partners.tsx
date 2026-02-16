@@ -160,13 +160,13 @@ export default function Partners() {
   );
 
   const nationalMembers = uniquePartners
-    .filter(p => p.type === 'National' && getPartnerStatus(p.name) !== 'PTF')
+    .filter(p => p.type === 'National' && getPartnerStatus(p.name) !== 'PTF' && getPartnerStatus(p.name) !== 'CA')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const internationalMembers = uniquePartners
-    .filter(p => p.type === 'International' && getPartnerStatus(p.name) !== 'PTF')
+    .filter(p => p.type === 'International' && getPartnerStatus(p.name) !== 'PTF' && getPartnerStatus(p.name) !== 'CA')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const institutionalPartners = uniquePartners
-    .filter(p => p.type === 'Institutionnel' && getPartnerStatus(p.name) !== 'PTF')
+    .filter(p => p.type === 'Institutionnel' && getPartnerStatus(p.name) !== 'PTF' && getPartnerStatus(p.name) !== 'CA')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const techFinPartners = uniquePartners
     .filter(p => getPartnerStatus(p.name) === 'PTF') // Simplified: ANY partner with PTF status goes here

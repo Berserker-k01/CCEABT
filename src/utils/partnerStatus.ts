@@ -56,6 +56,11 @@ export function getPartnerStatus(partnerName: string): 'CA' | 'PTF' | 'Other' {
     return 'Other';
   }
 
+  // Force CDE / Chaine de l'Espoir en CA
+  if (normalizedName.includes('cde') || (normalizedName.includes('chaine') && normalizedName.includes('espoir'))) {
+    return 'CA';
+  }
+
   // Vérifier si c'est un membre du CA
   for (const ca of CA_MEMBERS) {
     const normalizedCA = normalizePartnerName(ca);
