@@ -112,7 +112,7 @@ export default function Network() {
     .map(p => ({
       ...p,
       status: getPartnerStatus(p.name),
-      displayOrder: getPartnerDisplayOrder(getPartnerStatus(p.name), p.type)
+      displayOrder: getPartnerDisplayOrder(getPartnerStatus(p.name), p.type, p.name)
     }))
     .filter(p => {
       const normalizedName = p.name.toLowerCase();

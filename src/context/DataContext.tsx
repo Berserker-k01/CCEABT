@@ -773,7 +773,7 @@ const initialPartners: PartnerItem[] = [
         description: "Partenaire Technique et Financier",
         email: "genda@cceabt.org",
         password: "password123",
-        logo: "/partners/gwa.jpeg"
+        logo: "/partners/genda.jpg"
     },
     {
         id: "seves___economiquement_187",

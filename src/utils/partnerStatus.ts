@@ -3,11 +3,8 @@
 
 // Membres du Conseil d'Administration
 export const CA_MEMBERS = [
-  'Chaine de l\'espoir',
-  'Chaîne de l\'Espoir',
-  'La Chaîne de l\'Espoir',
-  'La CDE',
-  'CDE',
+  'PADIE',
+  'La CDE - La Chaîne de l\'Espoir', // Position 2 comme sur la page d'accueil
   'FIADI',
   'ODIAE',
   'ADESCO',
@@ -26,19 +23,10 @@ export const PTF_MEMBERS = [
   'AAFEA',
   'ENDWATERPOVERTY',
   'Ambassade de France au Togo',
-  'Gender and Water Alliance',
+  'Gender and Water Alliance', // GENDA Water Alliance
   'Plan International Togo',
   'SEVES',
-  'CAWST',
-  'SEDIF',
-  'Commune des Lacs 1',
-  'PADIE',
-  'Agence de l\'eau Seine-Normandie',
-  'Service Public de l\'eau',
-  'Région Maritime',
-  'République Française',
-  'AHEAD-Africa',
-  'Croix-Rouge Togolaise'
+  'CAWST'
 ];
 
 /**
@@ -94,11 +82,14 @@ export function getPartnerStatus(partnerName: string): 'CA' | 'PTF' | 'Other' {
     }
 
     // Vérifier aussi les acronymes et mots-clés pour Chaine de l'espoir
-    if (normalizedCA === 'chaine de lespoir' || normalizedCA === 'chaîne de lespoir') {
+    if (normalizedCA.includes('chaine') && normalizedCA.includes('espoir')) {
       if (normalizedName.includes('chaine') && normalizedName.includes('espoir')) {
         return 'CA';
       }
       if (normalizedName.includes('cde') && normalizedName.includes('espoir')) {
+        return 'CA';
+      }
+      if (normalizedName.includes('cde') && normalizedName.includes('chaine')) {
         return 'CA';
       }
     }
@@ -130,7 +121,7 @@ export function getPartnerStatus(partnerName: string): 'CA' | 'PTF' | 'Other' {
     if (ptf === 'Coalition Eau' && normalizedName.includes('coalition') && normalizedName.includes('eau')) {
       return 'PTF';
     }
-    if (ptf === 'SWA' && (normalizedName === 'swa' || normalizedName.includes('sanitation water'))) {
+    if (ptf === 'SWA' && (normalizedName.includes('swa') || (normalizedName.includes('sanitation') && normalizedName.includes('water')))) {
       return 'PTF';
     }
     if (ptf === 'ENDWATERPOVERTY' && (normalizedName.includes('endwaterpoverty') || normalizedName.includes('end water poverty'))) {
@@ -145,7 +136,7 @@ export function getPartnerStatus(partnerName: string): 'CA' | 'PTF' | 'Other' {
     if (ptf === 'UE' && (normalizedName === 'ue' || normalizedName.includes('union europeenne'))) {
       return 'PTF';
     }
-    if (ptf === 'SWA' && (normalizedName === 'swa' || normalizedName.includes('sanitation') || normalizedName.includes('water for all'))) {
+    if (ptf === 'SWA' && (normalizedName.includes('swa') || (normalizedName.includes('sanitation') && normalizedName.includes('water')))) {
       return 'PTF';
     }
     if (ptf === 'AAFEA' && (normalizedName.includes('aafea') || normalizedName.includes('alliance africaine'))) {
@@ -158,7 +149,7 @@ export function getPartnerStatus(partnerName: string): 'CA' | 'PTF' | 'Other' {
     if (ptf === 'CAWST' && normalizedName.includes('cawst')) {
       return 'PTF';
     }
-    if (ptf === 'pS-Eau' && (normalizedName.includes('pseau') || normalizedName.includes('ps-eau'))) {
+    if (ptf === 'pS-Eau' && (normalizedName.includes('pseau') || normalizedName.includes('ps-eau') || normalizedName.includes('ps eau'))) {
       return 'PTF';
     }
     if (ptf === 'SEDIF' && (normalizedName.includes('sedif') || normalizedName.includes('service public'))) {
@@ -168,9 +159,6 @@ export function getPartnerStatus(partnerName: string): 'CA' | 'PTF' | 'Other' {
       return 'PTF';
     }
     if (ptf === 'Commune des Lacs 1' && (normalizedName.includes('lacs 1') || normalizedName.includes('lacs1') || normalizedName.includes('region maritime'))) {
-      return 'PTF';
-    }
-    if (ptf === 'PADIE' && (normalizedName.includes('padie') || normalizedName.includes('pionniers'))) {
       return 'PTF';
     }
     if (ptf === 'SEVES' && normalizedName.includes('seves')) {
@@ -188,8 +176,14 @@ export function getPartnerStatus(partnerName: string): 'CA' | 'PTF' | 'Other' {
  */
 export function getPartnerDisplayOrder(
   status: 'CA' | 'PTF' | 'Other',
-  category: 'National' | 'International' | 'Institutionnel' | 'Technique' | 'Financier'
+  category: string, // Changed from strict union to string to allow easier usage
+  partnerName?: string
 ): number {
+  // Priorité absolue pour PADIE
+  if (partnerName && (partnerName.toLowerCase().includes('padie') || partnerName.toLowerCase().includes('pionniers'))) {
+    return 0; // Priorité maximale (top of list)
+  }
+
   // Priorité de statut (plus petit = plus prioritaire)
   const statusPriority = {
     'CA': 1,
@@ -198,7 +192,8 @@ export function getPartnerDisplayOrder(
   };
 
   // Priorité de catégorie (National avant International)
-  const categoryPriority = {
+  // Use 'any' or index signature to allow string access
+  const categoryPriority: Record<string, number> = {
     'National': 1,
     'International': 2,
     'Institutionnel': 3,
@@ -207,5 +202,25 @@ export function getPartnerDisplayOrder(
   };
 
   // Combiner les priorités (statut * 100 + catégorie pour garantir l'ordre)
-  return statusPriority[status] * 100 + (categoryPriority[category] || 99);
+  const statusScore = statusPriority[status] || 99;
+
+  // Si c'est un membre du CA, on respecte l'ordre précis de la liste CA_MEMBERS
+  if (status === 'CA' && partnerName) {
+    const normalizedName = normalizePartnerName(partnerName);
+    const index = CA_MEMBERS.findIndex(caMember => {
+      const normalizedCA = normalizePartnerName(caMember);
+      return normalizedName === normalizedCA ||
+        normalizedName.includes(normalizedCA) ||
+        normalizedCA.includes(normalizedName);
+    });
+
+    if (index !== -1) {
+      // On retourne 10 + index pour être sûr d'être avant les 100+ (catégories) tout en gardant l'ordre
+      // PADIE sera 10 (ou 0 car géré au dessus), FIADI 11, etc.
+      return 10 + index;
+    }
+  }
+
+  const categoryScore = categoryPriority[category] || 99;
+  return statusScore * 100 + categoryScore;
 }

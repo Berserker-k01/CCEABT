@@ -84,8 +84,8 @@ const PartnerCard = ({ partner, t, getTranslatedType }: { partner: any, t: any, 
   );
 };
 
-const PartnerSection = ({ title, icon, partners, t, getTranslatedType }: any) => {
-  if (!partners || partners.length === 0) return null;
+const PartnerSection = ({ title, icon, partners, t, getTranslatedType, forceRender = false }: any) => {
+  if ((!partners || partners.length === 0) && !forceRender) return null;
 
   return (
     <div className="mb-40">
@@ -98,15 +98,24 @@ const PartnerSection = ({ title, icon, partners, t, getTranslatedType }: any) =>
           </h2>
         </div>
         <div className="hidden md:block text-sm font-bold text-gray-400 uppercase tracking-widest">
-          {partners.length} {t('partners_page.partners_found')}
+          {partners ? partners.length : 0} {t('partners_page.partners_found')}
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {partners.map((partner: any, index: number) => (
-          <PartnerCard key={index} partner={partner} t={t} getTranslatedType={getTranslatedType} />
-        ))}
-      </div>
+      {(!partners || partners.length === 0) ? (
+        <div className="flex flex-col items-center justify-center py-20 bg-gray-50 rounded-[2.5rem] border border-dashed border-gray-200">
+          <div className="bg-white p-6 rounded-full shadow-sm mb-4">
+            <Globe className="text-gray-300" size={48} />
+          </div>
+          <p className="text-gray-400 font-medium text-lg">Aucun partenaire pour le moment</p>
+        </div>
+      ) : (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {partners.map((partner: any, index: number) => (
+            <PartnerCard key={index} partner={partner} t={t} getTranslatedType={getTranslatedType} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -151,19 +160,16 @@ export default function Partners() {
   );
 
   const nationalMembers = uniquePartners
-    .filter(p => p.type === 'National')
+    .filter(p => p.type === 'National' && getPartnerStatus(p.name) !== 'PTF')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const internationalMembers = uniquePartners
-    .filter(p => p.type === 'International')
+    .filter(p => p.type === 'International' && getPartnerStatus(p.name) !== 'PTF')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const institutionalPartners = uniquePartners
-    .filter(p => p.type === 'Institutionnel')
+    .filter(p => p.type === 'Institutionnel' && getPartnerStatus(p.name) !== 'PTF')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const techFinPartners = uniquePartners
-    .filter(p => getPartnerStatus(p.name) === 'PTF' &&
-      p.type !== 'International' &&
-      p.type !== 'National' &&
-      p.type !== 'Institutionnel')
+    .filter(p => getPartnerStatus(p.name) === 'PTF') // Simplified: ANY partner with PTF status goes here
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
 
   const getTranslatedType = (type: string) => {
@@ -328,6 +334,7 @@ export default function Partners() {
                 icon={<Globe size={28} className="text-blue-600" />}
                 t={t}
                 getTranslatedType={getTranslatedType}
+                forceRender={true}
               />
             </div>
 
