@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, FileText, Download, UserPlus, Handshake, X, Building2, ExternalLink, Globe, Award, TrendingUp } from 'lucide-react';
+import { Users, FileText, Download, UserPlus, Handshake, X, Building2, ExternalLink, Globe, Award, TrendingUp, Linkedin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useData } from '../context/DataContext';
 import { getPartnerStatus, getPartnerDisplayOrder } from '../utils/partnerStatus';
 import { findPartnerImage, generateImagePaths } from '../utils/partnerUtils';
 
-const PartnerCard = ({ partner, index, navigate, setSelectedPartner, getTranslatedType, t }: any) => {
+const PartnerCard = ({ partner, index, setSelectedPartner, getTranslatedType, t }: any) => {
   const [imageState, setImageState] = useState({
     path: (partner.logo && partner.logo.trim() !== "") ? partner.logo : findPartnerImage(partner.name),
     error: false
@@ -53,6 +53,19 @@ const PartnerCard = ({ partner, index, navigate, setSelectedPartner, getTranslat
             )}
           </div>
           <div className="flex gap-2">
+            {partner.linkedin && (
+              <a
+                href={partner.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="p-2 bg-blue-50 text-blue-600 hover:bg-blue-700 hover:text-white rounded-xl transition-all duration-300"
+              >
+                <div className="w-[18px] h-[18px] relative flex items-center justify-center">
+                  <span className="font-bold text-xs">in</span>
+                </div>
+              </a>
+            )}
             {partner.website && (
               <a
                 href={partner.website}
@@ -264,7 +277,6 @@ export default function Network() {
                               key={partner.id}
                               partner={partner}
                               index={index}
-                              navigate={navigate}
                               setSelectedPartner={setSelectedPartner}
                               getTranslatedType={getTranslatedType}
                               t={t}
@@ -352,6 +364,13 @@ export default function Network() {
                       <h4 className="font-bold text-blue-900 mb-2 flex items-center gap-2"><Building2 size={16} /> Siège</h4>
                       <p className="text-blue-800">{selectedPartner.headquarters || "Non spécifié"}</p>
                     </div>
+                    {selectedPartner.linkedin && (
+                      <a href={selectedPartner.linkedin} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-3 w-full justify-center bg-[#0077b5] text-white py-3 rounded-xl font-bold hover:bg-[#006097] transition-colors">
+                        <Linkedin size={20} />
+                        LinkedIn
+                      </a>
+                    )}
                   </div>
 
                   <div className="lg:col-span-2 space-y-8">

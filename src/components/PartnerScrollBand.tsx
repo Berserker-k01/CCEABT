@@ -104,6 +104,7 @@ export default function PartnerScrollBand({
 
     const nameMappings: Record<string, string[]> = {
       'padi': ['padi', 'padie'],
+      'padie': ['padie', 'padi', 'pionniers'],
       'chaine de lespoir': ['chaine', 'espoir', 'chainedelespoir'],
       'fiadi': ['fiadi'],
       'odiae': ['odiae'],
@@ -112,16 +113,17 @@ export default function PartnerScrollBand({
       'cdd': ['cdd'],
       'aesen': ['aesen'],
       'afd': ['afd', 'agence francaise developpement'],
-      'ue': ['ue', 'union europeenne', 'european union', 'eu'],
-      'pseau': ['pseau'],
+      'pseau': ['pseau', 'ps eau'],
       'coalition eau': ['coalition eau', 'coalitioneau'],
+      'sedif': ['sedif', 'service public'],
+      'republique francaise': ['republique francaise', 'ambassade france', 'france togo', 'french embassy'],
+      'region maritime commune des lacs 1': ['lacs 1', 'lacs1', 'region maritime', 'commune des lacs'],
+      'plan international togo': ['plan international', 'plan togo'],
+      'seves': ['seves'],
       'swa': ['swa', 'sanitation water alliance'],
       'aafea': ['aafea'],
       'endwaterpoverty': ['endwaterpoverty', 'end water poverty', 'ewp'],
-      'ambassade de france au togo': ['ambassade france', 'france togo', 'french embassy'],
       'gender and water alliance': ['genda', 'genda water', 'genda alliance', 'gwa', 'gender water', 'gender and water alliance'],
-      'plan international togo': ['plan international', 'plan togo'],
-      'seves': ['seves'],
       'cawst': ['cawst']
     };
 

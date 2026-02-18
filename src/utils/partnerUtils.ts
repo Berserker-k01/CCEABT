@@ -91,7 +91,10 @@ export const partnerNameMapping: Record<string, string[]> = {
     'plan-togo-country'
   ],
   'SEVES': ['seves', 's-e-v-e-s', 'seves-togo', 'seves-tg'],
-  'CAWST': ['cawst', 'c-a-w-s-t', 'cawst-togo', 'cawst-tg']
+  'CAWST': ['cawst', 'c-a-w-s-t', 'cawst-togo', 'cawst-tg'],
+  'SEDIF': ['sedif', 'service-public-eau', 'sedif-togo'],
+  'République Française': ['republique-francaise', 'ambassade-france', 'france-togo'],
+  'Région Maritime Commune des Lacs 1': ['region-maritime', 'commune-lacs-1', 'lacs-1', 'commune-des-lacs-1']
 };
 
 // Mapping direct des URLs des logos (priorité haute)
@@ -140,11 +143,16 @@ export const partnerLogoUrls: Record<string, string> = {
   'AAFEA': '/partners/aafea.png',
   'ENDWATERPOVERTY': '/partners/endwaterpoverty.png',
   'Ambassade de France au Togo': '/partners/ambassade-france.png',
+  'République Française': '/partners/ambassade-france.png',
   'Gender and Water Alliance': '/partners/gwa.jpeg',
   'Plan International Togo': '/partners/plan-international.png',
   'SEVES': '/partners/seves.png',
   'SEVES - Systèmes Economiquement Viables pour l\'Eau aux Suds': '/partners/seves.png',
   'CAWST': '/partners/cawst.png',
+  'SEDIF': '/partners/sedif.png',
+  'SEDIF (Service Public de l\'eau)': '/partners/sedif.png',
+  'Commune des Lacs 1': '/partners/communes_des_lacs_1.jpg',
+  'Région Maritime Commune des Lacs 1': '/partners/communes_des_lacs_1.jpg',
   'OCDI': '/partners/image2.jpeg',
   'OCDI/CARITAS Lomé': '/partners/image2.jpeg',
   'EAA': '/partners/image8.png',

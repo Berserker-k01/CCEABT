@@ -253,7 +253,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto space-y-20">
             {/* Organisations membres du Conseil d'administration */}
             <PartnerScrollBand
-              partners={['PADI', 'Chaine de l\'espoir', 'FIADI', 'ODIAE', 'ADESCO', 'AJT', 'CDD']}
+              partners={['Chaine de l\'espoir', 'FIADI', 'ODIAE', 'ADESCO', 'AJT', 'CDD']}
               title={t('home.partners_ca_title')}
               icon={<Users className="text-blue-600" size={28} />}
               gradientFrom="from-blue-50"
@@ -266,7 +266,7 @@ export default function Home() {
 
             {/* Partenaires Techniques et Financiers (PTF) */}
             <PartnerScrollBand
-              partners={['AESEN', 'AFD', 'UE', 'PSEAU', 'Coalition Eau', 'SWA', 'AAFEA', 'ENDWATERPOVERTY', 'Ambassade de France au Togo', 'Gender and Water Alliance', 'Plan International Togo', 'SEVES', 'CAWST']}
+              partners={['PSEAU', 'Coalition Eau', 'AFD', 'SEDIF', 'République Française', 'AESEN', 'Région Maritime Commune des Lacs 1', 'SEVES', 'PADIE', 'Plan International Togo']}
               title={t('home.partners_ptf_title')}
               icon={<TrendingUp className="text-yellow-600" size={28} />}
               gradientFrom="from-yellow-50"

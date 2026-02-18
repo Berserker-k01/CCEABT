@@ -1,4 +1,4 @@
-import { ExternalLink, Handshake, Globe, Globe2, Users, Building2, TrendingUp } from 'lucide-react';
+import { ExternalLink, Handshake, Globe, Globe2, Users, Building2, TrendingUp, Target } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useData } from '../context/DataContext';
 import { getPartnerStatus } from '../utils/partnerStatus';
@@ -160,16 +160,21 @@ export default function Partners() {
   );
 
   const nationalMembers = uniquePartners
-    .filter(p => p.type === 'National' && getPartnerStatus(p.name) !== 'PTF' && getPartnerStatus(p.name) !== 'CA')
+    .filter(p => p.type === 'National')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const internationalMembers = uniquePartners
-    .filter(p => p.type === 'International' && getPartnerStatus(p.name) !== 'PTF' && getPartnerStatus(p.name) !== 'CA')
+    .filter(p => p.type === 'International')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const institutionalPartners = uniquePartners
     .filter(p => p.type === 'Institutionnel' && getPartnerStatus(p.name) !== 'PTF' && getPartnerStatus(p.name) !== 'CA')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
+
+  const positionnementPartners = uniquePartners
+    .filter(p => p.type === 'Positionnement')
+    .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
+
   const techFinPartners = uniquePartners
-    .filter(p => getPartnerStatus(p.name) === 'PTF') // Simplified: ANY partner with PTF status goes here
+    .filter(p => getPartnerStatus(p.name) === 'PTF' && p.type !== 'Positionnement')
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
 
   const getTranslatedType = (type: string) => {
@@ -179,15 +184,16 @@ export default function Partners() {
       case 'Institutionnel': return t('network.type_institutional');
       case 'Technique': return t('network.type_technical');
       case 'Financier': return t('network.type_financial');
+      case 'Positionnement': return 'Positionnement dans le secteur à l’international';
       default: return type;
     }
   };
 
   // Carousel Logic
   const carouselPartners = [
-    'PADI', 'Chaine de l\'espoir', 'FIADI', 'ODIAE', 'ADESCO', 'AJT', 'CDD',
-    'AESEN', 'AFD', 'UE', 'PSEAU', 'Coalition Eau', 'SWA', 'AAFEA', 'ENDWATERPOVERTY',
-    'Ambassade de France au Togo', 'GENDA Water Alliance', 'Plan International Togo', 'SEVES', 'CAWST'
+    'Chaine de l\'espoir', 'FIADI', 'ODIAE', 'ADESCO', 'AJT', 'CDD',
+    'PSEAU', 'Coalition Eau', 'AFD', 'SEDIF', 'République Française', 'AESEN',
+    'Région Maritime Commune des Lacs 1', 'SEVES', 'PADIE', 'Plan International Togo'
   ];
   const [carouselIndex, setCarouselIndex] = useState(0);
 
@@ -343,6 +349,16 @@ export default function Partners() {
                 title={t('partners_page.institutional_title')}
                 partners={institutionalPartners}
                 icon={<Building2 size={28} className="text-indigo-600" />}
+                t={t}
+                getTranslatedType={getTranslatedType}
+              />
+            </div>
+
+            <div className="reveal-view" style={{ animationDelay: '1.1s' }}>
+              <PartnerSection
+                title="Positionnement dans le secteur à l’international"
+                partners={positionnementPartners}
+                icon={<Target size={28} className="text-purple-600" />}
                 t={t}
                 getTranslatedType={getTranslatedType}
               />

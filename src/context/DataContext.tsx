@@ -26,10 +26,11 @@ export interface ResourceItem {
 export interface PartnerItem {
     id: string;
     name: string;
-    type: 'Technique' | 'Financier' | 'Institutionnel' | 'International' | 'National';
-    description?: string;
+    type: 'Technique' | 'Financier' | 'Institutionnel' | 'International' | 'National' | 'Positionnement';
+    description: string;
+    logo: string;
     website?: string;
-    logo?: string;
+    linkedin?: string;
     email?: string;
     password?: string;
     phone?: string;
@@ -732,8 +733,8 @@ const initialPartners: PartnerItem[] = [
     },
     {
         id: "ptf_swa",
-        name: "SWA - Sanitation and Water for All",
-        type: "International",
+        name: "Point Focal Togo OSC - Sanitation and Water For All",
+        type: "Positionnement",
         description: "Partenaire Technique et Financier",
         email: "swa@cceabt.org",
         password: "password123",
@@ -742,7 +743,7 @@ const initialPartners: PartnerItem[] = [
     {
         id: "ptf_aafea",
         name: "AAFEA",
-        type: "International",
+        type: "Positionnement",
         description: "Partenaire Technique et Financier",
         email: "aafea@cceabt.org",
         password: "password123",
@@ -751,7 +752,7 @@ const initialPartners: PartnerItem[] = [
     {
         id: "ptf_endwaterpoverty",
         name: "ENDWATERPOVERTY",
-        type: "International",
+        type: "Positionnement",
         description: "Partenaire Technique et Financier",
         email: "endwaterpoverty@cceabt.org",
         password: "password123",
@@ -759,7 +760,7 @@ const initialPartners: PartnerItem[] = [
     },
     {
         id: "ptf_ambassade_france",
-        name: "Ambassade de France au Togo",
+        name: "République Française",
         type: "Technique",
         description: "Partenaire Technique et Financier",
         email: "ambassadefrance@cceabt.org",
@@ -769,7 +770,7 @@ const initialPartners: PartnerItem[] = [
     {
         id: "ptf_genda",
         name: "Gender and Water Alliance",
-        type: "International",
+        type: "Positionnement",
         description: "Partenaire Technique et Financier",
         email: "genda@cceabt.org",
         password: "password123",
@@ -778,7 +779,7 @@ const initialPartners: PartnerItem[] = [
     {
         id: "seves___economiquement_187",
         name: "SEVES - Systèmes Economiquement Viables pour l'Eau aux Suds",
-        type: "Technique",
+        type: "International",
         description: "Partenaire Technique et Financier",
         email: "contact@cceabt.tg",
         phone: "",
@@ -862,21 +863,22 @@ const initialPartners: PartnerItem[] = [
 
     {
         id: "ptf_commune_lacs1",
-        name: "Commune des Lacs 1",
+        name: "Région Maritime Commune des Lacs 1",
         type: "Technique",
         description: "Partenaire Technique et Financier",
         email: "commune.lacs1@cceabt.org",
         password: "password123",
-        logo: "/partners/image34.jpeg"
+        logo: "/partners/communes_des_lacs_1.jpg"
     },
     {
         id: "padie____743",
         name: "PADIE - Pionniers en Action pour le Développempent Intégré à l’Environnement",
-        type: "Technique",
+        type: "National",
         description: "Partenaire Technique et Financier",
         email: "contact@cceabt.tg",
         phone: "",
         website: "",
+        linkedin: "https://www.linkedin.com/in/ong-padie-4bb831235/",
         logo: "/partners/image1.png",
         "password": "password123",
         "acronym": "PADIE",

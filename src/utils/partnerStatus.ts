@@ -3,8 +3,7 @@
 
 // Membres du Conseil d'Administration
 export const CA_MEMBERS = [
-  'PADIE',
-  'La CDE - La Chaîne de l\'Espoir', // Position 2 comme sur la page d'accueil
+  'La CDE - La Chaîne de l\'Espoir',
   'FIADI',
   'ODIAE',
   'ADESCO',
@@ -14,19 +13,16 @@ export const CA_MEMBERS = [
 
 // Partenaires Techniques et Financiers (liste complète et définitive)
 export const PTF_MEMBERS = [
-  'AESEN',
-  'AFD',
-  'UE',
   'pS-Eau',
   'Coalition Eau',
-  'SWA',
-  'AAFEA',
-  'ENDWATERPOVERTY',
-  'Ambassade de France au Togo',
-  'Gender and Water Alliance', // GENDA Water Alliance
-  'Plan International Togo',
+  'AFD',
+  'SEDIF',
+  'République Française',
+  'AESEN',
+  'Région Maritime Commune des Lacs 1',
   'SEVES',
-  'CAWST'
+  'PADIE',
+  'Plan International Togo'
 ];
 
 /**
@@ -72,16 +68,14 @@ export function getPartnerStatus(partnerName: string): 'CA' | 'PTF' | 'Other' {
 
     // Pour CDD, vérifier que ce n'est pas CCDD
     if (normalizedCA === 'cdd') {
-      // CDD = Communication pour un Développement Durable
-      // Ne pas confondre avec CCDD = Collectif des citoyens
       if (normalizedName.includes('cdd') && !normalizedName.includes('ccdd') &&
         (normalizedName.includes('communication') || normalizedName === 'cdd')) {
         return 'CA';
       }
-      continue; // Passer au suivant si ce n'est pas un match sûr
+      continue;
     }
 
-    // Correspondance partielle (sauf pour CDD qui nécessite une vérification spéciale)
+    // Correspondance partielle
     if (normalizedName.includes(normalizedCA) || normalizedCA.includes(normalizedName)) {
       return 'CA';
     }
@@ -106,67 +100,44 @@ export function getPartnerStatus(partnerName: string): 'CA' | 'PTF' | 'Other' {
     return 'Other';
   }
 
-  // Vérifier si c'est un PTF (UNIQUEMENT les 13 noms exacts de la liste)
-  // Correspondance stricte uniquement avec les noms normalisés de la liste PTF_MEMBERS
+  // Vérifier si c'est un PTF (les 10 noms exacts de la liste)
   for (const ptf of PTF_MEMBERS) {
     const normalizedPTF = normalizePartnerName(ptf);
 
-    // Correspondance exacte uniquement (pas de correspondance partielle)
+    // Correspondance exacte
     if (normalizedName === normalizedPTF) {
       return 'PTF';
     }
 
-    // Pour certains PTF, accepter aussi les acronymes si le nom complet est présent
-    if (ptf === 'AFD' && (normalizedName === 'afd' || normalizedName.includes('agence francaise developpement'))) {
-      return 'PTF';
-    }
-    if (ptf === 'UE' && (normalizedName === 'ue' || normalizedName.includes('union europeenne'))) {
+    // Correspondances spécifiques pour chaque PTF
+    if (ptf === 'pS-Eau' && (normalizedName.includes('pseau') || normalizedName.includes('ps-eau') || normalizedName.includes('ps eau'))) {
       return 'PTF';
     }
     if (ptf === 'Coalition Eau' && normalizedName.includes('coalition') && normalizedName.includes('eau')) {
       return 'PTF';
     }
-    if (ptf === 'SWA' && (normalizedName.includes('swa') || (normalizedName.includes('sanitation') && normalizedName.includes('water')))) {
-      return 'PTF';
-    }
-    if (ptf === 'ENDWATERPOVERTY' && (normalizedName.includes('endwaterpoverty') || normalizedName.includes('end water poverty'))) {
-      return 'PTF';
-    }
-    if (ptf === 'Ambassade de France au Togo' && normalizedName.includes('ambassade') && normalizedName.includes('france') && normalizedName.includes('togo')) {
-      return 'PTF';
-    }
-    if (ptf === 'Gender and Water Alliance' && (normalizedName.includes('genda') || (normalizedName.includes('gender') && normalizedName.includes('water')))) {
-      return 'PTF';
-    }
-    if (ptf === 'UE' && (normalizedName === 'ue' || normalizedName.includes('union europeenne'))) {
-      return 'PTF';
-    }
-    if (ptf === 'SWA' && (normalizedName.includes('swa') || (normalizedName.includes('sanitation') && normalizedName.includes('water')))) {
-      return 'PTF';
-    }
-    if (ptf === 'AAFEA' && (normalizedName.includes('aafea') || normalizedName.includes('alliance africaine'))) {
-      return 'PTF';
-    }
-
-    if (ptf === 'Plan International Togo' && normalizedName.includes('plan international')) {
-      return 'PTF';
-    }
-    if (ptf === 'CAWST' && normalizedName.includes('cawst')) {
-      return 'PTF';
-    }
-    if (ptf === 'pS-Eau' && (normalizedName.includes('pseau') || normalizedName.includes('ps-eau') || normalizedName.includes('ps eau'))) {
+    if (ptf === 'AFD' && (normalizedName === 'afd' || normalizedName.includes('agence francaise developpement'))) {
       return 'PTF';
     }
     if (ptf === 'SEDIF' && (normalizedName.includes('sedif') || normalizedName.includes('service public'))) {
       return 'PTF';
     }
+    if (ptf === 'République Française' && (normalizedName.includes('republique francaise') || normalizedName.includes('republique française') || (normalizedName.includes('ambassade') && normalizedName.includes('france')))) {
+      return 'PTF';
+    }
     if (ptf === 'AESEN' && (normalizedName.includes('aesen') || normalizedName.includes('seine-normandie') || normalizedName.includes('seine normandie'))) {
       return 'PTF';
     }
-    if (ptf === 'Commune des Lacs 1' && (normalizedName.includes('lacs 1') || normalizedName.includes('lacs1') || normalizedName.includes('region maritime'))) {
+    if (ptf === 'Région Maritime Commune des Lacs 1' && (normalizedName.includes('lacs 1') || normalizedName.includes('lacs1') || normalizedName.includes('region maritime') || normalizedName.includes('commune des lacs'))) {
       return 'PTF';
     }
     if (ptf === 'SEVES' && normalizedName.includes('seves')) {
+      return 'PTF';
+    }
+    if (ptf === 'PADIE' && (normalizedName.includes('padie') || normalizedName.includes('pionniers'))) {
+      return 'PTF';
+    }
+    if (ptf === 'Plan International Togo' && normalizedName.includes('plan international')) {
       return 'PTF';
     }
   }
@@ -203,7 +174,8 @@ export function getPartnerDisplayOrder(
     'International': 2,
     'Institutionnel': 3,
     'Technique': 4,
-    'Financier': 5
+    'Financier': 5,
+    'Positionnement': 6
   };
 
   // Combiner les priorités (statut * 100 + catégorie pour garantir l'ordre)
