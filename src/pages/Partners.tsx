@@ -174,7 +174,10 @@ export default function Partners() {
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
 
   const techFinPartners = uniquePartners
-    .filter(p => getPartnerStatus(p.name) === 'PTF' && p.type !== 'Positionnement')
+    .filter(p => {
+      const n = p.name.toLowerCase();
+      return (getPartnerStatus(p.name) === 'PTF' || n.includes('padie') || n.includes('pionniers')) && p.type !== 'Positionnement';
+    })
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
 
   const getTranslatedType = (type: string) => {

@@ -238,7 +238,14 @@ export default function Network() {
 
                   caAndPtfPartners.forEach(partner => {
                     const status = partner.status || 'Other';
-                    if (status === 'CA' || status === 'PTF') {
+                    if (status === 'CA') {
+                      groupedPartners['CA'].push(partner);
+                      // Si le partenaire est aussi dans PTF_MEMBERS, l'ajouter aussi au PTF
+                      const normalizedName = partner.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                      if (normalizedName.includes('padie') || normalizedName.includes('pionniers')) {
+                        groupedPartners['PTF'].push(partner);
+                      }
+                    } else if (status === 'PTF') {
                       groupedPartners[status].push(partner);
                     }
                   });

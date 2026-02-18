@@ -8,7 +8,8 @@ export const CA_MEMBERS = [
   'ODIAE',
   'ADESCO',
   'AJT',
-  'CDD'
+  'CDD',
+  'PADIE'
 ];
 
 // Partenaires Techniques et Financiers (liste complète et définitive)
