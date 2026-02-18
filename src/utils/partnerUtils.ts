@@ -94,7 +94,9 @@ export const partnerNameMapping: Record<string, string[]> = {
   'CAWST': ['cawst', 'c-a-w-s-t', 'cawst-togo', 'cawst-tg'],
   'SEDIF': ['sedif', 'service-public-eau', 'sedif-togo'],
   'République Française': ['republique-francaise', 'ambassade-france', 'france-togo'],
-  'Région Maritime Commune des Lacs 1': ['region-maritime', 'commune-lacs-1', 'lacs-1', 'commune-des-lacs-1']
+  'Région Maritime Commune des Lacs 1': ['region-maritime', 'commune-lacs-1', 'lacs-1', 'commune-des-lacs-1'],
+  'Eau Vive': ['eau-vive', 'eauvive'],
+  'France Volontaire': ['france-volontaire', 'francevolontaire']
 };
 
 // Mapping direct des URLs des logos (priorité haute)
@@ -153,15 +155,17 @@ export const partnerLogoUrls: Record<string, string> = {
   'SEDIF (Service Public de l\'eau)': '/partners/sedif.png',
   'Commune des Lacs 1': '/partners/communes_des_lacs_1.jpg',
   'Région Maritime Commune des Lacs 1': '/partners/communes_des_lacs_1.jpg',
-  'OCDI': '/partners/image2.jpeg',
-  'OCDI/CARITAS Lomé': '/partners/image2.jpeg',
-  'EAA': '/partners/image8.png',
-  'EAA - Eau Assainissement pour l\'Afrique': '/partners/image8.png',
+  'Eau Vive': '/partners/eau_vive.png',
+  'France Volontaire': '/partners/france_volontaire.png',
+  'OCDI': '/partners/image8.png',
+  'OCDI/CARITAS Lomé': '/partners/image8.png',
+  'EAA': '/partners/eaa.png',
+  'EAA - Eau Assainissement pour l\'Afrique': '/partners/eaa.png',
 
   // National members without logos (display premium icon)
   'APSS - Association Promotion de la Salubrité Pour la Santé': '',
   'CARD - Comité d\'Action pour la Recherche et le Developpement': '',
-  'CRT-RC - Croix-Rouge Togolaise / Région Centrale': '',
+  'CRT-RC - Croix-Rouge Togolaise / Région Centrale': '/partners/croix_rouge.png',
   'E-D - Environnement et Développement': '',
   'RAID - Recherche et Appuis aux Initiatives de Développement': '',
   'RP/RC - Réseau Phast Région Centrale': '',
@@ -174,7 +178,7 @@ export const partnerLogoUrls: Record<string, string> = {
   'GIRCAFEM - Groupe International pour le Renforcement des Capacités Féminines': '',
 
   'CCDD - Collectif des citoyens pour le développement durable': '',
-  'COLOMBE': ''
+  'COLOMBE': '/partners/colombe.jpg'
 };
 
 // Extensions d'images à essayer

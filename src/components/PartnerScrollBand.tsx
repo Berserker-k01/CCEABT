@@ -124,7 +124,9 @@ export default function PartnerScrollBand({
       'aafea': ['aafea'],
       'endwaterpoverty': ['endwaterpoverty', 'end water poverty', 'ewp'],
       'gender and water alliance': ['genda', 'genda water', 'genda alliance', 'gwa', 'gender water', 'gender and water alliance'],
-      'cawst': ['cawst']
+      'cawst': ['cawst'],
+      'eau vive': ['eau vive', 'eauvive'],
+      'france volontaire': ['france volontaire', 'francevolontaire']
     };
 
     return allPartners.find(p => {

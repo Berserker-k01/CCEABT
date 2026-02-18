@@ -23,7 +23,9 @@ export const PTF_MEMBERS = [
   'Région Maritime Commune des Lacs 1',
   'SEVES',
   'PADIE',
-  'Plan International Togo'
+  'Plan International Togo',
+  'Eau Vive',
+  'France Volontaire'
 ];
 
 /**
@@ -139,6 +141,12 @@ export function getPartnerStatus(partnerName: string): 'CA' | 'PTF' | 'Other' {
       return 'PTF';
     }
     if (ptf === 'Plan International Togo' && normalizedName.includes('plan international')) {
+      return 'PTF';
+    }
+    if (ptf === 'Eau Vive' && normalizedName.includes('eau vive')) {
+      return 'PTF';
+    }
+    if (ptf === 'France Volontaire' && normalizedName.includes('france volontaire')) {
       return 'PTF';
     }
   }

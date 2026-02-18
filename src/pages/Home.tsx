@@ -266,7 +266,7 @@ export default function Home() {
 
             {/* Partenaires Techniques et Financiers (PTF) */}
             <PartnerScrollBand
-              partners={['PSEAU', 'Coalition Eau', 'AFD', 'SEDIF', 'République Française', 'AESEN', 'Région Maritime Commune des Lacs 1', 'SEVES', 'PADIE', 'Plan International Togo']}
+              partners={['PSEAU', 'Coalition Eau', 'AFD', 'SEDIF', 'République Française', 'AESEN', 'Région Maritime Commune des Lacs 1', 'SEVES', 'PADIE', 'Plan International Togo', 'Eau Vive', 'France Volontaire']}
               title={t('home.partners_ptf_title')}
               icon={<TrendingUp className="text-yellow-600" size={28} />}
               gradientFrom="from-yellow-50"

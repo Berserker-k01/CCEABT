@@ -196,7 +196,8 @@ export default function Partners() {
   const carouselPartners = [
     'Chaine de l\'espoir', 'FIADI', 'ODIAE', 'ADESCO', 'AJT', 'CDD',
     'PSEAU', 'Coalition Eau', 'AFD', 'SEDIF', 'République Française', 'AESEN',
-    'Région Maritime Commune des Lacs 1', 'SEVES', 'PADIE', 'Plan International Togo'
+    'Région Maritime Commune des Lacs 1', 'SEVES', 'PADIE', 'Plan International Togo',
+    'Eau Vive', 'France Volontaire'
   ];
   const [carouselIndex, setCarouselIndex] = useState(0);
 

@@ -137,12 +137,12 @@ const initialPartners: PartnerItem[] = [
     {
         "id": "eaa____790",
         "name": "EAA - Eau Assainissement pour l'Afrique",
-        "type": "National",
+        "type": "International",
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
         "website": "",
-        "logo": "/partners/image8.png",
+        "logo": "/partners/eaa.png",
         "password": "password123"
     },
     {
@@ -197,7 +197,7 @@ const initialPartners: PartnerItem[] = [
         "email": "contact@cceabt.tg",
         "phone": "",
         "website": "",
-        "logo": "",
+        "logo": "/partners/colombe.jpg",
         "password": "password123"
     },
     {
@@ -219,7 +219,7 @@ const initialPartners: PartnerItem[] = [
         "email": "contact@cceabt.tg",
         "phone": "",
         "website": "",
-        "logo": "/partners/image2.jpeg",
+        "logo": "/partners/image8.png",
         "password": "password123"
     },
     {
@@ -471,12 +471,12 @@ const initialPartners: PartnerItem[] = [
         "email": "contact@cceabt.tg",
         "phone": "",
         "website": "",
-        "logo": "",
+        "logo": "/partners/croix_rouge.png",
         "password": "password123"
     },
     {
         "id": "dh____191",
-        "name": "DH - Défi Horizon",
+        "name": "Dimension Humaine",
         "type": "National",
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
@@ -804,6 +804,24 @@ const initialPartners: PartnerItem[] = [
         email: "sedif@cceabt.org",
         password: "password123",
         logo: "/partners/sedif.png"
+    },
+    {
+        id: "ptf_eau_vive",
+        name: "Eau Vive",
+        type: "Technique",
+        description: "Partenaire Technique et Financier",
+        email: "contact@cceabt.tg",
+        password: "password123",
+        logo: "/partners/eau_vive.png"
+    },
+    {
+        id: "ptf_france_volontaire",
+        name: "France Volontaire",
+        type: "Technique",
+        description: "Partenaire Technique et Financier",
+        email: "contact@cceabt.tg",
+        password: "password123",
+        logo: "/partners/france_volontaire.png"
     },
     // --- Partenaires Institutionnels (Ministères) ---
     {
