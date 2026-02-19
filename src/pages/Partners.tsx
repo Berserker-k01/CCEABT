@@ -167,7 +167,7 @@ export default function Partners() {
     .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
   const institutionalPartners = uniquePartners
     .filter(p => p.type === 'Institutionnel' && getPartnerStatus(p.name) !== 'PTF' && getPartnerStatus(p.name) !== 'CA')
-    .sort((a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' }));
+    .filter(p => p.type === 'Institutionnel' && getPartnerStatus(p.name) !== 'PTF' && getPartnerStatus(p.name) !== 'CA');
 
   const positionnementPartners = uniquePartners
     .filter(p => p.type === 'Positionnement')
@@ -194,10 +194,7 @@ export default function Partners() {
 
   // Carousel Logic
   const carouselPartners = [
-    'Chaine de l\'espoir', 'FIADI', 'ODIAE', 'ADESCO', 'AJT', 'CDD',
-    'PSEAU', 'Coalition Eau', 'AFD', 'SEDIF', 'République Française', 'AESEN',
-    'Région Maritime Commune des Lacs 1', 'SEVES', 'PADIE', 'Plan International Togo',
-    'Eau Vive', 'France Volontaire'
+    'Chaine de l\'espoir', 'FIADI', 'ODIAE', 'ADESCO', 'AJT', 'CDD', 'PADIE'
   ];
   const [carouselIndex, setCarouselIndex] = useState(0);
 
@@ -314,7 +311,7 @@ export default function Partners() {
                         <Handshake size={20} />
                       </div>
                       <h2 className="text-xl md:text-2xl font-black text-gray-800 tracking-tight">
-                        {t('home.partners_ptf_title')} <span className="text-blue-600">{"&"}</span> {t('home.partners_ca_title')}
+                        {t('home.partners_ca_title')}
                       </h2>
                     </div>
                     <div className="h-1 w-20 bg-gradient-to-r from-blue-500 to-green-500 rounded-full mb-4"></div>

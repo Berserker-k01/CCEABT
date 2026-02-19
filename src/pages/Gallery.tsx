@@ -4,33 +4,23 @@ import { Maximize2, X, ChevronRight, Share2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+import { useData } from '../context/DataContext';
+
 // Type pour une image de galerie
-type GalleryItem = {
-    id: number;
+export type GalleryItem = {
+    id: string; // Changed to string to match DataContext
     src: string;
-    titleKey: string;
+    title: string; // Changed from titleKey to title to match DataContext
     category: 'event' | 'field' | 'conference' | 'portrait';
     date: string;
     size: 'small' | 'medium' | 'large' | 'tall' | 'wide';
     color: string; // Pour le fond de la tuile si pas d'image ou overlay
 };
 
-const galleryData: GalleryItem[] = [
-    { id: 1, src: '/images/1.jpg', titleKey: 'gallery_page.item_mission_savanes', category: 'field', date: 'Mars 2024', size: 'large', color: 'bg-blue-600' },
-    { id: 2, src: '/images/2.jpg', titleKey: 'gallery_page.item_conf_eha', category: 'conference', date: 'Fév 2024', size: 'medium', color: 'bg-green-600' },
-    { id: 3, src: '/images/3.jpg', titleKey: 'gallery_page.item_formation', category: 'event', date: 'Jan 2024', size: 'small', color: 'bg-purple-600' },
-    { id: 4, src: '/images/4.jpg', titleKey: 'gallery_page.item_acces_eau', category: 'field', date: 'Déc 2023', size: 'wide', color: 'bg-orange-500' },
-    { id: 5, src: '/images/DSC08851.jpeg', titleKey: 'gallery_page.item_ag', category: 'event', date: 'Nov 2023', size: 'tall', color: 'bg-red-500' },
-    { id: 6, src: '/images/back cceabt.jpeg', titleKey: 'gallery_page.item_equipe', category: 'portrait', date: 'Oct 2023', size: 'medium', color: 'bg-teal-600' },
-    { id: 7, src: '/images/cceabt_cover.jpg', titleKey: 'gallery_page.item_partenariat', category: 'conference', date: 'Sept 2023', size: 'small', color: 'bg-indigo-600' },
-    { id: 8, src: '/images/eau.jpeg', titleKey: 'gallery_page.item_source_potable', category: 'field', date: 'Août 2023', size: 'large', color: 'bg-cyan-600' },
-    { id: 9, src: '/images/1.jpg', titleKey: 'gallery_page.item_sensibilisation', category: 'field', date: 'Juil 2023', size: 'tall', color: 'bg-pink-600' },
-    { id: 10, src: '/images/2.jpg', titleKey: 'gallery_page.item_rencontre', category: 'event', date: 'Juin 2023', size: 'medium', color: 'bg-lime-600' },
-];
-
 export default function Gallery() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+    const { galleryItems } = useData();
     const [filter, setFilter] = useState('all');
     const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
 
@@ -42,8 +32,8 @@ export default function Gallery() {
     ];
 
     const filteredData = filter === 'all'
-        ? galleryData
-        : galleryData.filter(item => item.category === filter);
+        ? galleryItems
+        : galleryItems.filter(item => item.category === filter);
 
     // Fonction pour déterminer la classe CSS de la tuile selon sa taille "Metro"
     const getTileClass = (size: string) => {
@@ -109,7 +99,7 @@ export default function Gallery() {
                         >
                             <img
                                 src={item.src}
-                                alt={t(item.titleKey)}
+                                alt={i18n.exists(item.title) ? t(item.title) : item.title}
                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 loading="lazy"
                             />
@@ -120,7 +110,9 @@ export default function Gallery() {
                                     <span className="inline-block px-2 py-1 bg-white/20 backdrop-blur-md text-xs font-bold uppercase tracking-wider mb-1">
                                         {t(`gallery_page.cat_${item.category}`)}
                                     </span>
-                                    <h3 className="font-semibold text-lg leading-tight">{t(item.titleKey)}</h3>
+                                    <h3 className="font-semibold text-lg leading-tight">
+                                        {i18n.exists(item.title) ? t(item.title) : item.title}
+                                    </h3>
                                     <p className="text-slate-300 text-xs mt-1">{item.date}</p>
                                 </div>
                             </div>
@@ -169,11 +161,11 @@ export default function Gallery() {
                         >
                             <img
                                 src={selectedImage.src}
-                                alt={t(selectedImage.titleKey)}
+                                alt={i18n.exists(selectedImage.title) ? t(selectedImage.title) : selectedImage.title}
                                 className="max-w-full max-h-[85vh] object-contain shadow-2xl border-4 border-slate-800"
                             />
                             <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-md p-6 text-white translate-y-full md:translate-y-0">
-                                <h2 className="text-2xl font-bold">{t(selectedImage.titleKey)}</h2>
+                                <h2 className="text-2xl font-bold">{i18n.exists(selectedImage.title) ? t(selectedImage.title) : selectedImage.title}</h2>
                                 <div className="flex items-center gap-4 text-sm text-slate-300 mt-1">
                                     <span className="uppercase tracking-wider font-semibold text-blue-400">{t(`gallery_page.cat_${selectedImage.category}`)}</span>
                                     <span>•</span>

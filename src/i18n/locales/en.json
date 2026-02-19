@@ -317,15 +317,15 @@
         "cat_water": "Water and sanitation",
         "cat_training": "Training and awareness",
         "cat_testimonials": "Testimonials and community projects",
-        "fb_desc": "Follow our news, events and awareness campaigns.",
-        "fb_btn": "Follow on Facebook",
-        "li_desc": "Join our professional network and discover our opportunities.",
-        "li_btn": "Follow on LinkedIn",
-        "li_profile": "Official profile",
         "gallery_title": "Our Media Library",
         "gallery_subtitle": "Discover all our photo reports, events and conferences in our new interactive gallery.",
         "gallery_hero_title": "Back in images on our field actions",
-        "gallery_btn": "Access the gallery"
+        "gallery_btn": "Access the gallery",
+        "fb_desc": "Follow our news, events and awareness campaigns on our official Facebook page.",
+        "fb_btn": "Follow on Facebook",
+        "li_profile": "CCEABT",
+        "li_desc": "Join our professional network on LinkedIn to follow our publications and opportunities.",
+        "li_btn": "Follow on LinkedIn"
     },
     "gallery_page": {
         "back_btn": "Back",

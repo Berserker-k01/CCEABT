@@ -1,11 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Trash2, LogOut, Lock, Eye, EyeOff, Save, Edit, FileText, Building2, Users } from 'lucide-react';
+import { Plus, Trash2, LogOut, Lock, Eye, EyeOff, Save, Edit, FileText, Building2, Users, Image as ImageIcon, Upload, Link as LinkIcon } from 'lucide-react';
 import { getPartnerStatus } from '../utils/partnerStatus';
 
 export default function Admin() {
-  const { news, partners, addNews, updateNews, deleteNews, addPartner, updatePartner, deletePartner, addResource, deleteResource, resources, driveUrl, setDriveUrl } = useData();
+  const {
+    news, partners, resources, galleryItems,
+    addNews, updateNews, deleteNews,
+    addPartner, updatePartner, deletePartner,
+    addResource, deleteResource,
+    addGalleryItem, deleteGalleryItem,
+    driveUrl, setDriveUrl
+  } = useData();
   const navigate = useNavigate();
 
   // Auth State
@@ -20,12 +27,16 @@ export default function Admin() {
   const [adminPassword, setAdminPassword] = useState('admin123');
   const [isEditingCredentials, setIsEditingCredentials] = useState(false);
 
-  const [activeTab, setActiveTab] = useState<'news' | 'partners' | 'resources' | 'settings'>('news');
+  const [activeTab, setActiveTab] = useState<'news' | 'partners' | 'resources' | 'gallery' | 'settings'>('news');
 
   // Form States (New Logic)
   const [newsForm, setNewsForm] = useState({ title: '', category: '', date: '', image: '', excerpt: '', content: '' });
   const [resourceForm, setResourceForm] = useState({ title: '', type: 'PDF', theme: '', year: new Date().getFullYear().toString(), author: 'CCEABT', size: '', downloadUrl: '' });
-  const [partnerForm, setPartnerForm] = useState({ name: '', type: 'Technique' as const, description: '', website: '', email: '', password: '' });
+  const [partnerForm, setPartnerForm] = useState({ name: '', type: 'Technique' as const, description: '', website: '', email: '', password: '', logo: '' });
+  // Gallery Form
+  const [galleryForm, setGalleryForm] = useState({ title: '', category: 'event' as const, date: '', src: '' });
+  const [uploadMode, setUploadMode] = useState<'file' | 'url'>('file');
+
   const [editingPartnerId, setEditingPartnerId] = useState<string | null>(null);
   const [editingNewsId, setEditingNewsId] = useState<string | null>(null);
   const [activePartnerCategory, setActivePartnerCategory] = useState<'National' | 'International' | 'Institutionnel' | 'Technique'>('National');
@@ -114,7 +125,7 @@ export default function Admin() {
       alert('Partenaire ajouté !');
     }
 
-    setPartnerForm({ name: '', type: 'Technique', description: '', website: '', email: '', password: '' });
+    setPartnerForm({ name: '', type: 'Technique', description: '', website: '', email: '', password: '', logo: '' });
   };
 
   const startEditingPartner = (partner: any) => {
@@ -125,13 +136,75 @@ export default function Admin() {
       description: partner.description || '',
       website: partner.website || '',
       email: partner.email || '',
-      password: partner.password || ''
+      password: partner.password || '',
+      logo: partner.logo || ''
     });
   };
 
   const cancelEditingPartner = () => {
     setEditingPartnerId(null);
-    setPartnerForm({ name: '', type: 'Technique', description: '', website: '', email: '', password: '' });
+    setPartnerForm({ name: '', type: 'Technique', description: '', website: '', email: '', password: '', logo: '' });
+  };
+
+  // --- Gallery Handlers ---
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Limit size to 5MB before processing
+    if (file.size > 5 * 1024 * 1024) {
+      alert("L'image est trop volumineuse (Max 5MB)");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        // Resize if too large (max 1200px width)
+        const MAX_WIDTH = 1200;
+        if (width > MAX_WIDTH) {
+          height = (height * MAX_WIDTH) / width;
+          width = MAX_WIDTH;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, width, height);
+
+        // Compress to JPEG 0.7 quality
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+        setGalleryForm(prev => ({ ...prev, src: dataUrl }));
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleAddGalleryItem = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!galleryForm.src || !galleryForm.title) {
+      alert("Veuillez ajouter une image et un titre");
+      return;
+    }
+
+    addGalleryItem({
+      src: galleryForm.src,
+      title: galleryForm.title,
+      category: galleryForm.category as any,
+      date: galleryForm.date || new Date().toLocaleDateString('fr-FR'),
+      size: 'medium', // Default size
+      color: 'bg-gray-500' // Default fallback color
+    });
+
+    setGalleryForm({ title: '', category: 'event', date: '', src: '' });
+    alert("Photo ajoutée à la médiathèque !");
   };
 
   if (!isAuthenticated) {
@@ -219,7 +292,7 @@ export default function Admin() {
         {/* Tabs */}
         <div className="bg-white rounded-lg shadow-md mb-6">
           <div className="flex border-b overflow-x-auto">
-            {['news', 'partners', 'resources', 'settings'].map((tab) => (
+            {['news', 'partners', 'resources', 'gallery', 'settings'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
@@ -231,6 +304,7 @@ export default function Admin() {
                 {tab === 'news' && 'Actualités'}
                 {tab === 'partners' && 'Partenaires'}
                 {tab === 'resources' && 'Ressources'}
+                {tab === 'gallery' && 'Médiathèque'}
                 {tab === 'settings' && 'Paramètres'}
               </button>
             ))}
@@ -581,6 +655,136 @@ export default function Admin() {
                       </div>
                     );
                   })()}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* GALLERY TAB */}
+          {activeTab === 'gallery' && (
+            <div className="grid lg:grid-cols-2 gap-8">
+              <div className="h-fit space-y-4">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Ajouter une photo</h2>
+                <form onSubmit={handleAddGalleryItem} className="space-y-4 bg-gray-50 p-6 rounded-xl border">
+
+                  {/* Upload Mode Toggle */}
+                  <div className="flex bg-gray-100 p-1 rounded-lg mb-4">
+                    <button
+                      type="button"
+                      onClick={() => { setUploadMode('file'); setGalleryForm(prev => ({ ...prev, src: '' })); }}
+                      className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-all ${uploadMode === 'file' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                    >
+                      Fichier local
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setUploadMode('url'); setGalleryForm(prev => ({ ...prev, src: '' })); }}
+                      className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-all ${uploadMode === 'url' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                    >
+                      Lien URL
+                    </button>
+                  </div>
+
+                  {/* Image Input Area */}
+                  {uploadMode === 'file' ? (
+                    <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 bg-white hover:bg-gray-50 transition-colors relative cursor-pointer group">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                      />
+                      {galleryForm.src ? (
+                        <div className="relative w-full aspect-video">
+                          <img src={galleryForm.src} alt="Preview" className="w-full h-full object-cover rounded-lg" />
+                          <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white font-bold">
+                            Changer l'image
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="text-center text-gray-400">
+                          <ImageIcon size={48} className="mx-auto mb-2" />
+                          <p className="font-semibold">Cliquez pour ajouter une image</p>
+                          <p className="text-xs">JPG, PNG (Max 5MB)</p>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">URL de l'image</label>
+                        <div className="relative">
+                          <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                          <input
+                            type="url"
+                            value={galleryForm.src}
+                            onChange={(e) => setGalleryForm({ ...galleryForm, src: e.target.value })}
+                            placeholder="https://exemple.com/image.jpg"
+                            className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                          />
+                        </div>
+                      </div>
+                      {galleryForm.src && (
+                        <div className="relative w-full aspect-video bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
+                          <img
+                            src={galleryForm.src}
+                            alt="Preview"
+                            className="w-full h-full object-cover"
+                            onError={(e) => (e.currentTarget.style.display = 'none')}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Titre</label>
+                    <input type="text" value={galleryForm.title} onChange={e => setGalleryForm({ ...galleryForm, title: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" required placeholder="Titre de la photo..." />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Catégorie</label>
+                      <select value={galleryForm.category} onChange={e => setGalleryForm({ ...galleryForm, category: e.target.value as any })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        <option value="event">Événement</option>
+                        <option value="field">Terrain</option>
+                        <option value="conference">Conférence</option>
+                        <option value="portrait">Portrait</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Date</label>
+                      <input type="text" value={galleryForm.date} onChange={e => setGalleryForm({ ...galleryForm, date: e.target.value })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" placeholder="ex: Mars 2024" />
+                    </div>
+                  </div>
+
+                  <button type="submit" className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center gap-2">
+                    <Upload size={20} /> Ajouter à la galerie
+                  </button>
+                </form>
+              </div>
+
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Médiathèque ({galleryItems.length})</h2>
+                <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
+                  {galleryItems.map(item => (
+                    <div key={item.id} className="border border-gray-200 rounded-lg p-3 flex gap-4 bg-white shadow-sm items-center">
+                      <img src={item.src} className="w-24 h-24 object-cover rounded-md bg-gray-200" alt="" />
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900 line-clamp-1">{item.title}</h3>
+                        <div className="flex gap-2 mt-1">
+                          <span className="text-xs font-semibold uppercase tracking-wider bg-blue-50 text-blue-600 px-2 py-0.5 rounded">
+                            {item.category}
+                          </span>
+                          <span className="text-xs text-gray-500">{item.date}</span>
+                        </div>
+                      </div>
+                      <button onClick={() => deleteGalleryItem(item.id)} className="text-red-500 hover:text-red-700 p-2 bg-red-50 rounded-lg hover:bg-red-100 transition-colors">
+                        <Trash2 size={20} />
+                      </button>
+                    </div>
+                  ))}
+                  {galleryItems.length === 0 && <p className="text-gray-500 italic text-center py-8">La galerie est vide.</p>}
                 </div>
               </div>
             </div>

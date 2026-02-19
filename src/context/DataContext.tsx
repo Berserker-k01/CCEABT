@@ -23,6 +23,16 @@ export interface ResourceItem {
     downloadUrl: string; // Simulé pour l'instant
 }
 
+export interface GalleryItem {
+    id: string;
+    src: string;
+    title: string;
+    category: 'event' | 'field' | 'conference' | 'portrait';
+    date: string;
+    size: 'small' | 'medium' | 'large' | 'tall' | 'wide';
+    color: string;
+}
+
 export interface PartnerItem {
     id: string;
     name: string;
@@ -81,6 +91,10 @@ interface DataContextType {
     addSubmission: (item: Omit<Submission, 'id' | 'date'> & { status?: Submission['status'] }) => void;
     deleteSubmission: (id: string) => void;
     updateSubmissionStatus: (id: string, status: Submission['status']) => void;
+
+    galleryItems: GalleryItem[];
+    addGalleryItem: (item: Omit<GalleryItem, 'id'>) => void;
+    deleteGalleryItem: (id: string) => void;
 }
 
 // --- Initial Mock Data (Pour ne pas démarrer vide) ---
@@ -134,17 +148,7 @@ const initialPartners: PartnerItem[] = [
         "logo": "/partners/croix_rouge.png",
         "password": "password123"
     },
-    {
-        "id": "eaa____790",
-        "name": "EAA - Eau Assainissement pour l'Afrique",
-        "type": "International",
-        "description": "Membre du réseau CCEABT",
-        "email": "contact@cceabt.tg",
-        "phone": "",
-        "website": "",
-        "logo": "/partners/eaa.png",
-        "password": "password123"
-    },
+
     {
         "id": "jat____532",
         "name": "JAT - Jeunesse et Avenir Togo",
@@ -152,7 +156,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://jeunesseavenirtogo.wordpress.com/",
         "logo": "/partners/image3.jpg",
         "password": "password123"
     },
@@ -163,7 +167,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://jveinternational.org/",
         "logo": "/partners/image4.jpeg",
         "password": "password123"
     },
@@ -185,7 +189,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "https://alafia-togo.org/",
+        "website": "https://www.alafiatogo.org/",
         "logo": "/partners/image6.jpeg",
         "password": "password123"
     },
@@ -196,7 +200,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://onglacolombe.org/",
         "logo": "/partners/colombe.jpg",
         "password": "password123"
     },
@@ -207,7 +211,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://ongstadd.com/",
         "logo": "/partners/image7.jpg",
         "password": "password123"
     },
@@ -218,7 +222,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Organisation de la Charité pour un Développement Intégral, Lomé",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://ocdicaritaslome.e-monsite.com/",
         "logo": "/partners/image8.png",
         "password": "password123"
     },
@@ -300,7 +304,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://ongjvs.org/",
         "logo": "",
         "password": "password123"
     },
@@ -322,7 +326,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://odiae.org/",
         "logo": "/partners/image12.jpg",
         "password": "password123"
     },
@@ -371,7 +375,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://joddtogo.asso-web.com/",
         "logo": "/partners/image15.png",
         "password": "password123"
     },
@@ -393,7 +397,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "http://www.ong-ail.org",
+        "website": "https://ong-ail.org/",
         "logo": "/partners/image16.png",
         "password": "password123"
     },
@@ -415,7 +419,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://ongadesco.org/fr/",
         "logo": "/partners/image17.jpg",
         "password": "password123"
     },
@@ -437,7 +441,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://adiff.org/",
         "logo": "/partners/image19.jpg",
         "password": "password123"
     },
@@ -470,7 +474,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://www.crt-plateaux.org/Coord_Centrale.html",
         "logo": "/partners/croix_rouge.png",
         "password": "password123"
     },
@@ -558,7 +562,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://www.lepades.org/",
         "logo": "/partners/image24.jpeg",
         "password": "password123"
     },
@@ -569,7 +573,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://aprodifetogo.org/",
         "logo": "/partners/image25.jpg",
         "password": "password123"
     },
@@ -602,7 +606,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://ong-cdd.org/",
         "logo": "/partners/cdd.jpeg",
         "password": "password123"
     },
@@ -646,7 +650,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "http://capastogo.org/php/home.php",
         "logo": "/partners/image29.jpeg",
         "password": "password123"
     },
@@ -679,7 +683,7 @@ const initialPartners: PartnerItem[] = [
         "description": "Membre du réseau CCEABT",
         "email": "contact@cceabt.tg",
         "phone": "",
-        "website": "",
+        "website": "https://www.chainedelespoir.org/",
         "logo": "/partners/image31.jpeg",
         "password": "password123"
     },
@@ -700,6 +704,7 @@ const initialPartners: PartnerItem[] = [
         type: "Technique",
         description: "Partenaire Technique et Financier",
         email: "aesen@cceabt.org",
+        website: "https://www.eau-seine-normandie.fr/",
         password: "password123",
         logo: "/partners/aesen.png"
     },
@@ -719,6 +724,7 @@ const initialPartners: PartnerItem[] = [
         type: "Technique",
         description: "Partenaire Technique et Financier",
         email: "pseau@cceabt.org",
+        website: "https://www.pseau.org/",
         password: "password123",
         logo: "/partners/pseau.png"
     },
@@ -728,6 +734,7 @@ const initialPartners: PartnerItem[] = [
         type: "Technique",
         description: "Partenaire Technique et Financier",
         email: "coalitioneau@cceabt.org",
+        website: "https://coalition-eau.org/",
         password: "password123",
         logo: "/partners/coalition-eau.png"
     },
@@ -737,6 +744,7 @@ const initialPartners: PartnerItem[] = [
         type: "Positionnement",
         description: "Partenaire Technique et Financier",
         email: "swa@cceabt.org",
+        website: "https://www.sanitationandwaterforall.org/fr",
         password: "password123",
         logo: "/partners/swa.jpg"
     },
@@ -746,6 +754,7 @@ const initialPartners: PartnerItem[] = [
         type: "Positionnement",
         description: "Partenaire Technique et Financier",
         email: "aafea@cceabt.org",
+        website: "https://alliance-aafea.org/",
         password: "password123",
         logo: "/partners/aafea.png"
     },
@@ -755,6 +764,7 @@ const initialPartners: PartnerItem[] = [
         type: "Positionnement",
         description: "Partenaire Technique et Financier",
         email: "endwaterpoverty@cceabt.org",
+        website: "https://endwaterpoverty.org/",
         password: "password123",
         logo: "/partners/endwaterpoverty.png"
     },
@@ -764,6 +774,7 @@ const initialPartners: PartnerItem[] = [
         type: "Technique",
         description: "Partenaire Technique et Financier",
         email: "ambassadefrance@cceabt.org",
+        website: "https://www.info.gouv.fr/",
         password: "password123",
         logo: "/partners/ambassade_france.png"
     },
@@ -773,6 +784,7 @@ const initialPartners: PartnerItem[] = [
         type: "Positionnement",
         description: "Partenaire Technique et Financier",
         email: "genda@cceabt.org",
+        website: "https://genderandwater.org/en/",
         password: "password123",
         logo: "/partners/genda.jpg"
     },
@@ -780,7 +792,7 @@ const initialPartners: PartnerItem[] = [
         id: "seves___economiquement_187",
         name: "SEVES - Systèmes Economiquement Viables pour l'Eau aux Suds",
         type: "International",
-        description: "Partenaire Technique et Financier",
+        description: "Membre du réseau CCEABT",
         email: "contact@cceabt.tg",
         phone: "",
         website: "http://asso-seves.org/",
@@ -802,6 +814,7 @@ const initialPartners: PartnerItem[] = [
         type: "Technique",
         description: "Partenaire Technique et Financier",
         email: "sedif@cceabt.org",
+        website: "https://www.sedif.com/",
         password: "password123",
         logo: "/partners/sedif.png"
     },
@@ -811,6 +824,7 @@ const initialPartners: PartnerItem[] = [
         type: "Technique",
         description: "Partenaire Technique et Financier",
         email: "contact@cceabt.tg",
+        website: "https://www.eau-vive-internationale.org/",
         password: "password123",
         logo: "/partners/eau_vive.png"
     },
@@ -820,6 +834,7 @@ const initialPartners: PartnerItem[] = [
         type: "Technique",
         description: "Partenaire Technique et Financier",
         email: "contact@cceabt.tg",
+        website: "https://france-volontaires.org/",
         password: "password123",
         logo: "/partners/france_volontaire.png"
     },
@@ -843,15 +858,6 @@ const initialPartners: PartnerItem[] = [
         logo: "/partners/min_sante.png"
     },
     {
-        id: "inst_env",
-        name: "Ministère de l'Environnement, des Ressources Forestières, de la Protection Côtière et du Changement Climatique",
-        type: "Institutionnel",
-        description: "Partenaire Institutionnel",
-        email: "environnement@gouv.tg",
-        password: "password123",
-        logo: "/partners/min_env.png"
-    },
-    {
         id: "inst_admin_terr",
         name: "Ministère de l'Administration Territoriale, de la Gouvernance Locale et des Affaires Coutumières",
         type: "Institutionnel",
@@ -861,22 +867,23 @@ const initialPartners: PartnerItem[] = [
         logo: "/partners/min_admin_terr.png"
     },
     {
+        id: "inst_env",
+        name: "Ministère de l'Environnement, des Ressources Forestières, de la Protection Côtière et du Changement Climatique",
+        type: "Institutionnel",
+        description: "Partenaire Institutionnel",
+        email: "environnement@gouv.tg",
+        password: "password123",
+        logo: "/partners/min_env.png"
+    },
+    {
         id: "inst_arse",
         name: "Autorité de régulation du secteur de l'électricité",
         type: "Institutionnel",
         description: "Partenaire Institutionnel",
         email: "arse@gouv.tg",
+        website: "https://www.arse.tg/",
         password: "password123",
-        logo: "/partners/arse.png"
-    },
-    {
-        id: "inst_arrec",
-        name: "ARREC",
-        type: "Institutionnel",
-        description: "Partenaire Institutionnel",
-        email: "arrec@gouv.tg",
-        password: "password123",
-        logo: "/partners/arrec.png"
+        logo: "/partners/logo_arse.png"
     },
 
     {
@@ -885,6 +892,7 @@ const initialPartners: PartnerItem[] = [
         type: "Technique",
         description: "Partenaire Technique et Financier",
         email: "commune.lacs1@cceabt.org",
+        website: "https://lacs1.mairie.tg/",
         password: "password123",
         logo: "/partners/communes_des_lacs_1.jpg"
     },
@@ -955,15 +963,30 @@ const initialPartners: PartnerItem[] = [
         password: "password123",
         logo: "/partners/ministere_administration.png"
     },
+
     {
-        id: "inst_autorite_elec",
-        name: "Autorité de régulation du secteur de l'électricité",
-        type: "Institutionnel",
-        description: "Partenaire Institutionnel",
-        email: "contact@cceabt.tg",
+        id: "ptf_eaa",
+        name: "EAA - Water and Sanitation for Africa",
+        type: "International",
+        description: "Membre du réseau CCEABT",
+        email: "eaa@cceabt.org",
+        website: "https://www.ws-africa.org/index.php/fr/",
         password: "password123",
-        logo: "/partners/autorite_electricite.png"
+        logo: "/partners/eaa.png"
     }
+];
+
+const initialGalleryData: GalleryItem[] = [
+    { id: '1', src: '/images/1.jpg', title: 'gallery_page.item_mission_savanes', category: 'field', date: 'Mars 2024', size: 'large', color: 'bg-blue-600' },
+    { id: '2', src: '/images/2.jpg', title: 'gallery_page.item_conf_eha', category: 'conference', date: 'Fév 2024', size: 'medium', color: 'bg-green-600' },
+    { id: '3', src: '/images/3.jpg', title: 'gallery_page.item_formation', category: 'event', date: 'Jan 2024', size: 'small', color: 'bg-purple-600' },
+    { id: '4', src: '/images/4.jpg', title: 'gallery_page.item_acces_eau', category: 'field', date: 'Déc 2023', size: 'wide', color: 'bg-orange-500' },
+    { id: '5', src: '/images/DSC08851.jpeg', title: 'gallery_page.item_ag', category: 'event', date: 'Nov 2023', size: 'tall', color: 'bg-red-500' },
+    { id: '6', src: '/images/back cceabt.jpeg', title: 'gallery_page.item_equipe', category: 'portrait', date: 'Oct 2023', size: 'medium', color: 'bg-teal-600' },
+    { id: '7', src: '/images/cceabt_cover.jpg', title: 'gallery_page.item_partenariat', category: 'conference', date: 'Sept 2023', size: 'small', color: 'bg-indigo-600' },
+    { id: '8', src: '/images/eau.jpeg', title: 'gallery_page.item_source_potable', category: 'field', date: 'Août 2023', size: 'large', color: 'bg-cyan-600' },
+    { id: '9', src: '/images/1.jpg', title: 'gallery_page.item_sensibilisation', category: 'field', date: 'Juil 2023', size: 'tall', color: 'bg-pink-600' },
+    { id: '10', src: '/images/2.jpg', title: 'gallery_page.item_rencontre', category: 'event', date: 'Juin 2023', size: 'medium', color: 'bg-lime-600' },
 ];
 
 
@@ -1017,6 +1040,16 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         }
     });
 
+    const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(() => {
+        try {
+            const saved = localStorage.getItem('cceabt_gallery');
+            return saved ? JSON.parse(saved) : initialGalleryData;
+        } catch (error) {
+            console.error('Error parsing gallery from localStorage', error);
+            return initialGalleryData;
+        }
+    });
+
 
     // Helper to persist to localStorage
     useEffect(() => { localStorage.setItem('cceabt_drive_url', driveUrl); }, [driveUrl]);
@@ -1026,6 +1059,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem('cceabt_partners_v29', JSON.stringify(partners));
     }, [partners]);
     useEffect(() => { localStorage.setItem('cceabt_submissions', JSON.stringify(submissions)); }, [submissions]);
+    useEffect(() => { localStorage.setItem('cceabt_gallery', JSON.stringify(galleryItems)); }, [galleryItems]);
 
     // Sync across tabs
     useEffect(() => {
@@ -1036,6 +1070,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
                 if (e.key === 'cceabt_news' && e.newValue) setNews(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_resources' && e.newValue) setResources(JSON.parse(e.newValue));
                 if (e.key === 'cceabt_submissions' && e.newValue) setSubmissions(JSON.parse(e.newValue));
+                if (e.key === 'cceabt_gallery' && e.newValue) setGalleryItems(JSON.parse(e.newValue));
             } catch (error) {
                 console.error('Error syncing storage change', error);
             }
@@ -1097,6 +1132,15 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         setSubmissions(prev => prev.map(s => s.id === id ? { ...s, status } : s));
     };
 
+    const addGalleryItem = (item: Omit<GalleryItem, 'id'>) => {
+        const newItem = { ...item, id: Date.now().toString() };
+        setGalleryItems(prev => [newItem, ...prev]);
+    };
+
+    const deleteGalleryItem = (id: string) => {
+        setGalleryItems(prev => prev.filter(item => item.id !== id));
+    };
+
 
     const updateNews = (id: string, updates: Partial<NewsItem>) => {
         setNews(prev => prev.map(item => item.id === id ? { ...item, ...updates } : item));
@@ -1109,7 +1153,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
             news, addNews, deleteNews, updateNews,
             resources, addResource, deleteResource,
             partners, addPartner, deletePartner, updatePartner, setPartners, initialPartners,
-            submissions, addSubmission, deleteSubmission, updateSubmissionStatus
+            submissions, addSubmission, deleteSubmission, updateSubmissionStatus,
+            galleryItems, addGalleryItem, deleteGalleryItem
         }}>
             {children}
         </DataContext.Provider>

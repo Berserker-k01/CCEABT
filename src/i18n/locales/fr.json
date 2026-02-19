@@ -323,7 +323,12 @@
         "gallery_title": "Notre Médiathèque",
         "gallery_subtitle": "Découvrez l'ensemble de nos reportages photos, événements et conférences dans notre nouvelle galerie interactive.",
         "gallery_hero_title": "Retour en images sur nos actions terrain",
-        "gallery_btn": "Accéder à la galerie"
+        "gallery_btn": "Accéder à la galerie",
+        "fb_desc": "Suivez nos actualités, événements et actions sur notre page Facebook officielle.",
+        "fb_btn": "Suivre sur Facebook",
+        "li_profile": "CCEABT",
+        "li_desc": "Rejoignez notre réseau professionnel sur LinkedIn pour suivre nos publications et opportunités.",
+        "li_btn": "Suivre sur LinkedIn"
     },
     "gallery_page": {
         "back_btn": "Retour",
