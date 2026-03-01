@@ -194,7 +194,7 @@ export default function Partners() {
 
   // Carousel Logic
   const carouselPartners = [
-    'Chaine de l\'espoir', 'FIADI', 'ODIAE', 'ADESCO', 'AJT', 'CDD', 'PADIE'
+    'PADIE', 'Chaine de l\'espoir', 'FIADI', 'ODIAE', 'ADESCO', 'AJT', 'CDD'
   ];
   const [carouselIndex, setCarouselIndex] = useState(0);
 
